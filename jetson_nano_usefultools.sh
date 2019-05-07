@@ -94,7 +94,7 @@ sudo pip install matplotlib \
 # let gpio can be used on your account.
 cd
 sudo groupadd -f -r gpio
-sudo usermod -a -G gpio $hostname
+sudo usermod -a -G gpio $USER
 sudo cp /opt/nvidia/jetson-gpio/etc/99-gpio.rules /etc/udev/rules.d/
 sudo udevadm control --reload-rules && sudo udevadm trigger
 
