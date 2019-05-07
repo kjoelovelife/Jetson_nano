@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [308.745107860966, 0.0, 334.5906177764699, 0.0, 310.56621075543836, 237.14284056302324,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: topbot/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.312784847883155, 0.09142498691095552, -0.00022411455355343017, 0.0019941157593890767,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [234.09848022460938, 0.0, 336.4436171737543, 0.0, 0.0, 242.09683227539062,
+    234.9221886988089, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

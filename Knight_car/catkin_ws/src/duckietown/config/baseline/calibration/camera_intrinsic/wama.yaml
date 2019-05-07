@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [319.7232254665968, 0.0, 296.50332879412235, 0.0, 324.92020966876265, 231.20049166797017,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: wama/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.24558218602111542, 0.03776310062429389, 0.0010070220011680318, 0.0032396035366966565,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [212.5869140625, 0.0, 301.62454711587634, 0.0, 0.0, 268.2391662597656, 227.16065034133862,
+    0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

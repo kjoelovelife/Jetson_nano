@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [302.2766165135509, 0.0, 344.9702833967342, 0.0, 304.62705323376326, 250.57452436939266,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: buyme/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.2633001859766462, 0.05133736810440617, 0.001286746434072275, 0.0030126008537503866,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [211.13792419433594, 0.0, 348.14696599375566, 0.0, 0.0, 237.7010498046875,
+    258.999084359908, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

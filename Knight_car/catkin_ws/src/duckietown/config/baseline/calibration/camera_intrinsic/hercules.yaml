@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [321.12260735513576, 0.0, 310.71661891691707, 0.0, 324.22241121790574, 247.8863753499401,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: hercules/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.27280835040649776, 0.054170628209513405, 0.002154286213280718, 0.001166574456476254,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [222.63507080078125, 0.0, 312.98709383972164, 0.0, 0.0, 261.3592529296875,
+    254.6995459802929, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

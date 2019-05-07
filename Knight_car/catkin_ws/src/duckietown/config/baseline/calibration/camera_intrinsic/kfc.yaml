@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [270.727831883997, 0.0, 317.13334131012317, 0.0, 269.9943412430036, 230.64848175720232,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: kfc/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.3182557702974054, 0.06402949337750444, 0.0031550077779000435, -0.002329494445691844,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [186.83731079101562, 0.0, 317.3524225160145, 0.0, 0.0, 183.7976531982422,
+    235.27137635900726, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [309.12576840224733, 0.0, 320.36007811769696, 0.0, 306.50322782342226, 235.1285688293557,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: karissa/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.25622053250740834, 0.04433721709846185, 0.003977616689698647, -0.0029420790201069203,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [211.64346313476562, 0.0, 317.2042674188924, 0.0, 0.0, 242.86488342285156,
+    237.1033114206257, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

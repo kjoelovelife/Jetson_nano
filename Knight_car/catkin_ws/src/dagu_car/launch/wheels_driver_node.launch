@@ -1,0 +1,8 @@
+<launch>
+    <arg name="veh" doc="Name of vehicle. ex: megaman"/>
+    <node ns="$(arg veh)" machine="$(arg veh)" pkg="dagu_car" type="wheels_driver_node.py" name="wheels_driver_node" output="screen" clear_params="true" required="true"/>
+    
+    <!-- Subscriptions -->
+    <!-- "~wheels_cmd": duckietown_msgs/WheelsCmd. Command for the wheels -->
+
+</launch>

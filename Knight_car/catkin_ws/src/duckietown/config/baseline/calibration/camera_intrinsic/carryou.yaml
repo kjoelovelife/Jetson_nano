@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [339.1216131675718, 0.0, 296.030387566238, 0.0, 334.1050435031319, 236.46264717174785,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: carryou/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.31984891320080094, 0.08139903409389779, -0.00015421337856592247, 0.0014103365014739625,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [242.59609985351562, 0.0, 297.93908126108363, 0.0, 0.0, 263.7630615234375,
+    233.61165447667736, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

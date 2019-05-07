@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [1382.3766710885757, 0.0, 637.5922019816328, 0.0, 1363.5665330626166, 491.1215827346235,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: caroline/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [0.09091451408756626, -0.17585524189889842, -0.00028418755631072365, 0.009329634522045778,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 960
+image_width: 1280
+projection_matrix:
+  cols: 4
+  data: [1398.21142578125, 0.0, 645.8853140866122, 0.0, 0.0, 1388.6295166015625, 490.45147273853945,
+    0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

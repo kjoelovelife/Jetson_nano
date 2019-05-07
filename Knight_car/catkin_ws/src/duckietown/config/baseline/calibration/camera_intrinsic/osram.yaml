@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [469.0714385625144, 0.0, 339.0782455221074, 0.0, 470.6670434475922, 211.18331151634916,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: osram/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.7909309400090108, 0.41372217630420827, 0.004051056853650443, 0.0037141456646705697,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [319.0049133300781, 0.0, 336.29750647946275, 0.0, 0.0, 338.7936706542969,
+    196.526898203394, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

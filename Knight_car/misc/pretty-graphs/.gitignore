@@ -1,0 +1,6 @@
+local
+procgraph/
+quickapp
+out-*
+tmp
+.compmake_history.txt

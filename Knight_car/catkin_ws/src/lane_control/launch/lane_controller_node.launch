@@ -1,0 +1,27 @@
+<launch>
+	<arg name="veh"/>
+	<arg name="config" default="baseline"/>
+	<arg name="param_file_name" default="default" doc="Specify a param file. ex:megaman"/>
+	<arg name="local" default="false" doc="true to launch locally on laptop. false to launch of vehicle"/>
+	<arg name="pkg_name" default="lane_control" doc="name of the package"/>
+	<arg name="node_name" default="lane_controller_node" doc="name of the node"/>
+	<group ns="$(arg veh)">
+	    <!-- Local -->
+	    <node if="$(arg local)" pkg="$(arg pkg_name)" type="$(arg node_name).py" name="$(arg node_name)" output="screen" clear_params="true" required="true">
+	        <rosparam command="load" file="$(find duckietown)/config/$(arg config)/$(arg pkg_name)/$(arg node_name)/$(arg param_file_name).yaml"/>
+	    </node>
+	    <!-- Remote -->
+		<include unless="$(arg local)" file="$(find duckietown)/machines"/>
+	    <node unless="$(arg local)" machine="$(arg veh)" pkg="$(arg pkg_name)" type="$(arg node_name).py" name="$(arg node_name)" output="screen" clear_params="true" required="true">
+	        <rosparam command="load" file="$(find duckietown)/config/$(arg config)/$(arg pkg_name)/$(arg node_name)/$(arg param_file_name).yaml"/>
+	    </node>
+	</group>
+
+	<!-- Publication -->
+	<!-- ~wheels_control: duckietown_msgs/WheelsCmd. Wheels command for duckiebot. -->
+	
+	<!-- Subscription -->
+	<!-- ~lane_pose: duckietown_msgs/LanePose. LanePose from the lane filter -->
+
+
+</launch>

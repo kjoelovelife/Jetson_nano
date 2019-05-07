@@ -1,0 +1,22 @@
+<launch>
+    <arg name="pkg_name" value="image_proc"/>
+    <arg name="node_name" default="image_proc_node"/>
+
+    <arg name="veh" doc="Name of vehicle. ex: megaman"/>
+    <arg name="local" default="false"
+         doc="true for running everything you possibly can on laptop. false for everything running on vehicle."/>
+
+    <include file="$(find duckietown)/machines"/>
+    <group ns="$(arg veh)">
+
+        <!-- run local -->
+        <node if="$(arg local)" name="$(arg node_name)" pkg="$(arg pkg_name)" type="$(arg pkg_name)"
+              output="screen">
+        </node>
+
+        <!-- run remote -->
+        <node unless="$(arg local)" machine="$(arg veh)" name="$(arg node_name)" pkg="$(arg pkg_name)"
+              type="$(arg pkg_name)" output="screen">
+        </node>
+    </group>
+</launch>

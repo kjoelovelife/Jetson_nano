@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [255.17902610342483, 0.0, 304.5761213351013, 0.0, 251.38439207277304, 207.2280258087031,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: redbull/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.3056987555091027, 0.06807710347824825, 0.002554798211291582, -0.002544862032433613,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [172.69454956054688, 0.0, 292.59412035824425, 0.0, 0.0, 176.29800415039062,
+    207.67349586250202, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

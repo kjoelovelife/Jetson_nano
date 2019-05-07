@@ -1,0 +1,15 @@
+<launch>
+    <arg name="pkg_name" value="dagu_car"/>
+    <arg name="node_name" default="velocity_to_pose_node"/>
+
+    <arg name="veh" doc="Name of vehicle. ex: megaman"/>
+    <arg name="local" default="false" doc="true for running everything you possibly can on laptop. false for everything running on vehicle."/>
+    <arg name="config" default="baseline" doc="Specify a config."/>
+
+    <group ns="$(arg veh)">
+        <!-- run local -->
+        <node if="$(arg local)" name="$(arg node_name)" pkg="$(arg pkg_name)" type="$(arg node_name).py" output="screen" clear_params="true" required="true"/>
+        <!-- run remote -->
+        <node unless="$(arg local)" machine="$(arg veh)" name="$(arg node_name)" pkg="$(arg pkg_name)" type="$(arg node_name).py" output="screen" clear_params="true" required="true"/>
+    </group>
+</launch>

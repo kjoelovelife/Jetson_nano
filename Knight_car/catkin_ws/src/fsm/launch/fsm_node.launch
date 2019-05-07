@@ -1,0 +1,20 @@
+<launch>
+    <arg name="veh" doc="Name of vehicle. ex: megaman"/>
+    <arg name="local" default="false" doc="true for running on laptop. false for running on vehicle."/>
+    <arg name="config" default="baseline" doc="Specify a config."/>
+    <arg name="param_file_name" default="default"/>
+
+    <include file="$(find duckietown)/machines"/>
+    <!-- intersection control -->
+    <node ns="$(arg veh)" if="$(arg local)" pkg="fsm" type="fsm_node.py" name="fsm_node" clear_params="true" output="screen" required="true">
+        <rosparam command="load" file="$(find duckietown)/config/$(arg config)/fsm/fsm_node/$(arg param_file_name).yaml"/>
+    </node>
+    
+    <node ns="$(arg veh)" unless="$(arg local)" machine="$(arg veh)" pkg="fsm" type="fsm_node.py" name="fsm_node" clear_params="true" output="screen" required="true">
+        <rosparam command="load" file="$(find duckietown)/config/$(arg config)/fsm/fsm_node/$(arg param_file_name).yaml"/>
+    </node>
+
+    <!-- Publications -->
+
+    <!-- Subscriptions -->
+</launch>

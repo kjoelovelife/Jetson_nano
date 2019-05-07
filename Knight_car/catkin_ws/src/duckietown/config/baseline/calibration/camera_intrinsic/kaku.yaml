@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [332.50767766010404, 0.0, 314.381433252088, 0.0, 330.7623890075973, 265.6391930673865,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: kaku/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.29148940432868903, 0.058204226800090915, -0.005402534475821063, 0.00025961388905546554,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [227.93678283691406, 0.0, 313.468779373743, 0.0, 0.0, 262.9612731933594, 274.2684780369382,
+    0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

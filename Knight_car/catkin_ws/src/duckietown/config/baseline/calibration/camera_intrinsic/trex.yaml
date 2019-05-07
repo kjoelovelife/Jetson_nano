@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [314.4613737585494, 0.0, 325.89445939826925, 0.0, 311.6063191941622, 218.42617000375347,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: trex/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.30569541724381777, 0.07638993546614818, 0.0010953947108508358, 0.0001821431104446864,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [227.96881103515625, 0.0, 325.81238463881164, 0.0, 0.0, 239.18772888183594,
+    206.40524649316285, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

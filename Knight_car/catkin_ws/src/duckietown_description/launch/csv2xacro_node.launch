@@ -1,0 +1,22 @@
+<launch>
+    <arg name="pkg_name" value="duckietown_description"/>
+    <arg name="node_name" default="csv2xacro_node"/>
+
+    <arg name="local" default="true"
+         doc="true for running everything you possibly can on laptop. false for everything running on vehicle."/>
+    <arg name="config" default="baseline" doc="Specify a config."/>
+    <arg name="param_file_name" default="default" doc="Specify a param file. ex:megaman."/>
+
+    <arg name="tile_map_csv" doc="Full path to duckietown_tile_map.csv"/>
+    <arg name="tag_map_csv" doc="Full path to duckietown_tag_map.csv"/>
+    <arg name="map_name" doc="name of the output file without extension (will write to ...duckietown_description/urdf/)"/>
+
+    <!-- node -->
+    <node name="$(arg node_name)" pkg="$(arg pkg_name)" type="$(arg node_name).py" output="screen" required="true">
+        <rosparam command="load"
+                  file="$(find duckietown)/config/$(arg config)/$(arg pkg_name)/$(arg param_file_name).yaml"/>
+        <param name="tile_map_csv" value="$(arg tile_map_csv)"/>
+        <param name="tag_map_csv" value="$(arg tag_map_csv)"/>
+        <param name="output_map_name" value="$(arg map_name)"/>
+    </node>
+</launch>

@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [313.781117742651, 0.0, 328.81152617955803, 0.0, 313.8332884037332, 235.87176233339122,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: fffteam/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.30952132298253654, 0.07768300042743485, 0.0002581228410284913, 0.0018486209618778593,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [226.0259246826172, 0.0, 329.7736813348456, 0.0, 0.0, 241.61106872558594,
+    233.08626955954333, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [234.84570513425786, 0.0, 342.9730148041684, 0.0, 229.9402439807877, 237.535928819518,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: niching/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.2517872945768013, 0.04160481848069104, -0.0015723181358450766, -0.002329792360825415,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [169.6637420654297, 0.0, 320.97193803873415, 0.0, 0.0, 171.66671752929688,
+    240.95469560752463, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

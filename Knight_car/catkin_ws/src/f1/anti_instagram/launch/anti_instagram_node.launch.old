@@ -1,0 +1,12 @@
+<launch>
+    <node name="anti_instagram_node" 
+    		pkg="anti_instagram" type="anti_instagram_node.py" output="screen"/>
+
+    <!-- Publications 
+		~health : some metric of how good the image transformation is (for internal and external use)
+		~corrected_image : color-corrected version of raw image
+        Subscriptions 
+		~raw_image : straight from camera node
+    -->
+
+</launch>

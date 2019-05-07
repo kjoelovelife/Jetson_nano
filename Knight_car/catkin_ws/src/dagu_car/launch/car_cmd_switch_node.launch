@@ -1,0 +1,27 @@
+<launch>
+    <arg name="veh"/>
+    <arg name="local" default="false" doc="true to launch locally on laptop. false to launch of vehicle"/>
+    <arg name="config" default="baseline" doc="Specify a config."/>
+    <arg name="param_file_name" default="default" doc="Specify a param file. ex:megaman"/>
+
+    <arg name="pkg_name" value="dagu_car" doc="name of the package"/>
+    <arg name="node_name" default="car_cmd_switch_node" doc="name of the node"/>
+    <group ns="$(arg veh)">
+        <!-- Local -->
+        <node if="$(arg local)" pkg="$(arg pkg_name)" type="$(arg node_name).py" name="$(arg node_name)" output="screen">
+            <rosparam command="load" file="$(find duckietown)/config/$(arg config)/$(arg pkg_name)/$(arg node_name)/$(arg param_file_name).yaml"/>
+        </node>
+        <!-- Remote -->
+        <node unless="$(arg local)" machine="$(arg veh)" pkg="$(arg pkg_name)" type="$(arg node_name).py" name="$(arg node_name)" output="screen">
+            <rosparam command="load" file="$(find duckietown)/config/$(arg config)/$(arg pkg_name)/$(arg node_name)/$(arg param_file_name).yaml"/>
+        </node>
+    </group>
+
+    <!-- Subscriptions -->
+    <!-- "~mode": duckietown_msgs/FSMState. Current control mode of the duckiebot -->
+    <!-- Other subscriptions specified by the parameters -->
+
+    <!-- Publications -->
+    <!-- "~cmd" duckietown_msgs/Twist2DStamped. -->
+
+</launch>

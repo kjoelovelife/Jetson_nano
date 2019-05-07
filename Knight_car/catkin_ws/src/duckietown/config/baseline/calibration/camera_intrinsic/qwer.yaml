@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [325.791276388737, 0.0, 317.37954195092783, 0.0, 324.87904444594983, 223.089398471427,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: qwer/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.2924056158904825, 0.07072013386730508, 0.0009930060378139146, 0.00010206928324740765,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [236.71923828125, 0.0, 316.77268351532985, 0.0, 0.0, 259.7510986328125, 214.5819441697604,
+    0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

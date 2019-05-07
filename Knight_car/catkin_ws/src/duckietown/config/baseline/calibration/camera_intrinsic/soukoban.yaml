@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [298.2684608565921, 0.0, 327.6311431670993, 0.0, 302.7034478258418, 243.41952707231314,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: soukoban/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.26386479236293314, 0.050681950373890505, 0.0009769006714801175, -0.0006826771791989276,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [206.84727478027344, 0.0, 327.68509061714394, 0.0, 0.0, 236.71080017089844,
+    246.7508377327449, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

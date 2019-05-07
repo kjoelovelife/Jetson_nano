@@ -1,0 +1,13 @@
+<launch>
+	<arg name="veh" default="$(env VEHICLE_NAME)"/>
+	<!-- start basic args -->
+	<include file="$(find duckietown_demos)/launch/master.launch">
+		<arg name="veh" value="$(arg veh)"/>
+		<arg name="visualization" default="true" />
+		<arg name="verbose" default="true" />
+		<arg name="param_file_name" default="default" />
+		<arg name="line_detector_param_file_name" default="$(arg line_detector_param_file_name)" />
+		<arg name="anti_instagram" default="true" />
+		<arg name="/lane_following/stop_line_filter" default="false" /> <!-- will not every allow a transition into COORDINATION mode -->
+	</include>
+</launch>

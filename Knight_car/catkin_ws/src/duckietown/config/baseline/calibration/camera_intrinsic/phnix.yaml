@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [237.0549934320124, 0.0, 304.77285561717554, 0.0, 239.20442409984605, 205.65412063164823,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: phnix/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.22959045289355873, 0.029772768175458077, 0.004179057256959748, 0.004592222824930986,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [222.2560272216797, 0.0, 350.83392814928266, 0.0, 0.0, 214.78065490722656,
+    253.87076851191523, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

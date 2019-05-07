@@ -1,0 +1,16 @@
+<launch>
+	<arg name="veh"/>
+	<arg name="config" default="baseline"/>
+	<arg name="param_file_name" default="default" doc="Specify a param file. ex:megaman"/>
+	<!-- <arg name="raw" default="true" doc="If set to true, also publish raw image using decoder."/>     -->
+    <include file="$(find duckietown)/machines"/>
+	<group ns="$(arg veh)">
+		<node machine="$(arg veh)" name="camera_node" pkg="pi_camera" type="camera_node_sequence.py" output="screen" clear_params="true" required="true">
+			<rosparam command="load" file="$(find duckietown)/config/$(arg config)/pi_camera/camera_node/$(arg param_file_name).yaml"/>
+		</node>
+	</group>
+
+	<!-- Publications -->
+	<!-- "~image/compressed": sensor_msgs/CompressedImage. Image from the camera in jpeg format-->
+
+</launch>

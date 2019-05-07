@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [328.7341171091755, 0.0, 346.8402034046125, 0.0, 324.7100796704007, 197.17977558798373,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: teng/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.2901393536900826, 0.06538990710310826, 0.0019763603782974168, -0.004650306494199411,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [234.46017456054688, 0.0, 339.6413413153314, 0.0, 0.0, 252.34371948242188,
+    176.38522190559888, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [304.2207422561403, 0.0, 314.5307723770289, 0.0, 307.7761231001879, 207.42451551183444,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: pandola/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.2848924966766997, 0.042835779007152894, 0.009169013473206075, 0.0012374447712171328,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [218.3097381591797, 0.0, 324.5285436690592, 0.0, 0.0, 224.37872314453125,
+    190.0430550673409, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

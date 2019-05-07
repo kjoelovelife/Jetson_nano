@@ -1,0 +1,21 @@
+<launch>
+    <arg name="pkg_name" value="duckietown_description"/>
+    <arg name="node_name" default="duckietown_description_tester_node"/>
+
+    <arg name="veh" default="testbot" doc="Name of vehicle. ex: megaman"/>
+    <arg name="config" default="baseline" doc="Specify a config."/>
+    <arg name="param_file_name" default="test_default" doc="Specify a param file. ex:megaman."/>
+    <arg name="map_name" default="test_map" doc="The name of the xacro file with the duckietown map "/>
+
+    <!-- Run the node -->
+    <include file="$(find duckietown_description)/launch/duckietown_description_node.launch">
+        <arg name="veh" value="$(arg veh)"/>
+        <arg name="map_name" value="$(arg map_name)"/>
+        <arg name="gui" value="false"/>
+    </include>
+
+    <!-- Run unit test -->
+    <test test-name="$(arg node_name)" pkg="duckietown_description" type="$(arg node_name).py" ns="$(arg veh)">
+            <rosparam command="load" file="$(find duckietown)/config/$(arg config)/$(arg pkg_name)/$(arg param_file_name).yaml"/>
+    </test>
+</launch>

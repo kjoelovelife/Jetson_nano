@@ -1,0 +1,17 @@
+<launch>
+	<arg name="pkg_name" value="led_emitter"/>
+	<arg name="veh" doc="Name of vehicle. ex: megaman"/>
+	<include file="$(find duckietown)/machines"/>
+	<arg name="local" default="true" doc="true for running everything you possibly can on laptop. false for everything running on vehicle."/>
+	<arg name="config" default="baseline" doc="Specify a config."/>
+	<arg name="param_file_name" default="default" doc="Specify a param file. ex:megaman." />
+	<group ns="$(arg veh)">
+		<node machine="$(arg veh)" name="led_emitter_node" pkg="led_emitter" type="led_emitter_node.py" output="screen">
+			<remap from="~change_light_frequency" to="led_emitter_node_test/change_light_frequency"/>
+		</node>
+		<node machine="$(arg veh)" name="led_emitter_node_test" pkg="led_emitter" type="led_emitter_node_test.py" output="screen">
+			<remap from="~current_led_state" to="led_emitter_node/current_led_state"/>
+		</node>
+	</group>
+</launch>
+

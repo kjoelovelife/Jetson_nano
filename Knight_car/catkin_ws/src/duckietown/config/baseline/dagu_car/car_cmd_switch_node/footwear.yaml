@@ -1,0 +1,16 @@
+mode_topic: "fsm_node/mode"
+source_topics: #Mapping from cmd source name to topics
+  lane: "lane_controller_node/car_cmd"
+  joystick: "joy_mapper_node/car_cmd"
+  recovery: "lane_recovery_node/car_cmd" # not implemented yet
+  stop: "timer/car_cmd"
+  no_line: "line_detector_node/car_cmd"
+  u_turn: "fw_u_turn_node/car_cmd"
+
+mappings: #Mapping from FSMStates.state to cmd source names. Allows different FSM mode to use the same source.
+  LANE_FOLLOWING: "lane"
+  JOYSTICK_CONTROL: "joystick"
+  LANE_RECOVERY:     "lane"
+  STOP: "stop"
+  NO_LINE: "no_line"
+  U_TURN: "u_turn"

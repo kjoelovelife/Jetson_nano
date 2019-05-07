@@ -1,0 +1,5 @@
+# rectified image containing a checkerboard
+sensor_msgs/Image image
+---
+# 3x3 homography
+float32[] homography

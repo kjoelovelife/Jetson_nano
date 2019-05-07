@@ -1,0 +1,29 @@
+<launch>
+
+<include file="$(find duckietown)/machines"/>
+<arg name="pkg_name" value="led_interpreter"/>
+<arg name="veh"  doc="Name of vehicle. ex: megaman"/>
+<arg name="local" default="true" doc="true for running everything you possibly can on laptop. false for everything running on vehicle."/>
+<arg name="config" default="baseline" doc="Specify a config."/>
+<arg name="param_file_name" default="default" doc="Specify a param file. ex:megaman." />
+<arg name="protocol_file" default="LED_protocol"/>
+<arg name="location_config" default="location_config"/>
+<arg name="node_name" default="LED_interpreter_node"/>
+<arg name="intersectionType" /> 
+
+<!-- <arg name="testing" default="false" doc="using for test purposes." /> -->
+
+<node ns="$(arg veh)" machine="$(arg veh)"  pkg="$(arg pkg_name)" type="$(arg node_name).py" name="$(arg node_name)" output="screen" required="true">
+            <rosparam command="load" file="$(find duckietown)/config/$(arg config)/$(arg pkg_name)/$(arg protocol_file).yaml"/>
+            <rosparam command="load" file="$(find duckietown)/config/$(arg config)/$(arg pkg_name)/$(arg location_config).yaml"/>
+            <param name="intersectionType" value="$(arg intersectionType)"/>
+</node>
+
+
+
+<!-- Publication -->
+    
+<!-- Subscription -->
+
+
+</launch>

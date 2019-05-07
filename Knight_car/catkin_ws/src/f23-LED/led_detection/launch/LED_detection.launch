@@ -1,0 +1,18 @@
+<launch>
+	<include file="$(find duckietown)/machines"/>
+	<arg name="pkg_name" value="led_detection"/>
+	<arg name="veh" doc="Name of vehicle. ex: megaman"/>
+	<arg name="local" default="false" doc="true for running on laptop. false for running on vehicle."/>
+	<arg name="config" default="baseline" doc="Specify a config."/>
+	<arg name="param_file_name" default="default" doc="Specify a param file. ex:megaman"/>
+	<arg name="node_name" default="LED_detector_node"/>
+	<arg name="continuous" default="True"/> <!-- manual trigger required if false [interactive mode] -->
+
+	<!-- Run detector on remote (vehicle) -->
+	<node ns="$(arg veh)" machine="$(arg veh)" pkg="$(arg pkg_name)" type="LED_detector_node.py" name="LED_detector_node" output="screen" clear_params="true" required="true">
+		<rosparam command="load" file="$(find duckietown)/config/$(arg config)/led_interpreter/LED_protocol.yaml"/>
+		<rosparam command="load" file="$(find duckietown)/config/$(arg config)/$(arg pkg_name)/$(arg node_name)/$(arg param_file_name).yaml"/>
+		<param name="continuous" type="bool" value="$(arg continuous)" />
+	</node>	
+
+</launch>

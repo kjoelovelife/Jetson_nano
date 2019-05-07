@@ -1,0 +1,26 @@
+<launch>
+	<arg name="veh"/>
+	<arg name="config" default="baseline"/>
+	<arg name="param_file_name" default="default" doc="Specify a param file. ex:megaman"/>
+	<arg name="local" default="false" doc="true to launch locally on laptop. false to launch of vehicle"/>
+
+	<group ns="$(arg veh)">
+		<!-- Lane Controller -->
+		<include file="$(find lane_control)/launch/lane_controller_node.launch">
+			<arg name="veh" value="$(arg veh)">
+			<arg name="config" value="$(arg config)">
+			<arg name="param_file_name" value="$(arg param_file_name)">
+			<arg name="local" value="$(arg local)">
+		</include>
+
+		<!-- Vicon for Lane -->
+		<remap from="vicon_for_lane_node/vicon_pose" to="/duckiecar/pose"/>
+		<remap from="vicon_for_lane_node/lane_pose" to="lane_controller_node/lane_pose"/>
+		<include file="$(find lane_control)/launch/vicon_for_lane_node.launch">
+			<arg name="veh" value="$(arg veh)">
+			<arg name="config" value="$(arg config)">
+			<arg name="param_file_name" value="$(arg param_file_name)">
+			<arg name="local" value="$(arg local)">
+		</include>
+	</group>
+</launch>

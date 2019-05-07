@@ -1,0 +1,23 @@
+<launch>
+
+    <arg name="veh" doc="Name of vehicle. ex: megaman"/>
+    <arg name="map_name" default="open_house_dp6" doc="The name of the xacro file with the duckietown map "/>
+    <arg name="gui" default="true" />
+    <arg name="rviz_config" default="rviz_default"/>
+
+    <group ns="$(arg veh)">
+        <node if="$(arg gui)" name="rviz" pkg="rviz" type="rviz" args="-d $(find duckietown_description)/rviz/$(arg rviz_config).rviz" />
+    </group>
+
+    <!-- The duckietown map state publisher-->
+    <param name="map_description" command="$(find xacro)/xacro '$(find duckietown_description)/urdf/$(arg map_name).urdf.xacro'" />
+    <node name="map_state_publisher" pkg="robot_state_publisher" type="state_publisher" >
+        <remap from="robot_description" to="map_description" />
+    </node>
+
+    <!-- The duckiebot state publisher-->
+    <param name="duckiebot_description" command="$(find xacro)/xacro '$(find duckietown_description)/urdf/duckiebot.urdf.xacro'" />
+    <node name="duckiebot_state_publisher" pkg="robot_state_publisher" type="state_publisher" >
+        <remap from="robot_description" to="duckiebot_description" />
+    </node>
+</launch>

@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [279.6634637221388, 0.0, 300.5090709195681, 0.0, 277.101297974128, 184.5424168671948,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: yunbot/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.3026228996729972, 0.05234337468813497, 0.007999298942122202, 0.003384274449237447,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [268.681884765625, 0.0, 363.17030734565924, 0.0, 0.0, 279.2694396972656, 234.67174804007846,
+    0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

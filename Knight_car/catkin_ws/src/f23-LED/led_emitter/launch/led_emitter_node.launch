@@ -1,0 +1,15 @@
+<launch>
+	<arg name="pkg_name" value="led_emitter"/>
+	<arg name="veh" doc="Name of vehicle. ex: megaman"/>
+	<include file="$(find duckietown)/machines"/>
+	<arg name="local" default="false" doc="true for running everything you possibly can on laptop. false for everything running on vehicle."/>
+	<arg name="config" default="baseline" doc="Specify a config."/>
+    <arg name="param_file_name" default="default" doc="Specify a param file. ex:megaman"/>
+
+	<group ns="$(arg veh)">
+		<node machine="$(arg veh)" name="led_emitter_node" pkg="$(arg pkg_name)" type="led_emitter_node.py" output="screen" clear_params="true" required="true">
+			<rosparam command="load" file="$(find duckietown)/config/$(arg config)/led_interpreter/LED_protocol.yaml"/>
+		</node>
+	</group>
+</launch>
+

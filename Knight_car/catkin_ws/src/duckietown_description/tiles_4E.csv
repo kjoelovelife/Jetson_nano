@@ -1,0 +1,7 @@
+x, y, type     , rotation
+0, 0, turn     , 270
+0, 1, turn     , 180
+1, 0, straight , 0
+1, 1, straight , 0
+2, 0, turn     , 0
+2, 1, turn     , 90

@@ -1,0 +1,7 @@
+#parameters for pi_camera/camera_node
+framerate_high: 10 
+framerate_low:  5
+res_w: 1280 
+res_h: 960
+#decompress: false
+#publish_info: false

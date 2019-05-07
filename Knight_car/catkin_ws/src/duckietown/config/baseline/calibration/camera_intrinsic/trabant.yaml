@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [316.52597444317314, 0.0, 320.9948809392584, 0.0, 321.2731572848207, 205.92052874401818,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: trabant/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.2601671987836283, 0.04662981063335094, 0.005020360395041378, 0.0029019828987683857,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [217.697265625, 0.0, 324.6142217791639, 0.0, 0.0, 257.8800354003906, 192.57688048131422,
+    0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [355.5501898094035, 0.0, 309.9932511254742, 0.0, 337.8933799165951, 188.0236996357827,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: blackmanba/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.5010103634805051, 0.1488915169954276, 0.001999589028097851, -0.008064599635487557,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [380.47894287109375, 0.0, 377.4710276062033, 0.0, 0.0, 361.1685485839844,
+    257.7904468889483, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

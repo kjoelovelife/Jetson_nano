@@ -1,0 +1,29 @@
+<launch>
+
+    <arg name="veh"/>
+    <arg name="config" default="baseline"/>
+    <arg name="param_file_name" default="default" doc="Specify a param file. ex:megaman"/>
+    <arg name="local" default="false" doc="true to launch locally on laptop. false to launch of vehicle"/>
+    <arg name="pkg_name" default="dagu_car" doc="name of the package"/>
+    <arg name="node_name" default="wheels_cmd_switch_node" doc="name of the node"/>
+    <group ns="$(arg veh)">
+        <!-- Local -->
+        <node if="$(arg local)" pkg="$(arg pkg_name)" type="$(arg node_name).py" name="$(arg node_name)" output="screen" clear_params="true">
+            <rosparam command="load" file="$(find duckietown)/config/$(arg config)/$(arg pkg_name)/$(arg node_name)/$(arg param_file_name).yaml"/>
+        </node>
+        <!-- Remote -->
+        <include unless="$(arg local)" file="$(find duckietown)/machines"/>
+        <node unless="$(arg local)" machine="$(arg veh)" pkg="$(arg pkg_name)" type="$(arg node_name).py" name="$(arg node_name)" output="screen" clear_params="true" >
+            <rosparam command="load" file="$(find duckietown)/config/$(arg config)/$(arg pkg_name)/$(arg node_name)/$(arg param_file_name).yaml"/>
+        </node>
+    </group>
+    <!-- Subscriptions -->
+    <!-- "~mode": duckietown_msgs/ControlMode. Current control mode of the duckiebot -->
+    <!-- "~wheels_cmd_lane": duckietown_msgs/WheelsCmd. Wheels command from the lane controller -->
+    <!-- "~wheels_cmd_intersection": duckietown_msgs/WheelsCmd. Wheels command from the intersection controller -->
+    <!-- "~wheels_cmd_coordination": duckietown_msgs/WheelsCmd. Wheels command from the coordination controller -->
+    
+    <!-- Publications -->
+    <!-- "~wheels_cmd" duckietown_msgs/WheelsCmd. Wheels command output of the current mode. -->
+
+</launch>

@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [250.15953019067445, 0.0, 347.82987860937584, 0.0, 253.69903953961153, 243.51557941862734,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: kenny/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.30068806730678205, 0.060316091782515874, -0.0003806498201007501, -0.0015397123507048566,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [177.46385192871094, 0.0, 334.1477233405185, 0.0, 0.0, 185.7172088623047,
+    243.2067323129886, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

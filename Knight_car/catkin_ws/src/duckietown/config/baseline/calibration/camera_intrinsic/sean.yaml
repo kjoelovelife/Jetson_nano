@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [314.8437269348345, 0.0, 337.7768189001673, 0.0, 312.4521344539822, 209.57401757193207,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: sean/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.26946816023534126, 0.051099923243570156, -0.0023690812814642537, -0.002212008025431359,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [217.0231170654297, 0.0, 334.7911738277762, 0.0, 0.0, 238.49899291992188,
+    185.97615485661663, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [321.9473438643624, 0.0, 349.66486856344505, 0.0, 324.0516068981, 228.29083104903336,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: parker/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.2924862670322902, 0.07011585736339362, 0.0040223771821627525, -0.003873895791858971,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [234.46070861816406, 0.0, 343.0463562070563, 0.0, 0.0, 259.0605163574219,
+    226.375010712718, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

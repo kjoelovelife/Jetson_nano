@@ -1,0 +1,154 @@
+# Initail state of the FSM
+initial_state: "JOYSTICK_CONTROL"
+
+events: #Maps from subscribing topic to signal ids
+  joystick_override_on: 
+    topic: "joy_mapper_node/joystick_override"
+    msg_type: "BoolStamped"
+    trigger: True
+  joystick_override_off: 
+    topic: "joy_mapper_node/joystick_override"
+    msg_type: "BoolStamped"
+    trigger: False
+  parallel_autonomy_on:
+    topic: "joy_mapper_node/parallel_autonomy"
+    msg_type: "BoolStamped"
+    trigger: True
+  parallel_autonomy_off:
+    topic: "joy_mapper_node/parallel_autonomy"
+    msg_type: "BoolStamped"
+    trigger: False
+  start_avoidance:
+    topic: "joy_mapper_node/start_avoidance"
+    msg_type: "BoolStamped"
+    trigger: True
+  at_stop_line:
+    topic: "stop_line_filter_node/at_stop_line"
+    msg_type: "BoolStamped"
+    trigger: True
+  at_u_turn_line:
+    topic: "stop_line_filter_node/at_u_turn_line"
+    msg_type: "BoolStamped"
+    trigger: True
+  time_is_up:
+    topic: "timer/time_is_up"
+    msg_type: "BoolStamped"
+    trigger: True
+  lane_recovery:
+    topic: "timer/lane_recovery"
+    msg_type: "BoolStamped"
+    trigger: True
+
+  lost_lane: # not tested
+    topic: "line_detector_node/have_lines"
+    msg_type: "BoolStamped"
+    trigger: False
+  found_lane: # note tested
+    topic: "line_detector_node/have_lines"
+    msg_type: "BoolStamped"
+    trigger: True
+
+  u_turn_recovery:
+    topic: "fw_u_turn_node/u_turn_recovery"
+    msg_type: "BoolStamped"
+    trigger: True
+
+#  lost_lane: # not tested
+#    topic: "lane_filter_node/in_lane"
+#    msg_type: "BoolStamped"
+#    trigger: False
+#  found_lane: # note tested
+#    topic: "lane_filter_node/in_lane"
+#    msg_type: "BoolStamped"
+#    trigger: True
+#  lane_recovery_timeout_reached: #not currently implemented
+#    topic: "lane_recovery_node/timeout_reached"
+#    msg_type: "BoolStamped"
+#    trigger: True
+#  intersection_complete_no_lane:
+#    topic: "logic_gate_node/intersection_complete_no_lane" # not currently implemented
+#    msg_type: "BoolStamped"
+#    trigger: True
+
+# Define global transitions. Available from all states.
+global_transitions:
+  joystick_override_on: "JOYSTICK_CONTROL"
+  parallel_autonomy_off: "JOYSTICK_CONTROL"
+
+# Define nodes 
+nodes:
+  decoder_node: "decoder_node/switch"
+# anti_instagram_node: "anti_instagram/switch"
+  line_detector_node: "line_detector_node/switch"
+  lane_filter_node: "lane_filter_node/switch"
+  stop_line_filter_node: "stop_line_filter_node/switch"
+  framerate_high: "camera_node/framerate_high_switch"
+  timer: "timer/switch"
+  fw_u_turn_node: "fw_u_turn_node/switch"
+
+
+# Define state transitions
+states:
+  JOYSTICK_CONTROL:
+    transitions:
+      joystick_override_off: "LANE_FOLLOWING"
+    active_nodes:
+      - lane_filter_node
+      - line_detector_node
+      #- stop_line_filter_node
+      - framerate_high
+
+  LANE_FOLLOWING:
+    transitions:
+      at_stop_line: "STOP"
+      at_u_turn_line: "U_TURN"
+      joystick_override_off: "JOYSTICK_CONTROL"
+      lost_lane: "NO_LINE"
+
+#      lost_lane: "LANE_RECOVERY"
+    active_nodes:
+      - lane_filter_node
+      - line_detector_node
+      - stop_line_filter_node
+
+  STOP:
+    transitions:
+      lane_recovery: "LANE_RECOVERY"
+      joystick_override_off: "JOYSTICK_CONTROL"
+      lost_lane: "NO_LINE"
+    active_nodes:
+      - line_detector_node
+      - timer
+
+
+  LANE_RECOVERY:
+    transitions:
+      time_is_up: "LANE_FOLLOWING"
+      joystick_override_off: "JOYSTICK_CONTROL"
+      lost_lane: "NO_LINE"
+
+    active_nodes:
+      - line_detector_node
+      - lane_filter_node
+      - line_detector_node
+      - timer
+
+  NO_LINE:
+    transitions:
+      found_lane: "LANE_FOLLOWING"
+      joystick_override_off: "JOYSTICK_CONTROL"
+
+    active_nodes:
+      - line_detector_node
+
+  U_TURN:
+    transitions:
+      u_turn_recovery: "LANE_FOLLOWING"
+
+    active_nodes:
+      - line_detector_node
+      - lane_filter_node
+      - fw_u_turn_node
+
+
+

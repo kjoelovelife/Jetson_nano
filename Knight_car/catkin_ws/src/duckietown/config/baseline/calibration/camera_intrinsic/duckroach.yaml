@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [330.88193627803565, 0.0, 329.8482843071124, 0.0, 334.3235955538429, 199.0864988670286,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: duckroach/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.2801520229142491, 0.05743035527165979, 0.0026743657868291285, -0.0009454819170764702,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [230.16592407226562, 0.0, 329.7248972037851, 0.0, 0.0, 266.0405578613281,
+    180.51468609230142, 0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

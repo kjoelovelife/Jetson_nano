@@ -1,0 +1,13 @@
+*~
+*.bag
+*.pyc
+.DS_Store
+catkin_ws/src/duckietown/machines
+.idea/
+*.swp
+*.swo
+catkin_ws/src/footwear
+catkin_ws/src/semantic-mapping-arg
+catkin_ws/src/duckiedog
+catkin_ws/src/wearnavi
+catkin_ws/src/guidedog-code

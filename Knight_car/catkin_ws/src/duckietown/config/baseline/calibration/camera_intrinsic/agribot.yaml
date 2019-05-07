@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [320.85158016062445, 0.0, 314.69273040354966, 0.0, 324.4043947706543, 215.6323591153414,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: agribot/camera_node
+distortion_coefficients:
+  cols: 5
+  data: [-0.28930092639086585, 0.0609360283708848, 0.003790715664549801, -0.0010542532583146269,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 480
+image_width: 640
+projection_matrix:
+  cols: 4
+  data: [222.80029296875, 0.0, 312.7231767529156, 0.0, 0.0, 256.32537841796875, 205.0252118033677,
+    0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

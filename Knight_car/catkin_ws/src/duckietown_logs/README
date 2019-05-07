@@ -1,0 +1,11 @@
+
+Until we fix the dependencies:
+
+sudo pip install SystemCmd==1.2 ros_node_utils==1.0 ConfTools==1.8 QuickApp==1.2.2
+
+sudo apt-get install -y  mplayer mencoder
+
+sudo add-apt-repository ppa:mc3man/trusty-media
+sudo apt-get update 
+sudo apt-get install -y ffmpeg gstreamer0.10-ffmpeg 
+
