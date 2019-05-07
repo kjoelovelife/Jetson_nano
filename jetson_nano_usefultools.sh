@@ -132,7 +132,7 @@ python setup.py install
 sudo ldconfig
 
 # Install Darknet , let jetson-nano can train Yolo model with darknet.
-cd ~/jetson_nano/darknet
+cd ~/Jetson_nano/darknet
 sudo make
 
 # Install YOLO3-4-py , let jetson-nano can infer YOLO model with GPU.
@@ -140,7 +140,7 @@ export GPU=1
 sudo pip install yolo34py-gpu
 
 # Install Jetson stats , about resource monitoring with series of NVIDIA Jetson
-cd ~/jetson_nano/jetson_stats
+cd ~/Jetson_nano/jetson_stats
 sudo ./install_jetson_stats.sh –s
 
 # Configure power mode : 5W
