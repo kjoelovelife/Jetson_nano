@@ -55,6 +55,7 @@ sudo apt-get install -y python-pip \
                         libboost-all-dev \
                         nano \
                         virtualenv \
+                        rsync
 
 ## And can install [ pkg-config , zip ]
                         
@@ -141,6 +142,12 @@ sudo pip install yolo34py-gpu
 # Install Jetson stats , about resource monitoring with series of NVIDIA Jetson
 cd ~/jetson_nano/jetson_stats
 sudo ./install_jetson_stats.sh –s
+
+# Configure power mode : 5W
+sudo nvpmodel -m1
+
+## If you want to see power mode , use 
+sudo nvpmodel -q
 
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
