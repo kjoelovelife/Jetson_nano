@@ -56,7 +56,8 @@ pip install --upgrade --user \
 	pymongo==3.5.1 \
 	ruamel.yaml==0.15.34
 
-
+#Enable i2c permissions
+sudo usermod -aG i2c $USER
 
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC

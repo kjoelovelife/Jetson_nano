@@ -82,6 +82,7 @@ sudo apt-get install -y python-rosinstall \
 ## install library for machine learning with python.
 cd
 sudo pip install matplotlib \
+                 numpy \
                  scikit-build \
                  imutils \
                  pillow \
@@ -94,8 +95,8 @@ sudo pip install matplotlib \
 
 # let gpio can be used on your account.
 cd
-sudo groupadd -f -r gpio
-sudo usermod -a -G gpio $USER
+#sudo groupadd -f -r gpio    # you need to enter this line
+sudo usermod -aG gpio $USER # you need to enter this line 
 sudo cp /opt/nvidia/jetson-gpio/etc/99-gpio.rules /etc/udev/rules.d/
 sudo udevadm control --reload-rules && sudo udevadm trigger
 
@@ -113,37 +114,49 @@ sudo swapon –show
 sudo cp /etc/fstab /etc/fstab.bak
 echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 
+## configure cuda version 10 ( system default set up )
+echo "export CUBA_HOME=/usr/local/cuda-10.0" >> ~/.bashrc
+echo "export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64:$LD_LIBRARY_PATH" >> ~/.bashrc
+echo "export PATH=/usr/local/cuda-10.0/bin:$PATH" >> ~/.bashrc
+source ~/.bashrc
+
 # Install DLIB , a tool can use machine learning , computer vision , image recognition...etc.
 # if it had error about " atal error: Python.h: No such file or directory " 
 # Please reset virable of python
-#============ use theese ========================
+#===== use theese to modified error ========================
 # sudo find / -name “Python.h"
 # /usr/include/python3.6m/Python.h # note: this path maybe different.
 # /usr/include/python2.7/Python.h
 # export CPLUS_INCLUDE_PATH=/usr/include/python3.6m
-#======================================================
+#===========================================================
 cd
 mkdir temp; cd temp
 git clone https://github.com/davisking/dlib.git
 cd dlib
-mkdir build; cd build
-cmake .. -DDLIB_USE_CUDA=1 -DUSE_AVX_INSTRUCTIONS=1
-cmake --build .
+sudo mkdir build; cd build
+sudo cmake .. -DDLIB_USE_CUDA=1 -DUSE_AVX_INSTRUCTIONS=1
+sudo cmake --build .
 cd ..
-python setup.py install
+sudo python setup.py install
 sudo ldconfig
 
 # Install Darknet , let jetson-nano can train Yolo model with darknet.
 cd ~/Jetson_nano/darknet
-sudo make
+sudo make -j4
 
 # Install YOLO3-4-py , let jetson-nano can infer YOLO model with GPU.
+# YoloV3 on github : https://github.com/madhawav/YOLO3-4-py
 export GPU=1
-sudo pip install yolo34py-gpu
+sudo pip3 install numpy yolo34py-gpu
 
 # Install Jetson stats , about resource monitoring with series of NVIDIA Jetson
 cd ~/Jetson_nano/jetson_stats
-sudo ./install_jetson_stats.sh –s
+sudo ./install_jetson_stats.sh
+#================= How to use =========================
+# you can enter [ ntop ] , to see what state on jetson-nano now . 
+# you can enter [ jetson_release ] , to see what version of software on this jetson-nano
+#======================================================
+
 
 # Configure power mode : 5W
 #sudo nvpmodel -m1

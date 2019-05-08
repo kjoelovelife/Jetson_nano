@@ -12,11 +12,13 @@ If you buy the kit from IcShop , the password in image is 「 5564686 」.
 
 ## reference
 
+*jetson-nano-dev-kit-sd-card-image :https://developer.nvidia.com/embedded/dlc/jetson-nano-dev-kit-sd-card-image
+
 *Nvidia Jetbot : https://github.com/NVIDIA-AI-IOT/jetbot
 
 *TensorRT：https://developer.nvidia.com/tensorrt
 
-*CH.Tseng - NVida Jetson Nano 初體驗（一）安裝與測試: https://chtseng.wordpress.com/2019/05/01/nvida-jetson-nano-%E5%88%9D%E9%AB%94%E9%A9%97%EF%BC%9A%E5%AE%89%E8%A3%9D%E8%88%87%E6%B8%AC%E8%A9%A6/
+*Omnixri webpage about jetson-nano : https://omnixri.blogspot.com/2019/05/nvidia-jetson-nano.html
 
 ## Demo Video
 
