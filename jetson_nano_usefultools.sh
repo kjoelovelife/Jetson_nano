@@ -190,5 +190,8 @@ source ~/.bashrc
 cd ~/Jetson_nano
 git clone https://github.com/dusty-nv/jetbot_ros 
 
+# Jetson-inference
+git clone -b onnx https://github.com/dusty-nv/jetson-inference
+
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
 # sudo pip install --upgrade pip setuptools wheel
