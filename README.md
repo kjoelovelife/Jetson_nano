@@ -16,6 +16,8 @@ If you buy the kit from IcShop , the password in image is 「 5564686 」.
 
 *Nvidia Jetbot : https://github.com/NVIDIA-AI-IOT/jetbot
 
+*Nvidia Jetbot-ROS : https://github.com/dusty-nv/jetbot_ros
+
 *TensorRT：https://developer.nvidia.com/tensorrt
 
 *Omnixri webpage about jetson-nano : https://omnixri.blogspot.com/2019/05/nvidia-jetson-nano.html

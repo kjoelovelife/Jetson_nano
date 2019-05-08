@@ -92,6 +92,7 @@ pip install matplotlib \
                  scikit-learn \
                  notebook \
                  Jetson.GPIO \
+                 Adafruit-MotorHAT \
                  -extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4
 
 # if you want , You need to upgrade pip3 :  [ python3 -m pip install --upgrade pip ]
@@ -184,6 +185,10 @@ sudo nvpmodel -q
 #=== end of installation , configure variable in ~/.bashrc  #
 echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 source ~/.bashrc
+
+# Clone Jetbot-ROS
+cd ~/Jetson_nano
+git clone https://github.com/dusty-nv/jetbot_ros 
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
 # sudo pip install --upgrade pip setuptools wheel
