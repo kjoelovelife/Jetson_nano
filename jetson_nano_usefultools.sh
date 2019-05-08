@@ -37,6 +37,7 @@ cd
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get install -y python-pip \
+                        python3-pip \
                         libfreetype6-dev\
                         zlib1g-dev \
                         libjpeg8-dev \
@@ -79,6 +80,7 @@ sudo apt-get install -y python-rosinstall \
 
 ## install library for machine learning with python.
 cd
+
 pip install matplotlib \
                  numpy \
                  scikit-build \
@@ -91,12 +93,25 @@ pip install matplotlib \
                  Jetson.GPIO \
                  -extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4
 
+pip3 install matplotlib \
+                  numpy \
+                  scikit-build \
+                  imutils \
+                  pillow \
+                  scipy \
+                  keras \
+                  scikit-learn \
+                  notebook \
+                  Jetson.GPIO \
+                  -extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4
+
 # let gpio can be used on your account.
 cd
-#sudo groupadd -f -r gpio    # you need to enter this line
-sudo usermod -aG gpio $USER # you need to enter this line 
+#sudo groupadd -f -r gpio     # you need to enter this line
+#sudo usermod -aG gpio $USER  # you need to enter this line 
 sudo cp /opt/nvidia/jetson-gpio/etc/99-gpio.rules /etc/udev/rules.d/
-sudo udevadm control --reload-rules && sudo udevadm trigger
+sudo udevadm control --reload-rules
+sudo udevadm trigger
 
 # configure SWAP size , ideal is double RAM. Default is 4G
 # you can use [ df -h ] to see how space you can use on microSD now
@@ -143,7 +158,7 @@ sudo make -j4
 # Install YOLO3-4-py , let jetson-nano can infer YOLO model with GPU.
 # YoloV3 on github : https://github.com/madhawav/YOLO3-4-py
 export GPU=1
-pip install numpy yolo34py-gpu
+pip3 install yolo34py-gpu
 
 # Install Jetson stats , about resource monitoring with series of NVIDIA Jetson
 cd ~/Jetson_nano/jetson_stats
