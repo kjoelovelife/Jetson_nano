@@ -186,14 +186,13 @@ sudo nvpmodel -q
 echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 
-# Clone Jetbot-ROS
-cd ~/Jetson_nano
-git clone https://github.com/dusty-nv/jetbot_ros 
-
-# Jetson-inference
+# Clone Jetbot-ROS in ~/Jetson_nano/Jetbot/catkin_ws/src
 cd ~/Jetson_nano
 mkdir -p Jetbot/catkin_ws/src
 cd ~/Jetson_nano/Jetbot/catkin_ws/src
+git clone https://github.com/dusty-nv/jetbot_ros 
+
+# clone Jetson-inference in ~/Jetson_nano/Jetbot/catkin_ws/src
 git clone -b onnx https://github.com/dusty-nv/jetson-inference
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
