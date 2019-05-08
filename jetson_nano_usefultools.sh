@@ -56,7 +56,8 @@ sudo apt-get install -y python-pip \
                         nano \
                         virtualenv \
                         rsync \
-			gedit
+			gedit \
+                        libgflags-dev
 
 ## And can install [ pkg-config , zip ]
                         
@@ -71,9 +72,6 @@ sudo apt install -y ros-melodic-desktop-full
 sudo rosdep init
 rosdep update
 
-echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
-source ~/.bashrc
-
 sudo apt-get install -y python-rosinstall \
                         python-rosinstall-generator \
                         python-wstool \
@@ -81,7 +79,7 @@ sudo apt-get install -y python-rosinstall \
 
 ## install library for machine learning with python.
 cd
-sudo pip install matplotlib \
+pip install matplotlib \
                  numpy \
                  scikit-build \
                  imutils \
@@ -114,12 +112,6 @@ sudo swapon –show
 sudo cp /etc/fstab /etc/fstab.bak
 echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 
-## configure cuda version 10 ( system default set up )
-echo "export CUBA_HOME=/usr/local/cuda-10.0" >> ~/.bashrc
-echo "export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64:$LD_LIBRARY_PATH" >> ~/.bashrc
-echo "export PATH=/usr/local/cuda-10.0/bin:$PATH" >> ~/.bashrc
-source ~/.bashrc
-
 # Install DLIB , a tool can use machine learning , computer vision , image recognition...etc.
 # if it had error about " atal error: Python.h: No such file or directory " 
 # Please reset virable of python
@@ -141,13 +133,17 @@ sudo python setup.py install
 sudo ldconfig
 
 # Install Darknet , let jetson-nano can train Yolo model with darknet.
+echo "export CUBA_HOME=/usr/local/cuda-10.0"
+echo "export PATH=/usr/local/cuda-10.0/bin:$PATH" >> ~/.bashrc
+echo "export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64:$LD_LIBRARY_PATH" >> ~/.bashrc
+source ~/.bashrc
 cd ~/Jetson_nano/darknet
 sudo make -j4
 
 # Install YOLO3-4-py , let jetson-nano can infer YOLO model with GPU.
 # YoloV3 on github : https://github.com/madhawav/YOLO3-4-py
 export GPU=1
-sudo pip3 install numpy yolo34py-gpu
+pip install numpy yolo34py-gpu
 
 # Install Jetson stats , about resource monitoring with series of NVIDIA Jetson
 cd ~/Jetson_nano/jetson_stats
@@ -167,6 +163,9 @@ sudo nvpmodel -m0
 ## If you want to see power mode , use 
 sudo nvpmodel -q
 
+#=== end of installation , configure variable in ~/.bashrc  #
+echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
+source ~/.bashrc
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
 # sudo pip install --upgrade pip setuptools wheel
