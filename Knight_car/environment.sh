@@ -5,11 +5,11 @@ source /opt/ros/melodic/setup.bash
 echo "...done."
 
 echo "Setting up PYTHONPATH."
-export PYTHONPATH=~/Knight_car/catkin_ws/src:$PYTHONPATH
+export PYTHONPATH=~/Jetson_nano/Knight_car/catkin_ws/src:$PYTHONPATH
 
 echo "Setup ROS_HOSTNAME."
 export ROS_HOSTNAME=$HOSTNAME.local
-export DUCKIETOWN_ROOT=$HOME/Knight_car
+export DUCKIETOWN_ROOT=$HOME/Jetson_nano/Knight_car
 
 echo "Building machines file..."
 make -C  $DUCKIETOWN_ROOT
