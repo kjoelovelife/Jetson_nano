@@ -2,7 +2,7 @@
 
 # Shell script scripts to install useful tools , ROS melodic on unbuntu 18.04 with Jetson-nano
 # -------------------------------------------------------------------------
-#Copyright © 2018 Wei-Chih Lin , kjoelovelife@gmail.com 
+#Copyright © 2019 Wei-Chih Lin , kjoelovelife@gmail.com 
 
 #Permission is hereby granted, free of charge, to any person obtaining a copy
 #of this software and associated documentation files (the "Software"), to deal
@@ -191,6 +191,9 @@ cd ~/Jetson_nano
 git clone https://github.com/dusty-nv/jetbot_ros 
 
 # Jetson-inference
+cd ~/Jetson_nano
+mkdir -p Jetbot/catkin_ws/src
+cd ~/Jetson_nano/Jetbot/catkin_ws/src
 git clone -b onnx https://github.com/dusty-nv/jetson-inference
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
