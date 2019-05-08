@@ -58,7 +58,8 @@ sudo apt-get install -y python-pip \
                         virtualenv \
                         rsync \
 			gedit \
-                        libgflags-dev
+                        libgflags-dev \
+                        pthon3-scipy
 
 ## And can install [ pkg-config , zip ]
                         
@@ -93,6 +94,8 @@ pip install matplotlib \
                  Jetson.GPIO \
                  -extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4
 
+# if you want , You need to upgrade pip3 :  [ python3 -m pip install --upgrade pip ]
+# And then , you need to modified " /usr/bin/pip " , detail : https://stackoverflow.com/questions/49836676/error-after-upgrading-pip-cannot-import-name-main
 pip3 install matplotlib \
                   numpy \
                   scikit-build \
