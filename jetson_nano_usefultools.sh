@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Shell script scripts to install useful tools , ROS melodic on unbuntu 18.04
+# Shell script scripts to install useful tools , ROS melodic on unbuntu 18.04 with Jetson-nano
 # -------------------------------------------------------------------------
 #Copyright © 2018 Wei-Chih Lin , kjoelovelife@gmail.com 
 
@@ -37,8 +37,8 @@ cd
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get install -y python-pip \
-                        libfreetype6-dev 
-                        zlib1g-dev \ 
+                        libfreetype6-dev\
+                        zlib1g-dev \
                         libjpeg8-dev \
                         libhdf5-dev \
                         libssl-dev \
@@ -55,7 +55,8 @@ sudo apt-get install -y python-pip \
                         libboost-all-dev \
                         nano \
                         virtualenv \
-                        rsync
+                        rsync \
+			gedit
 
 ## And can install [ pkg-config , zip ]
                         
@@ -101,8 +102,9 @@ sudo udevadm control --reload-rules && sudo udevadm trigger
 # configure SWAP size , ideal is double RAM. Default is 4G
 # you can use [ df -h ] to see how space you can use on microSD now
 #             [ free -h ] to see how space you can use with swap    
+size=4G
 cd
-sudo fallocate -l 4G /swapfile
+sudo fallocate -l $size /swapfile
 sudo chmod 600 /swapfile
 ls -lh /swapfile
 sudo mkswap /swapfile
@@ -144,7 +146,10 @@ cd ~/Jetson_nano/jetson_stats
 sudo ./install_jetson_stats.sh –s
 
 # Configure power mode : 5W
-sudo nvpmodel -m1
+#sudo nvpmodel -m1
+
+# Configure power mode : 10W
+sudo nvpmodel -m0
 
 ## If you want to see power mode , use 
 sudo nvpmodel -q
