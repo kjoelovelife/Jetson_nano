@@ -132,7 +132,7 @@ pip install matplotlib \
 #                  scikit-learn \
 #                  notebook \
 #                  Jetson.GPIO \
-#                  -extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4
+#                  --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4
 #=============================================================================================
 
 #======== let gpio can be used on your account. ========
