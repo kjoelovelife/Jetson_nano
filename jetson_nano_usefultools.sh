@@ -63,7 +63,7 @@ echo "source ~/envs/AI/bin/activate" >> ~/.bashrc
 source ~/envs/AI/bin/activate
 #=======================================================================================
 
-#========== Now，we will do anything in virtualenv AI with python3 ======================
+########### Now，we will do anything in virtualenv AI with python3 ###########
 
 #======== configure OpenCV ( Theese command just for Jetson-nano developer kit) ========
 cd ~/envs/AI/lib/python3.6/site-packages/
@@ -120,7 +120,8 @@ pip install matplotlib \
 #================== About python3 ===========================================================
 # if you want install in system, not in virtualenv AI  , You need to upgrade pip3 :  [ python3 -m pip install --upgrade pip ]
 # And then , you need to modified " /usr/bin/pip " , detail : https://stackoverflow.com/questions/49836676/error-after-upgrading-pip-cannot-import-name-main
-#exit 
+# Notice : you need to exit virtualenv AI , please enter " deactivate "
+# and then , you use bellow command to install packager in system with pip3
 #pip3 install matplotlib \
 #                  numpy \
 #                  scikit-build \
