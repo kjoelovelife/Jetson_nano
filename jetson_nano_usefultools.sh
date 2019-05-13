@@ -59,7 +59,7 @@ sudo apt-get install -y python-pip \
                         rsync \
 			gedit \
                         libgflags-dev \
-                        pthon3-scipy
+                        virtualenv
 
 ## And can install [ pkg-config , zip ]
                         
@@ -81,8 +81,16 @@ sudo apt-get install -y python-rosinstall \
 #=======================================================================================
 
 #================ install library for machine learning with python. ===================
-cd
 
+## configure virtualenv
+cd
+mkdir envs;cd envs
+virtualenv -p python3 AI
+source ~/envs/AI/bin/activate
+echo "source ~/envs/AI/bin/activate" >> ~/.bashrc
+
+## Now，we will do anything in virtualenv AI with python3
+## Install package in virtualenv AI( python3 )
 pip install matplotlib \
                  numpy \
                  scikit-build \
@@ -95,12 +103,18 @@ pip install matplotlib \
                  Jetson.GPIO \
                  Adafruit-MotorHAT \
                  -extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4
+
+## configure OpenCV ( Theese command just for Jetson-nano developer kit)
+cd ~/envs/AI/lib/python3.6/site-packages/
+ln -s /usr/lib/python3.6/dist-packages/cv2.cpython-36m-aarch64-linux-gnu.so
+
 #=======================================================================================
 
 #================== About python3 ===========================================================
-# if you want , You need to upgrade pip3 :  [ python3 -m pip install --upgrade pip ]
+# if you want install in system, not in virtualenv AI  , You need to upgrade pip3 :  [ python3 -m pip install --upgrade pip ]
 # And then , you need to modified " /usr/bin/pip " , detail : https://stackoverflow.com/questions/49836676/error-after-upgrading-pip-cannot-import-name-main
-# pip3 install matplotlib \
+#exit 
+#pip3 install matplotlib \
 #                  numpy \
 #                  scikit-build \
 #                  imutils \
@@ -201,16 +215,19 @@ mkdir -p Jetbot/catkin_ws/src
 cd ~/Jetson_nano/Jetbot/catkin_ws/src
 git clone https://github.com/dusty-nv/jetbot_ros 
 
+#========================= configure Jetson-inference ======================================
 # clone Jetson-inference in ~/Jetson_nano/Jetbot/catkin_ws/src
-git clone -b onnx https://github.com/dusty-nv/jetson-inference
+cd ~/Jetson_nano
+git clone https://github.com/dusty-nv/jetson-inference
+cd ~/Jetson_nano/jetson-inference
+git submodule update --init
 
-##============ set Virtualenv ============================
-# sudo apt-get install virtualenv -y
-# mkdir envs ; cd envs
-# virtualenv -p python3 AI
-# source ~/envs/AI/bin/activate  # enter virtual environment
-# echo "source ~/envs.AI/bin/activate" >> ~/.bashrc
-##========================================================  
+## make Jetson-inference
+mkdir build && cd build
+cmake ../
+sudo make
+sudo make install
+#=======================================================================================
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
 # sudo pip install --upgrade pip setuptools wheel
