@@ -32,6 +32,15 @@ if [[ `id -u` -eq 0 ]] ; then
     exit 1 ;
 fi
 
+## configure virtualenv
+## if you want to exit virtualenv , just enter "deactivate"
+cd
+mkdir envs;cd envs
+virtualenv -p python3 AI
+echo "source ~/envs/AI/bin/activate" >> ~/.bashrc
+source ~/envs/AI/bin/activate
+#========== Now，we will do anything in virtualenv AI with python3 ======================
+
 ## install userful tools
 cd
 sudo apt-get update
@@ -58,9 +67,8 @@ sudo apt-get install -y python-pip \
                         virtualenv \
                         rsync \
 			gedit \
-                        libgflags-dev \
-                        virtualenv
-
+                        libgflags-dev
+			
 ## And can install [ pkg-config , zip ]
                         
 #=========================  Install ROS melodic =======================================
@@ -81,17 +89,6 @@ sudo apt-get install -y python-rosinstall \
 #=======================================================================================
 
 #================ install library for machine learning with python. ===================
-
-## configure virtualenv
-## if you want to exit virtualenv , just enter "deactivate"
-cd
-mkdir envs;cd envs
-virtualenv -p python3 AI
-echo "source ~/envs/AI/bin/activate" >> ~/.bashrc
-source ~/envs/AI/bin/activate
-
-
-## Now，we will do anything in virtualenv AI with python3
 ## Install package in virtualenv AI( python3 )
 pip install matplotlib \
                  numpy \
@@ -104,7 +101,7 @@ pip install matplotlib \
                  notebook \
                  Jetson.GPIO \
                  Adafruit-MotorHAT \
-                 -extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4
+                 --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4
 
 ## configure OpenCV ( Theese command just for Jetson-nano developer kit)
 cd ~/envs/AI/lib/python3.6/site-packages/
