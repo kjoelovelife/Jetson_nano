@@ -32,19 +32,47 @@ if [[ `id -u` -eq 0 ]] ; then
     exit 1 ;
 fi
 
-## configure virtualenv
+#======== apt update and upgrade ==============================
+sudo apt-get update
+sudo apt-get upgrade
+
+#=========================  Install ROS melodic =======================================
+cd
+sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
+sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
+sudo apt-get update
+
+sudo apt install -y ros-melodic-desktop-full
+
+sudo rosdep init
+rosdep update
+
+sudo apt-get install -y python-rosinstall \
+                        python-rosinstall-generator \
+                        python-wstool \
+                        build-essential
+#=======================================================================================
+
+#======== configure virtualenv ================================
 ## if you want to exit virtualenv , just enter "deactivate"
+sudo apt-get install -y virtualenv
 cd
 mkdir envs;cd envs
 virtualenv -p python3 AI
 echo "source ~/envs/AI/bin/activate" >> ~/.bashrc
 source ~/envs/AI/bin/activate
+#=======================================================================================
+
 #========== Now，we will do anything in virtualenv AI with python3 ======================
 
-## install userful tools
+#======== configure OpenCV ( Theese command just for Jetson-nano developer kit) ========
+cd ~/envs/AI/lib/python3.6/site-packages/
+ln -s /usr/lib/python3.6/dist-packages/cv2.cpython-36m-aarch64-linux-gnu.so
+
+#=======================================================================================
+
+#======== install userful tools ================
 cd
-sudo apt-get update
-sudo apt-get upgrade
 sudo apt-get install -y python-pip \
                         python3-pip \
                         libfreetype6-dev \
@@ -70,22 +98,6 @@ sudo apt-get install -y python-pip \
                         libgflags-dev
 			
 ## And can install [ pkg-config , zip ]
-                        
-#=========================  Install ROS melodic =======================================
-cd
-sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 421C365BD9FF1F717815A3895523BAEEB01FA116
-sudo apt-get update
-
-sudo apt install -y ros-melodic-desktop-full
-
-sudo rosdep init
-rosdep update
-
-sudo apt-get install -y python-rosinstall \
-                        python-rosinstall-generator \
-                        python-wstool \
-                        build-essential
 #=======================================================================================
 
 #================ install library for machine learning with python. ===================
@@ -102,10 +114,6 @@ pip install matplotlib \
                  Jetson.GPIO \
                  Adafruit-MotorHAT \
                  --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4
-
-## configure OpenCV ( Theese command just for Jetson-nano developer kit)
-cd ~/envs/AI/lib/python3.6/site-packages/
-ln -s /usr/lib/python3.6/dist-packages/cv2.cpython-36m-aarch64-linux-gnu.so
 
 #=======================================================================================
 
@@ -126,13 +134,14 @@ ln -s /usr/lib/python3.6/dist-packages/cv2.cpython-36m-aarch64-linux-gnu.so
 #                  -extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4
 #=============================================================================================
 
-# let gpio can be used on your account.
+#======== let gpio can be used on your account. ========
 cd
 #sudo groupadd -f -r gpio     # you need to enter this line
 #sudo usermod -aG gpio $USER  # you need to enter this line 
 sudo cp /opt/nvidia/jetson-gpio/etc/99-gpio.rules /etc/udev/rules.d/
 sudo udevadm control --reload-rules
 sudo udevadm trigger
+#=======================================================================================
 
 #==== configure SWAP size , ideal is double RAM. Default is 4G ========================
 # you can use [ df -h ] to see how space you can use on microSD now
@@ -150,15 +159,15 @@ sudo cp /etc/fstab /etc/fstab.bak
 echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 #=======================================================================================
 
-#== Install DLIB , a tool can use machine learning , computer vision , image recognition...etc. ==
+#========== Install DLIB , a tool can use machine learning , computer vision , image recognition...etc. ==========
 # if it had error about " atal error: Python.h: No such file or directory " 
 # Please reset virable of python
-#===== use theese to modified error ========================
+######### use theese to modified error #####################
 # sudo find / -name “Python.h"
 # /usr/include/python3.6m/Python.h # note: this path maybe different.
 # /usr/include/python2.7/Python.h
 # export CPLUS_INCLUDE_PATH=/usr/include/python3.6m
-#===========================================================
+############################################################
 cd
 mkdir temp; cd temp
 git clone https://github.com/davisking/dlib.git
@@ -181,7 +190,7 @@ sudo make -j4
 #==========================================================================================
 # Install YOLO3-4-py , let jetson-nano can infer YOLO model with GPU.
 
-#==== YoloV3 on github : https://github.com/madhawav/YOLO3-4-py ====
+###### YoloV3 on github : https://github.com/madhawav/YOLO3-4-py #####
 export GPU=1
 pip install yolo34py-gpu
 #===================================================================
@@ -189,10 +198,10 @@ pip install yolo34py-gpu
 #==== Install Jetson stats , about resource monitoring with series of NVIDIA Jetson ====
 cd ~/Jetson_nano/jetson_stats
 sudo ./install_jetson_stats.sh
-#================= How to use =========================
-# you can enter [ ntop ] , to see what state on jetson-nano now . 
+######### How to use ########
+# you can enter [ jtop ] , to see what state on jetson-nano now . 
 # you can enter [ jetson_release ] , to see what version of software on this jetson-nano
-#======================================================
+#############################
 #=======================================================================================
 
 # Configure power mode : 5W
@@ -203,10 +212,6 @@ sudo nvpmodel -m0
 
 ## If you want to see power mode , use 
 sudo nvpmodel -q
-
-#=== end of installation , configure variable about ROS in ~/.bashrc  #
-echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
-source ~/.bashrc
 
 # Clone Jetbot-ROS in ~/Jetson_nano/Jetbot/catkin_ws/src
 cd ~/Jetson_nano
@@ -226,6 +231,11 @@ mkdir build && cd build
 cmake ../
 sudo make
 sudo make install
+#=======================================================================================
+
+#=== end of installation , configure variable about ROS in ~/.bashrc  #
+echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
+source ~/.bashrc
 #=======================================================================================
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
