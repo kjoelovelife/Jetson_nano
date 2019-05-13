@@ -12,7 +12,9 @@ If you buy the kit from IcShop , the password in image is 「 5564686 」.
 
 ## reference
 
-*jetson-nano-dev-kit-sd-card-image :https://developer.nvidia.com/embedded/dlc/jetson-nano-dev-kit-sd-card-image
+*Jetson-nano-dev-kit-sd-card-image :https://developer.nvidia.com/embedded/dlc/jetson-nano-dev-kit-sd-card-image
+
+*Information for Jetson-nano : https://elinux.org/Jetson_Nano
 
 *Nvidia Jetbot : https://github.com/NVIDIA-AI-IOT/jetbot
 
@@ -44,3 +46,4 @@ If you buy the kit from IcShop , the password in image is 「 5564686 」.
 
 ## Usage & Tutorial
 
+If you don't have Ew-7811Un 
