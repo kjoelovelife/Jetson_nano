@@ -38,7 +38,7 @@ sudo apt-get update
 sudo apt-get upgrade
 sudo apt-get install -y python-pip \
                         python3-pip \
-                        libfreetype6-dev\
+                        libfreetype6-dev \
                         zlib1g-dev \
                         libjpeg8-dev \
                         libhdf5-dev \
