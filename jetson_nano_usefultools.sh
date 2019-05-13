@@ -86,8 +86,9 @@ sudo apt-get install -y python-rosinstall \
 cd
 mkdir envs;cd envs
 virtualenv -p python3 AI
-source ~/envs/AI/bin/activate
 echo "source ~/envs/AI/bin/activate" >> ~/.bashrc
+source ~/envs/AI/bin/activate
+
 
 ## Now，we will do anything in virtualenv AI with python3
 ## Install package in virtualenv AI( python3 )
