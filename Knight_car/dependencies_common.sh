@@ -55,6 +55,7 @@ pip install --upgrade --user \
 	procgraph==1.10.6 \
 	pymongo==3.5.1 \
 	ruamel.yaml==0.15.34
+pip install Adafruit-MotorHAT
 
 #Enable i2c permissions
 sudo usermod -aG i2c $USER
