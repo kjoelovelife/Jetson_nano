@@ -83,6 +83,7 @@ sudo apt-get install -y python-rosinstall \
 #================ install library for machine learning with python. ===================
 
 ## configure virtualenv
+## if you want to exit virtualenv , just enter "deactivate"
 cd
 mkdir envs;cd envs
 virtualenv -p python3 AI
