@@ -102,7 +102,7 @@ sudo apt-get install -y python-pip \
 
 #================ install library for machine learning with python. ===================
 ## Install package in virtualenv AI( python3 )
-pip install matplotlib \
+pip3 install matplotlib \
                  numpy \
                  scikit-build \
                  imutils \
@@ -118,21 +118,10 @@ pip install matplotlib \
 #=======================================================================================
 
 #================== About python3 ===========================================================
-# if you want install in system, not in virtualenv AI  , You need to upgrade pip3 :  [ python3 -m pip install --upgrade pip ]
+# if you want install in system , You need to upgrade pip3 :  [ python3 -m pip install --upgrade pip ]
 # And then , you need to modified " /usr/bin/pip " , detail : https://stackoverflow.com/questions/49836676/error-after-upgrading-pip-cannot-import-name-main
 # Notice : you need to exit virtualenv AI , please enter " deactivate "
-# and then , you use bellow command to install packager in system with pip3
-#pip3 install matplotlib \
-#                  numpy \
-#                  scikit-build \
-#                  imutils \
-#                  pillow \
-#                  scipy \
-#                  keras \
-#                  scikit-learn \
-#                  notebook \
-#                  Jetson.GPIO \
-#                  --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4
+
 #=============================================================================================
 
 #======== let gpio can be used on your account. ========
