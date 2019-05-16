@@ -89,7 +89,7 @@ $(OBJDIR)%.o: %.c $(DEPS)
 	$(CC) $(COMMON) $(CFLAGS) -c $< -o $@
 
 $(OBJDIR)%.o: %.cu $(DEPS)
-	$(NVCC) $(ARCH) $(COMMON) --compiler-options "$(CFLAGS)" -c $< -o $@
+	$(nvcc) $(ARCH) $(COMMON) --compiler-options "$(CFLAGS)" -c $< -o $@ # default $(NVCC)
 
 obj:
 	mkdir -p obj
