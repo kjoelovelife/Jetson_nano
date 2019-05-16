@@ -35,6 +35,7 @@ fi
 #======== apt update and upgrade ==============================
 sudo apt-get update
 sudo apt-get upgrade
+sudo apt autoremove
 
 #=========================  Install ROS melodic =======================================
 cd
@@ -81,9 +82,7 @@ ln -s /usr/lib/python3.6/dist-packages/cv2.cpython-36m-aarch64-linux-gnu.so
 
 #======== install userful tools ================
 cd
-sudo apt-get install -y python-pip \
-                        python3-pip \
-                        libfreetype6-dev \
+sudo apt-get install -y libfreetype6-dev \
                         zlib1g-dev \
                         libjpeg8-dev \
                         libhdf5-dev \
@@ -104,19 +103,20 @@ sudo apt-get install -y python-pip \
                         rsync \
 			gedit \
                         libgflags-dev \
-			git
+			git \
+                        python3-scipy \
+                        python-scipy
 			
 ## And can install [ pkg-config , zip ]
 #=======================================================================================
 
 #================ install library for machine learning with python. ===================
 ## Install package in virtualenv AI( python3 )
-pip3 install matplotlib \
-                 numpy \
+python3 -m pip install --upgrade pip setuptools wheel
+pip install matplotlib \
                  scikit-build \
                  imutils \
                  pillow \
-                 scipy \
                  keras \
                  scikit-learn \
                  notebook \
@@ -180,12 +180,12 @@ sudo ldconfig
 #=========================================================================================
 
 #==== Install Darknet , let jetson-nano can train Yolo model with darknet. ====
-echo "export CUBA_HOME=/usr/local/cuda-10.0"
-echo "export PATH=/usr/local/cuda-10.0/bin:$PATH" >> ~/.bashrc
-echo "export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64:$LD_LIBRARY_PATH" >> ~/.bashrc
-source ~/.bashrc
-cd ~/Jetson_nano/darknet
-sudo make -j4
+#echo "export CUBA_HOME=/usr/local/cuda-10.0"
+#echo "export PATH=/usr/local/cuda-10.0/bin:$PATH" >> ~/.bashrc
+#echo "export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64:$LD_LIBRARY_PATH" >> ~/.bashrc
+#source ~/.bashrc
+#cd ~/Jetson_nano/darknet
+#sudo make -j4
 #==========================================================================================
 # Install YOLO3-4-py , let jetson-nano can infer YOLO model with GPU.
 
@@ -226,7 +226,7 @@ git clone https://github.com/dusty-nv/jetbot_ros
 #========================= configure Jetson-inference ======================================
 # clone Jetson-inference in ~/Jetson_nano/Jetbot/catkin_ws/src
 cd ~/$workspace
-git clone -b onnx https://github.com/dusty-nv/jetson-inference
+git clone https://github.com/dusty-nv/jetson-inference
 cd jetson-inference
 git submodule update --init
 
@@ -248,16 +248,19 @@ git clone https://github.com/dusty-nv/ros_deep_learning
 
 #========================================================================================
 
-#========================= build ROS package ( ~/Jetson_nano/Jetbot/catkin_ws )======================================
+#=== configure variable about ROS in ~/.bashrc  ========================================
+echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
+source ~/.bashrc
+#=======================================================================================
+
+
+#========================= build ROS package ( ~/Jetson_nano/Jetbot/catkin_ws )==========
 
 cd ~/$workspace/catkin_ws && catkin_make
 
 #========================================================================================
 
-#=== end of installation , configure variable about ROS in ~/.bashrc  #
-echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
-source ~/.bashrc
-#=======================================================================================
+
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
 # sudo pip install --upgrade pip setuptools wheel
