@@ -103,7 +103,8 @@ sudo apt-get install -y python-pip \
                         virtualenv \
                         rsync \
 			gedit \
-                        libgflags-dev
+                        libgflags-dev \
+			git
 			
 ## And can install [ pkg-config , zip ]
 #=======================================================================================
@@ -211,25 +212,47 @@ sudo nvpmodel -m0
 ## If you want to see power mode , use 
 sudo nvpmodel -q
 
-# Clone Jetbot-ROS in ~/Jetson_nano/Jetbot/catkin_ws/src
+#============= Clone Jetbot-ROS in ~/Jetson_nano/Jetbot/catkin_ws/src =========================
 cd ~/Jetson_nano
-mkdir -p Jetbot/catkin_ws/src
-cd ~/Jetson_nano/Jetbot/catkin_ws/src
+mkdir -p Jet_falcon/catkin_ws/src
+
+# set variable " workspace"
+workspace="Jetson_nano/Jet_falcon"
+
+cd ~/$workspace/catkin_ws/src
 git clone https://github.com/dusty-nv/jetbot_ros 
+#==============================================================================================
 
 #========================= configure Jetson-inference ======================================
 # clone Jetson-inference in ~/Jetson_nano/Jetbot/catkin_ws/src
-cd ~/Jetson_nano
-git clone https://github.com/dusty-nv/jetson-inference
-cd ~/Jetson_nano/jetson-inference
+cd ~/$workspace
+git clone -b onnx https://github.com/dusty-nv/jetson-inference
+cd jetson-inference
 git submodule update --init
 
-## make Jetson-inference
+## build Jetson-inference from source
 mkdir build && cd build
 cmake ../
 sudo make
 sudo make install
-#=======================================================================================
+#==========================================================================================
+
+#========================= clone ros_deep_learning ======================================
+
+# install dependencies
+sudo apt-get install ros-melodic-vision-msgs ros-melodic-image-transport ros-melodic-image-publisher
+
+# clone the repo
+cd ~/$workspace/catkin_ws/src
+git clone https://github.com/dusty-nv/ros_deep_learning
+
+#========================================================================================
+
+#========================= build ROS package ( ~/Jetson_nano/Jetbot/catkin_ws )======================================
+
+cd ~/$workspace/catkin_ws && catkin_make
+
+#========================================================================================
 
 #=== end of installation , configure variable about ROS in ~/.bashrc  #
 echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
