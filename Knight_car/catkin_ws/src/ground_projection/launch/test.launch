@@ -1,0 +1,13 @@
+<launch>
+  <arg name="veh" doc="Name of vehicle. ex: megaman"/>
+
+  <arg name="config" default="baseline" doc="Specify a config."/>
+  <arg name="param_file_name" default="default" doc="Specify a param file. ex:megaman." />
+
+  <node pkg="ground_projection" type="test_projection_auto.py" name="test_projection" output="screen" clear_params="true">
+    <param name="~config" value="$(arg config)"/>
+    <param name="~veh" value="$(arg veh)"/>
+
+  </node>
+
+</launch>
