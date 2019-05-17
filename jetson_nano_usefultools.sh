@@ -105,8 +105,9 @@ sudo apt-get install -y libfreetype6-dev \
                         libgflags-dev \
 			git \
                         python3-scipy \
-                        python-scipy
-			
+                        python-scipy \
+                        libcanberra-gtk-module \
+			libcanberra-gtk3-module
 ## And can install [ pkg-config , zip ]
 #=======================================================================================
 
