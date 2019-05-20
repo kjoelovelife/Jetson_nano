@@ -108,8 +108,8 @@ sudo apt-get install -y libfreetype6-dev \
 #=======================================================================================
 
 #================ install library for machine learning with python. ===================
-## Install package in virtualenv AI( python3 )
-python3 -m pip install --upgrade pip setuptools wheel
+## Install package with python3
+#python3 -m pip install --upgrade pip setuptools wheel
 pip3 install matplotlib \
                  scikit-build \
                  imutils \
