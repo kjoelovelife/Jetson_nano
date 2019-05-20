@@ -68,16 +68,12 @@ sudo apt-get install -y virtualenv
 cd
 mkdir envs;cd envs
 virtualenv -p python3 AI
-echo "source ~/envs/AI/bin/activate" >> ~/.bashrc
-source ~/envs/AI/bin/activate
-#=======================================================================================
-
-########### Now，we will do anything in virtualenv AI with python3 ###########
-
+### if you want to use virtualenv AI, please enter bellow command 
+#echo "source ~/envs/AI/bin/activate" >> ~/.bashrc
+#source ~/envs/AI/bin/activate
 #======== configure OpenCV ( Theese command just for Jetson-nano developer kit) ========
-cd ~/envs/AI/lib/python3.6/site-packages/
-ln -s /usr/lib/python3.6/dist-packages/cv2.cpython-36m-aarch64-linux-gnu.so
-
+#cd ~/envs/AI/lib/python3.6/site-packages/
+#ln -s /usr/lib/python3.6/dist-packages/cv2.cpython-36m-aarch64-linux-gnu.so
 #=======================================================================================
 
 #======== install userful tools ================
@@ -114,7 +110,7 @@ sudo apt-get install -y libfreetype6-dev \
 #================ install library for machine learning with python. ===================
 ## Install package in virtualenv AI( python3 )
 python3 -m pip install --upgrade pip setuptools wheel
-pip install matplotlib \
+pip3 install matplotlib \
                  scikit-build \
                  imutils \
                  pillow \
