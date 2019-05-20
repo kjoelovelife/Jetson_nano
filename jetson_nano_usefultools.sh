@@ -119,7 +119,7 @@ pip3 install matplotlib \
                  notebook \
                  Jetson.GPIO \
                  Adafruit-MotorHAT \
-                 --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4
+                 --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4 --user
 
 #=======================================================================================
 
