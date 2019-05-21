@@ -116,6 +116,7 @@ wget https://nvidia.box.com/shared/static/veo87trfaawj5pfwuqvhl6mzc5b55fbj.whl -
 
 ## Install package with python3
 #python3 -m pip install --upgrade pip setuptools wheel
+#  For installing scipy , need to install gfortran :   
 pip3 install matplotlib \
                  scikit-build \
                  imutils \
@@ -128,6 +129,7 @@ pip3 install matplotlib \
 		 jupyter notebook \
 		 numpy \
 		 Cython \
+		 scipy \
 		 torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl \
                  --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4 --user
 
