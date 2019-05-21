@@ -120,6 +120,7 @@ pip3 install matplotlib \
                  notebook \
                  Jetson.GPIO \
                  Adafruit-MotorHAT \
+		 jupyter notebook \
                  --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4 --user
 
 #=======================================================================================
@@ -263,7 +264,7 @@ cd
 git clone https://github.com/NVIDIA-AI-IOT/jetbot
 cd ~/jetbot
 # if you use Adafruit MotorHAT , need to modify the parameter "alpha" in "robot.py" ,
-# then , you can enter this command to install : " sudo python3 setup.py install"
+# then use "cd ~/jetbot" to change directory , you can enter this command to install : " sudo python3 setup.py install"
 #==============================================================================================
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
