@@ -36,10 +36,41 @@ fi
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt autoremove
+#==============================================================
+
+#======== install userful tools ================
+cd
+sudo apt-get install -y libfreetype6-dev \
+                        zlib1g-dev \
+                        libjpeg8-dev \
+                        libhdf5-dev \
+                        libssl-dev \
+                        libffi-dev \
+                        python3-dev \
+                        libhdf5-serial-dev \
+                        hdf5-tools \
+                        libblas-dev \
+                        liblapack-dev \
+                        libatlas-base-dev \
+                        build-essential \
+                        cmake \
+                        libgtk-3-dev \
+                        libboost-all-dev \
+                        nano \
+                        virtualenv \
+                        rsync \
+			gedit \
+                        libgflags-dev \
+			git \
+                        python3-scipy \
+                        python-scipy \
+                        libcanberra-gtk-module \
+			libcanberra-gtk3-module
+## And can install [ pkg-config , zip ]
+#=======================================================================================
 
 #=========================  Install ROS melodic =======================================
 cd
-
 # enable all Ubuntu packages:
 sudo apt-add-repository universe
 sudo apt-add-repository multiverse
@@ -76,36 +107,6 @@ virtualenv -p python3 AI
 #ln -s /usr/lib/python3.6/dist-packages/cv2.cpython-36m-aarch64-linux-gnu.so
 #=======================================================================================
 
-#======== install userful tools ================
-cd
-sudo apt-get install -y libfreetype6-dev \
-                        zlib1g-dev \
-                        libjpeg8-dev \
-                        libhdf5-dev \
-                        libssl-dev \
-                        libffi-dev \
-                        python3-dev \
-                        libhdf5-serial-dev \
-                        hdf5-tools \
-                        libblas-dev \
-                        liblapack-dev \
-                        libatlas-base-dev \
-                        build-essential \
-                        cmake \
-                        libgtk-3-dev \
-                        libboost-all-dev \
-                        nano \
-                        virtualenv \
-                        rsync \
-			gedit \
-                        libgflags-dev \
-			git \
-                        python3-scipy \
-                        python-scipy \
-                        libcanberra-gtk-module \
-			libcanberra-gtk3-module
-## And can install [ pkg-config , zip ]
-#=======================================================================================
 
 #================ install library for machine learning with python. ===================
 ## Install package with python3
@@ -188,7 +189,7 @@ sudo ldconfig
 
 ###### YoloV3 on github : https://github.com/madhawav/YOLO3-4-py #####
 export GPU=1
-pip install yolo34py-gpu
+pip3 install yolo34py-gpu
 #===================================================================
 
 #==== Install Jetson stats , about resource monitoring with series of NVIDIA Jetson ====
@@ -257,7 +258,13 @@ cd ~/$workspace/catkin_ws && catkin_make
 
 #========================================================================================
 
-
+#============= Clone Jetbot in ~/jetbot =========================
+cd
+git clone https://github.com/NVIDIA-AI-IOT/jetbot
+cd ~/jetbot
+# if you use Adafruit MotorHAT , need to modify the parameter "alpha" in "robot.py" ,
+# then , you can enter this command to install : " sudo python3 setup.py install"
+#==============================================================================================
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
 # sudo pip install --upgrade pip setuptools wheel
