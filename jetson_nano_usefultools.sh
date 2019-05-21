@@ -129,7 +129,18 @@ pip3 install matplotlib \
 		 torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl \
                  --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4 --user
 
+#### Library that Can't use pip3 imstall 
+# install torchvision
+cd
+git clone https://github.com/pytorch/vision
+cd vision
+sudo python setup.py install
+#####
+
 #=======================================================================================
+
+
+
 
 #================== About python3 ===========================================================
 # if you want install in system , You need to upgrade pip3 :  [ python3 -m pip install --upgrade pip ]
