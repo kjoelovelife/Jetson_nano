@@ -109,6 +109,10 @@ virtualenv -p python3 AI
 
 
 #================ install library for machine learning with python. ===================
+
+# Download source for pytorch ,  
+wget https://nvidia.box.com/shared/static/veo87trfaawj5pfwuqvhl6mzc5b55fbj.whl -O torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl
+
 ## Install package with python3
 #python3 -m pip install --upgrade pip setuptools wheel
 pip3 install matplotlib \
@@ -121,6 +125,8 @@ pip3 install matplotlib \
                  Jetson.GPIO \
                  Adafruit-MotorHAT \
 		 jupyter notebook \
+		 numpy \
+		 torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl \
                  --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4 --user
 
 #=======================================================================================
@@ -266,6 +272,11 @@ cd ~/jetbot
 # if you use Adafruit MotorHAT , need to modify the parameter "alpha" in "robot.py" ,
 # then use "cd ~/jetbot" to change directory , you can enter this command to install : " sudo python3 setup.py install"
 #==============================================================================================
+
+#=======  configure i2c ===============
+# Enable i2c permissions
+sudo usermod -aG i2c $USER
+#======================================
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
 # sudo pip install --upgrade pip setuptools wheel
