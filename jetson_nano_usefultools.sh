@@ -126,6 +126,7 @@ pip3 install matplotlib \
                  Adafruit-MotorHAT \
 		 jupyter notebook \
 		 numpy \
+		 Cython \
 		 torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl \
                  --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4 --user
 
