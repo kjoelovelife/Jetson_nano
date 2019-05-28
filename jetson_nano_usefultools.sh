@@ -66,7 +66,9 @@ sudo apt-get install -y libfreetype6-dev \
                         python-scipy \
                         libcanberra-gtk-module \
 			libcanberra-gtk3-module \
-			gfortran
+			gfortran \
+			python3-pip \
+			python-pip
 ## And can install [ pkg-config , zip ]
 #=======================================================================================
 
