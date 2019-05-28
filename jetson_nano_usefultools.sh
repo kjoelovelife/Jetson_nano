@@ -155,8 +155,8 @@ sudo python setup.py install
 
 #======== let gpio can be used on your account. ========
 cd
-#sudo groupadd -f -r gpio     # you need to enter this line
-#sudo usermod -aG gpio $USER  # you need to enter this line 
+sudo groupadd -f -r gpio     # you need to enter this line
+sudo usermod -aG gpio $USER  # you need to enter this line 
 sudo cp /opt/nvidia/jetson-gpio/etc/99-gpio.rules /etc/udev/rules.d/
 sudo udevadm control --reload-rules
 sudo udevadm trigger
@@ -200,15 +200,14 @@ sudo ldconfig
 #=========================================================================================
 
 #==== Install Darknet , let jetson-nano can train Yolo model with darknet. ====
-#echo "export CUBA_HOME=/usr/local/cuda-10.0"
-#echo "export PATH=/usr/local/cuda-10.0/bin:$PATH" >> ~/.bashrc
-#echo "export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64:$LD_LIBRARY_PATH" >> ~/.bashrc
-#source ~/.bashrc
-#cd ~/Jetson_nano/darknet
-#sudo make -j4
+echo "export CUBA_HOME=/usr/local/cuda-10.0"
+echo "export PATH=/usr/local/cuda-10.0/bin:$PATH" >> ~/.bashrc
+echo "export LD_LIBRARY_PATH=/usr/local/cuda-10.0/lib64:$LD_LIBRARY_PATH" >> ~/.bashrc
+source ~/.bashrc
+cd ~/Jetson_nano/darknet
+sudo make -j4
 #==========================================================================================
 # Install YOLO3-4-py , let jetson-nano can infer YOLO model with GPU.
-
 ###### YoloV3 on github : https://github.com/madhawav/YOLO3-4-py #####
 export GPU=1
 pip3 install yolo34py-gpu
@@ -284,6 +283,7 @@ cd ~/$workspace/catkin_ws && catkin_make
 cd
 git clone https://github.com/NVIDIA-AI-IOT/jetbot
 cd ~/jetbot
+sudo python3 setup.py install
 # if you use Adafruit MotorHAT , need to modify the parameter "alpha" in "robot.py" ,
 # then use "cd ~/jetbot" to change directory , you can enter this command to install : " sudo python3 setup.py install"
 #==============================================================================================
