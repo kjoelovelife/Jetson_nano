@@ -112,10 +112,6 @@ virtualenv -p python3 AI
 
 
 #================ install library for machine learning with python. ===================
-
-# Download source for pytorch ,  
-wget https://nvidia.box.com/shared/static/veo87trfaawj5pfwuqvhl6mzc5b55fbj.whl -O torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl
-
 ## Install package with python3
 #python3 -m pip install --upgrade pip setuptools wheel
 #  For installing scipy , need to install gfortran :   
@@ -132,10 +128,13 @@ pip3 install matplotlib \
 		 jupyter notebook \
 		 numpy \
 		 scipy \
-		 torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl \
                  --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4 --user
 
 #### Library that Can't use pip3 imstall 
+
+# Download source for pytorch ,  
+wget https://nvidia.box.com/shared/static/veo87trfaawj5pfwuqvhl6mzc5b55fbj.whl -O torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl
+pip3 install torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl
 # install torchvision
 cd
 git clone https://github.com/pytorch/vision
