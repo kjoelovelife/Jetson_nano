@@ -140,7 +140,7 @@ pip3 install torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl
 cd
 git clone https://github.com/pytorch/vision
 cd vision
-sudo python setup.py install
+sudo python3 setup.py install
 #####
 
 #=======================================================================================
