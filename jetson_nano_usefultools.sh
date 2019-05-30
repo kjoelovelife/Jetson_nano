@@ -116,7 +116,7 @@ virtualenv -p python3 AI
 ## Install package with python3
 #python3 -m pip install --upgrade pip setuptools wheel
 #  For installing scipy , need to install gfortran :   
-pip3 install matplotlib \
+sudo pip3 install matplotlib \
                  scikit-build \
                  imutils \
                  pillow \
