@@ -69,7 +69,7 @@ sudo apt-get install -y libfreetype6-dev \
 			gfortran \
 			python3-pip \
 			python-pip \
-			apt-utils
+			python3-notebook jupyter-core python-ipykernel
 ## And can install [ pkg-config , zip ]
 #=======================================================================================
 
