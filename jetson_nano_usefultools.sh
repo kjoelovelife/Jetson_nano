@@ -68,8 +68,8 @@ sudo apt-get install -y libfreetype6-dev \
 			libcanberra-gtk3-module \
 			gfortran \
 			python3-pip \
-			python-pip \
-			python3-notebook jupyter-core python-ipykernel
+			python-pip
+			
 ## And can install [ pkg-config , zip ]
 #=======================================================================================
 
@@ -215,7 +215,7 @@ sudo make -j4
 # Install YOLO3-4-py , let jetson-nano can infer YOLO model with GPU.
 ###### YoloV3 on github : https://github.com/madhawav/YOLO3-4-py #####
 export GPU=1
-pip3 install yolo34py-gpu
+sudo pip3 install yolo34py-gpu
 #===================================================================
 
 #==== Install Jetson stats , about resource monitoring with series of NVIDIA Jetson ====
