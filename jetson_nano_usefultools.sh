@@ -116,7 +116,7 @@ virtualenv -p python3 AI
 ## Install package with python3
 #python3 -m pip install --upgrade pip setuptools wheel
 #  For installing scipy , need to install gfortran :   
-sudo pip3 install matplotlib \
+pip3 install matplotlib \
                  scikit-build \
                  imutils \
                  pillow \
@@ -126,10 +126,10 @@ sudo pip3 install matplotlib \
                  notebook \
                  Jetson.GPIO \
                  Adafruit-MotorHAT \
-		 jupyter notebook \
 		 numpy \
 		 scipy \
                  --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4 --user
+sudo pip3 install jupyter notebook
 
 # if jupyter notebook has the error : " bash: jupyter: command not found "
 # can enter this command to solve : " pip3 install --upgrade --force-reinstall --no-cache-dir jupyter notebook "
