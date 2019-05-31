@@ -70,6 +70,8 @@ sudo apt-get install -y libfreetype6-dev \
 			python3-pip \
 			python-pip
 			
+sudo pip3 install jupyter notebook
+
 ## And can install [ pkg-config , zip ]
 #=======================================================================================
 
@@ -129,7 +131,7 @@ pip3 install matplotlib \
 		 numpy \
 		 scipy \
                  --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4 --user
-sudo pip3 install jupyter notebook
+
 
 # if jupyter notebook has the error : " bash: jupyter: command not found "
 # can enter this command to solve : " pip3 install --upgrade --force-reinstall --no-cache-dir jupyter notebook "
