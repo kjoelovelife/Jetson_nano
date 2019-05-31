@@ -129,8 +129,9 @@ pip3 install matplotlib \
                  Jetson.GPIO \
                  Adafruit-MotorHAT \
 		 numpy \
-		 scipy \
-                 --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4 --user
+		 scipy
+		 
+sudo pip3 install --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4
 
 
 # if jupyter notebook has the error : " bash: jupyter: command not found "
