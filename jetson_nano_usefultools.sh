@@ -202,7 +202,7 @@ sudo mkdir build; cd build
 sudo cmake .. -DDLIB_USE_CUDA=1 -DUSE_AVX_INSTRUCTIONS=1
 sudo cmake --build .
 cd ..
-sudo python setup.py install
+sudo python3 setup.py install
 sudo ldconfig
 #=========================================================================================
 
