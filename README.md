@@ -22,6 +22,8 @@ If you buy the kit from IcShop , the password in image is 「 5564686 」.
 
 *Nvidia Jetson-inference : https://github.com/dusty-nv/jetson-inference
 
+*How to Install jetpack : https://docs.nvidia.com/jetson/jetpack/install-jetpack/index.html
+
 *How to run TensorFlow Object Detection model on Jetson Nano: https://www.dlology.com/blog/how-to-run-tensorflow-object-detection-model-on-jetson-nano/
 
 *How to run Keras model on Jetson Nano : https://www.dlology.com/blog/how-to-run-keras-model-on-jetson-nano/
