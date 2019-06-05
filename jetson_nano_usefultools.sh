@@ -207,7 +207,7 @@ sudo ldconfig
 #=========================================================================================
 
 #==== Install Darknet , let jetson-nano can train Yolo model with darknet. ====
-#echo "export CUBA_HOME=/usr/local/cuda-10.0"
+#echo "export CUBA_HOME=/usr/local/cuda-10.0" >> ~/.bashrc
 #echo "export PATH=${PATH}:/usr/local/cuda/bin" >> ~/.bashrc
 #echo "export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/cuda/lib64" >> ~/.bashrc
 #source ~/.bashrc
