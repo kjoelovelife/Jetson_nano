@@ -266,7 +266,7 @@ sudo make install
 #========================= clone ros_deep_learning ======================================
 
 # install dependencies
-sudo apt-get install ros-melodic-vision-msgs ros-melodic-image-transport ros-melodic-image-publisher
+sudo apt-get install -y ros-melodic-vision-msgs ros-melodic-image-transport ros-melodic-image-publisher
 
 # clone the repo
 cd ~/$workspace/catkin_ws/src
