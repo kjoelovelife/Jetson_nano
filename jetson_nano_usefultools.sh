@@ -207,12 +207,12 @@ sudo ldconfig
 #=========================================================================================
 
 #==== Install Darknet , let jetson-nano can train Yolo model with darknet. ====
-#echo "export CUBA_HOME=/usr/local/cuda-10.0" >> ~/.bashrc
-#echo "export PATH=${PATH}:/usr/local/cuda/bin" >> ~/.bashrc
-#echo "export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/cuda/lib64" >> ~/.bashrc
-#source ~/.bashrc
-#cd ~/Jetson_nano/darknet
-#sudo make -j4
+echo "export CUBA_HOME=/usr/local/cuda-10.0" >> ~/.bashrc
+echo "export PATH=${PATH}:/usr/local/cuda/bin" >> ~/.bashrc
+echo "export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/cuda/lib64" >> ~/.bashrc
+source ~/.bashrc
+cd ~/Jetson_nano/darknet
+sudo make -j4
 #==========================================================================================
 # Install YOLO3-4-py , let jetson-nano can infer YOLO model with GPU.
 ###### YoloV3 on github : https://github.com/madhawav/YOLO3-4-py #####
