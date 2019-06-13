@@ -127,10 +127,23 @@ pip3 install matplotlib \
                  Jetson.GPIO \
                  Adafruit-MotorHAT \
 		 numpy \
-		 scipy
+		 scipy \
+		 grpcio \ 
+		 absl-py \
+		 py-cpuinfo \
+		 psutil \
+		 portpicker \
+		 six \
+		 mock \
+		 requests \
+		 gast \
+		 h5py \
+		 astor \
+		 termcolor
+		 
 # also can install :pillow
 
-pip3 install --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4 --user
+pip3 install --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.5 --user
 
 sudo pip3 install --upgrade numpy
 
