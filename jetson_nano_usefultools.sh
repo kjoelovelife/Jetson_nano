@@ -84,7 +84,9 @@ sudo apt-add-repository restricted
 
 # add ROS repository to apt sources
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
-sudo apt-key adv --keyserver hkp://ha.pool.sks-keyservers.net:80 --recv-key 0xB01FA116
+sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
+
+## delete ROS pld key : sudo apt-key del 421C365BD9FF1F717815A3895523BAEEB01FA116 
 
 # install ROS desktop-full
 sudo apt-get update
@@ -143,7 +145,7 @@ pip3 install matplotlib \
 		 
 # also can install :pillow
 
-pip3 install --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.5 --user
+pip3 install --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4 --user
 
 sudo pip3 install --upgrade numpy
 
@@ -164,7 +166,7 @@ jupyter lab --generate-config
 
 # Download source for pytorch ,  
 wget https://nvidia.box.com/shared/static/veo87trfaawj5pfwuqvhl6mzc5b55fbj.whl -O torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl
-pip3 install torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl
+pip3 install torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl --user
 # install torchvision
 cd
 git clone https://github.com/pytorch/vision
