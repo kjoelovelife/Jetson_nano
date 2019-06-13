@@ -68,7 +68,9 @@ sudo apt-get install -y libfreetype6-dev \
 			libcanberra-gtk3-module \
 			gfortran \
 			python3-pip \
-			python-pip
+			python3-pil \
+			python3-smbus
+			
 
 ## And can install [ pkg-config , zip ]
 #=======================================================================================
@@ -119,19 +121,29 @@ virtualenv -p python3 AI
 pip3 install matplotlib \
                  scikit-build \
                  imutils \
-                 pillow \
                  keras \
 		 Cython \
                  scikit-learn \
-                 notebook \
                  Jetson.GPIO \
                  Adafruit-MotorHAT \
 		 numpy \
 		 scipy
-		 
+# also can install :pillow
+
 sudo pip3 install --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu==1.13.1+nv19.4 \
                   jupyter notebook
 
+sudo pip3 install --upgrade numpy
+
+# Install traitlets (master, to support the unlink() method)
+sudo python3 -m pip install git+https://github.com/ipython/traitlets@master
+
+# Install jupyter lab
+sudo apt install nodejs npm
+sudo pip3 install jupyter jupyterlab
+sudo jupyter labextension install @jupyter-widgets/jupyterlab-manager
+sudo jupyter labextension install @jupyterlab/statusbar
+jupyter lab --generate-config
 
 # if jupyter notebook has the error : " bash: jupyter: command not found "
 # can enter this command to solve : " pip3 install --upgrade --force-reinstall --no-cache-dir jupyter notebook "
