@@ -177,10 +177,7 @@ jupyter lab --generate-config
 wget https://nvidia.box.com/shared/static/veo87trfaawj5pfwuqvhl6mzc5b55fbj.whl -O torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl
 pip3 install torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl --user
 # install torchvision
-cd
-git clone https://github.com/pytorch/vision
-cd vision
-sudo python3 setup.py install
+sudo pip3 install torchvision
 #####
 
 #=======================================================================================
