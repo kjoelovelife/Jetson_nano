@@ -32,6 +32,15 @@ if [[ `id -u` -eq 0 ]] ; then
     exit 1 ;
 fi
 
+# Configure power mode : 5W
+#sudo nvpmodel -m1
+
+# Configure power mode : 10W
+sudo nvpmodel -m0
+
+## If you want to see power mode , use 
+sudo nvpmodel -q
+
 #======== apt update and upgrade ==============================
 sudo apt-get update
 sudo apt-get upgrade
@@ -233,17 +242,17 @@ sudo ldconfig
 #=========================================================================================
 
 #==== Install Darknet , let jetson-nano can train Yolo model with darknet. ====
-echo "export CUBA_HOME=/usr/local/cuda-10.0" >> ~/.bashrc
-echo "export PATH=${PATH}:/usr/local/cuda/bin" >> ~/.bashrc
-echo "export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/cuda/lib64" >> ~/.bashrc
-source ~/.bashrc
-cd ~/Jetson_nano/darknet
-sudo make -j4
+#echo "export CUBA_HOME=/usr/local/cuda-10.0" >> ~/.bashrc
+#echo "export PATH=${PATH}:/usr/local/cuda/bin" >> ~/.bashrc
+#echo "export LD_LIBRARY_PATH=${LD_LIBRARY_PATH}:/usr/local/cuda/lib64" >> ~/.bashrc
+#source ~/.bashrc
+#cd ~/Jetson_nano/darknet
+#sudo make -j4
 #==========================================================================================
 # Install YOLO3-4-py , let jetson-nano can infer YOLO model with GPU.
 ###### YoloV3 on github : https://github.com/madhawav/YOLO3-4-py #####
-export GPU=1
-sudo pip3 install yolo34py-gpu
+#export GPU=1
+#sudo pip3 install yolo34py-gpu
 #===================================================================
 
 #==== Install Jetson stats , about resource monitoring with series of NVIDIA Jetson ====
@@ -254,15 +263,6 @@ sudo ./install_jetson_stats.sh
 # you can enter [ jetson_release ] , to see what version of software on this jetson-nano
 #############################
 #=======================================================================================
-
-# Configure power mode : 5W
-#sudo nvpmodel -m1
-
-# Configure power mode : 10W
-sudo nvpmodel -m0
-
-## If you want to see power mode , use 
-sudo nvpmodel -q
 
 #============= Clone Jetbot-ROS in ~/Jetson_nano/Jetbot/catkin_ws/src =========================
 cd ~/Jetson_nano
