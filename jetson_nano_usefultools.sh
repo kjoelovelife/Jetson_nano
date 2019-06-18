@@ -204,7 +204,7 @@ sudo udevadm trigger
 #==== configure SWAP size , ideal is double RAM. Default is 4G ========================
 # you can use [ df -h ] to see how space you can use on microSD now
 #             [ free -h ] to see how space you can use with swap    
-size=4G
+size=8G
 cd
 sudo fallocate -l $size /swapfile
 sudo chmod 600 /swapfile
