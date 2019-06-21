@@ -324,5 +324,10 @@ sudo python3 setup.py install
 sudo usermod -aG i2c $USER
 #======================================
 
+#======= about opencv 3.3.1 ===========
+#sudo apt-get install libdc1394-22-dev 
+#
+#
+#======================================
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
 # sudo pip install --upgrade pip setuptools wheel
