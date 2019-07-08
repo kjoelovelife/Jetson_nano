@@ -78,7 +78,8 @@ sudo apt-get install -y libfreetype6-dev \
 			gfortran \
 			python3-pip \
 			python3-pil \
-			python3-smbus
+			python3-smbus \
+			firefox
 			
 
 ## And can install [ pkg-config , zip ]
