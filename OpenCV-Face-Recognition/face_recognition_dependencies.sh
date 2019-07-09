@@ -99,9 +99,9 @@ virtualenv -p python3 AI
 ## Install package with python3
 #python3 -m pip install --upgrade pip setuptools wheel
 #  For installing scipy , need to install gfortran :   
-pip3 install numpy
+pip3 install numpy nbresuse --user
 
-#======== configure openCV_contrib ========
+## configure openCV_contrib
 work_path="Jetson_nano/OpenCV-Face-Recognition"
 cd ~/$work_path
 wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.3.1.zip
@@ -121,22 +121,45 @@ cmake -D CMAKE_BUILD_TYPE=RELEASE \
 make -j5
 sudo make install
 sudo ldconfig
-#==========================================
-#==========================================
+#==================================================================
 
-#========= step6. configure jupyter lab ============================================== ================================================		 
-# Install traitlets (master, to support the unlink() method)
+#========= step6. configure jupyter lab ==============================================		 
+#$ Install traitlets (master, to support the unlink() method)
 sudo python3 -m pip install git+https://github.com/ipython/traitlets@master
 
-# Install jupyter lab
+#$ Install jupyter lab
 sudo apt-get install nodejs npm
 sudo pip3 install jupyter jupyterlab
+jupyter serverextension enable --py nbresuse
 sudo jupyter labextension install @jupyter-widgets/jupyterlab-manager
-sudo jupyter labextension install @jupyterlab/statusbar
+cd ~/Jetson_nano
+git clone https://github.com/jupyterlab/jupyterlab-statusbar
+cd jupyterlab-statusbar 
+npm install
+npm run build
+sudo jupyter lab build
+#sudo jupyter labextension install @jupyterlab/statusbar
 jupyter lab --generate-config
+jupyter notebook password
 
 # if jupyter notebook has the error : " bash: jupyter: command not found "
 # can enter this command to solve : " pip3 install --upgrade --force-reinstall --no-cache-dir jupyter notebook "
+#=======================================================================================
+
+#========= step7. configure jetbot service  =========================================	 
+## clone the jetbot repo with git 
+cd ~/Jetson_nano
+git clone https://github.com/NVIDIA-AI-IOT/jetbot
+cd jetbot/jetbot/utils
+python3 create_stats_service.py
+sudo mv jetbot_stats.service /etc/systemd/system/jetbot_stats.service
+sudo systemctl enable jetbot_stats
+sudo systemctl start jetbot_stats
+python3 create_jupyter_service.py
+sudo mv jetbot_jupyter.service /etc/systemd/system/jetbot_jupyter.service
+sudo systemctl enable jetbot_jupyter
+sudo systemctl start jetbot_jupyter
+
 #=======================================================================================
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
