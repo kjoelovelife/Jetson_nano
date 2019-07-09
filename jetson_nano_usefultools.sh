@@ -79,7 +79,7 @@ sudo apt-get install -y libfreetype6-dev \
 			python3-pip \
 			python3-pil \
 			python3-smbus \
-			firefox
+                        firefox
 			
 
 ## And can install [ pkg-config , zip ]
@@ -168,6 +168,7 @@ sudo pip3 install jupyter jupyterlab
 sudo jupyter labextension install @jupyter-widgets/jupyterlab-manager
 sudo jupyter labextension install @jupyterlab/statusbar
 jupyter lab --generate-config
+#jupyter notebook password # if you want to setup password
 
 # if jupyter notebook has the error : " bash: jupyter: command not found "
 # can enter this command to solve : " pip3 install --upgrade --force-reinstall --no-cache-dir jupyter notebook "
@@ -182,9 +183,6 @@ sudo pip3 install torchvision
 #####
 
 #=======================================================================================
-
-
-
 
 #================== About python3 ===========================================================
 # if you want install in system , You need to upgrade pip3 :  [ python3 -m pip install --upgrade pip ]
@@ -325,10 +323,5 @@ sudo python3 setup.py install
 sudo usermod -aG i2c $USER
 #======================================
 
-#======= about opencv 3.3.1 ===========
-#sudo apt-get install libdc1394-22-dev 
-#
-#
-#======================================
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
 # sudo pip install --upgrade pip setuptools wheel
