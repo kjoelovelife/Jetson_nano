@@ -1,2 +1,0 @@
-duckietown_msgs/Rect bounding_box
-duckietown_msgs/ObstacleType type

@@ -1,2 +1,0 @@
-git fetch origin --prune
-

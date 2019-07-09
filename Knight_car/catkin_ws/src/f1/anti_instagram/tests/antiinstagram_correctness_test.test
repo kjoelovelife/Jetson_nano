@@ -1,3 +1,0 @@
-<launch>
-    <test test-name="antiinstagram_correctness_test" pkg="anti_instagram" type="antiinstagram_correctness_test.py"/>
-</launch>

@@ -1,6 +1,0 @@
-<launch>
-	<arg name="veh" default="megaman"/>
-	<node ns="$(arg veh)" name="duckiebot_visualizer" pkg="duckiebot_visualizer" type="fw_duckiebot_visualizer.py" output="screen">
-		<param name="~veh_name" value="$(arg veh)"/>
-	</node>
-</launch>
