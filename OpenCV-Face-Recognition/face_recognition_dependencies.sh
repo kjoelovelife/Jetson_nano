@@ -45,24 +45,25 @@ sudo nvpmodel -q
 ## you can use [ df -h ] to see how space you can use on microSD now
 #             [ free -h ] to see how space you can use with swap    
 
-#size=8G
-#cd
-#sudo fallocate -l $size /swapfile
-#sudo chmod 600 /swapfile
-#ls -lh /swapfile
-#sudo mkswap /swapfile
-#sudo swapon /swapfile
-#sudo swapon –show
-#sudo cp /etc/fstab /etc/fstab.bak
+size=8G
+cd
+sudo fallocate -l $size /swapfile
+sudo chmod 600 /swapfile
+ls -lh /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+sudo swapon –show
+sudo cp /etc/fstab /etc/fstab.bak
 
 ## long time to use
 
-#echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 
 ## After this step , please reboot , and can use " free -h " to view information.
 #=======================================================================================
 
 #======== Step2. apt update and upgrade ==============================
+sudo add-apt-repository "deb http://security.ubuntu.com/ubuntu xenial-security main"
 sudo apt-get update
 sudo apt-get upgrade
 sudo apt autoremove
@@ -71,13 +72,13 @@ sudo apt autoremove
 #======== Step3. install dependencies ============================================
 cd
 sudo apt-get install -y build-essential cmake 'pkg-config' \
-                        libjpeg-dev libtiff5-dev libjasper-dev libpng12-dev \
+                        libjpeg-dev libtiff5-dev libpng-dev \
                         libavcodec-dev libavformat-dev libswscale-dev libv4l-dev \
                         libxvidcore-dev libx264-dev \
                         libgtk2.0-dev libgtk-3-dev \
                         libatlas-base-dev gfortran \
-                        python2-dev python3-dev \
-                        python2-pip python3-pip                        
+                        python-dev python3-dev python3-pil \
+                        python-pip python3-pip                        
 #=================================================================================
 
 #======== Step4. configure virtualenv ================================
@@ -101,25 +102,29 @@ virtualenv -p python3 AI
 pip3 install numpy
 
 #======== configure openCV_contrib ========
-work_space = 'Jetson-nano/OpenCV-Face-Recognition'
-cd ~/$work_space
+work_path="Jetson_nano/OpenCV-Face-Recognition"
+cd ~/$work_path
 wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.3.1.zip
 unzip opencv.zip
 
 wget -O opencv_contrib.zip https://github.com/Itseez/opencv_contrib/archive/3.3.1.zip
 unzip opencv_contrib.zip
 
-cd ~/$work_space/opencv-3.3.0
+cd ~/$work_path/opencv-3.3.1
 mkdir build
 cd build
-cmake -D OPENCV_EXTRA_MODULES_PATH=~/$work_space/opencv_contrib-3.3.1/modules \
+cmake -D CMAKE_BUILD_TYPE=RELEASE \
+    -D CMAKE_INSTALL_PREFIX=/usr/local \
+    -D INSTALL_PYTHON_EXAMPLES=ON \
+    -D OPENCV_EXTRA_MODULES_PATH=~/$work_path/opencv_contrib-3.3.1/modules \
+    -D BUILD_EXAMPLES=ON ..
 make -j5
 sudo make install
 sudo ldconfig
 #==========================================
 #==========================================
 
-#========= step6. configure jupyter lab ================================================		 
+#========= step6. configure jupyter lab ============================================== ================================================		 
 # Install traitlets (master, to support the unlink() method)
 sudo python3 -m pip install git+https://github.com/ipython/traitlets@master
 
