@@ -72,13 +72,15 @@ sudo apt autoremove
 #======== Step3. install dependencies ============================================
 cd
 sudo apt-get install -y build-essential cmake 'pkg-config' \
-                        libjpeg-dev libtiff5-dev libpng-dev \
+                        libjpeg-dev libtiff5-dev libpng-dev libfreetype6-dev \
                         libavcodec-dev libavformat-dev libswscale-dev libv4l-dev \
                         libxvidcore-dev libx264-dev \
                         libgtk2.0-dev libgtk-3-dev \
                         libatlas-base-dev gfortran \
-                        python-dev python3-dev python3-pil \
-                        python-pip python3-pip                        
+                        python-dev python3-dev python3-pil python3-smbus \
+                        python-pip python3-pip \
+                        firefox cmake gfortran rsync python3-smbus \
+                        libhdf5-serial-dev hdf5-tools libhdf5-dev zlib1g-dev 'zip' libjpeg8-dev              
 #=================================================================================
 
 #======== Step4. configure virtualenv ================================
@@ -97,9 +99,21 @@ virtualenv -p python3 AI
 
 #========= Step5. install library with python. ===================
 ## Install package with python3
-#python3 -m pip install --upgrade pip setuptools wheel
+sudo python3 -m pip install --upgrade pip setuptools wheel
 #  For installing scipy , need to install gfortran :   
-pip3 install numpy nbresuse --user
+sudo pip3 install -U numpy nbresuse matplotlib keras Cython Jetson.GPIO Adafruit-MotorHAT h5py \
+                scipy imutils \
+                grpcio absl-py py-cpuinfo psutil portpicker six mock requests gast h5py astor termcolor protobuf keras-applications keras-preprocessing wrapt google-pasta
+
+## Install tensorflow
+sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu
+## can find on this page : https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html
+
+# Download source for pytorch 
+wget https://nvidia.box.com/shared/static/veo87trfaawj5pfwuqvhl6mzc5b55fbj.whl -O torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl
+sudo pip3 install torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl --user
+# install torchvision
+sudo pip3 install torchvision
 
 ## configure openCV_contrib
 work_path="Jetson_nano/OpenCV-Face-Recognition"
@@ -113,11 +127,7 @@ unzip opencv_contrib.zip
 cd ~/$work_path/opencv-3.3.1
 mkdir build
 cd build
-cmake -D CMAKE_BUILD_TYPE=RELEASE \
-    -D CMAKE_INSTALL_PREFIX=/usr/local \
-    -D INSTALL_PYTHON_EXAMPLES=ON \
-    -D OPENCV_EXTRA_MODULES_PATH=~/$work_path/opencv_contrib-3.3.1/modules \
-    -D BUILD_EXAMPLES=ON ..
+cmake -D OPENCV_EXTRA_MODULES_PATH=~/$work_path/opencv_contrib-3.3.1/modules ..
 make -j5
 sudo make install
 sudo ldconfig
@@ -129,8 +139,8 @@ sudo python3 -m pip install git+https://github.com/ipython/traitlets@master
 
 #$ Install jupyter lab
 sudo apt-get install nodejs npm
-sudo pip3 install jupyter jupyterlab
-jupyter serverextension enable --py nbresuse
+sudo -H pip3 install jupyter jupyterlab
+sudo jupyter serverextension enable --py nbresuse
 sudo jupyter labextension install @jupyter-widgets/jupyterlab-manager
 cd ~/Jetson_nano
 git clone https://github.com/jupyterlab/jupyterlab-statusbar
@@ -150,7 +160,9 @@ jupyter notebook password
 ## clone the jetbot repo with git 
 cd ~/Jetson_nano
 git clone https://github.com/NVIDIA-AI-IOT/jetbot
-cd jetbot/jetbot/utils
+cd ~/Jetson_nano/jetbot
+sudo python3 setup.py install
+cd jetbot/utils
 python3 create_stats_service.py
 sudo mv jetbot_stats.service /etc/systemd/system/jetbot_stats.service
 sudo systemctl enable jetbot_stats
