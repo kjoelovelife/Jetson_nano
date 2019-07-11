@@ -160,6 +160,7 @@ jupyter notebook password
 ## clone the jetbot repo with git 
 cd ~/Jetson_nano
 git clone https://github.com/NVIDIA-AI-IOT/jetbot
+/bin/'cp' ~/Jetson_nano/OpenCV-Face-Recognition/USB_camera/camera.py ~/Jetson_nano/jetbot/jetbot/camera.py  
 cd ~/Jetson_nano/jetbot
 sudo python3 setup.py install
 cd jetbot/utils
