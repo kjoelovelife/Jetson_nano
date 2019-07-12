@@ -105,6 +105,8 @@ sudo pip3 install -U numpy nbresuse matplotlib keras Cython Jetson.GPIO Adafruit
                 scipy imutils testresources \
                 grpcio absl-py py-cpuinfo psutil portpicker six mock requests gast h5py astor termcolor protobuf keras-applications keras-preprocessing wrapt google-pasta
 
+# if you want to install tensorflow must enter this command : sudo pip3 install --upgrade pip
+# And , then modified file  「/usr/bin/pip3」 , 「 from  pip import __main__」 , 「 __main__._main() 」 
 ## Install tensorflow
 sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu
 ## can find on this page : https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html
@@ -137,9 +139,10 @@ sudo ldconfig
 #$ Install traitlets (master, to support the unlink() method)
 sudo python3 -m pip install git+https://github.com/ipython/traitlets@master
 
-#$ Install jupyter lab
+## Install jupyter lab
 sudo apt-get install nodejs npm
-sudo pip3 install pip3 install --upgrade --force-reinstall --no-cache-dir jupyter jupyterlab
+## needt modified file「 /usr/bin/pip3 」  , 「 from  pip import main」 , 「 main() 」 
+sudo -H pip3 install pip3 install --upgrade --force-reinstall --no-cache-dir jupyter jupyterlab
 sudo jupyter serverextension enable --py nbresuse
 sudo jupyter labextension install @jupyter-widgets/jupyterlab-manager
 cd ~/Jetson_nano
