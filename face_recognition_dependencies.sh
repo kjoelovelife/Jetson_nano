@@ -102,7 +102,7 @@ virtualenv -p python3 AI
 sudo python3 -m pip install --upgrade pip setuptools wheel
 #  For installing scipy , need to install gfortran :   
 sudo pip3 install -U numpy nbresuse matplotlib keras Cython Jetson.GPIO Adafruit-MotorHAT h5py \
-                scipy imutils \
+                scipy imutils testresources \
                 grpcio absl-py py-cpuinfo psutil portpicker six mock requests gast h5py astor termcolor protobuf keras-applications keras-preprocessing wrapt google-pasta
 
 ## Install tensorflow
