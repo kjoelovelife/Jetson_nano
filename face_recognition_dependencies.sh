@@ -152,8 +152,8 @@ npm install
 npm run build
 sudo jupyter lab build
 #sudo jupyter labextension install @jupyterlab/statusbar
-jupyter lab --generate-config
-jupyter notebook password
+sudo jupyter lab --generate-config
+sudo jupyter notebook password
 
 # if jupyter notebook has the error : " bash: jupyter: command not found "
 # can enter this command to solve : " pip3 install --upgrade --force-reinstall --no-cache-dir jupyter notebook "
