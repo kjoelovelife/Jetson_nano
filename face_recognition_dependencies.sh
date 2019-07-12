@@ -139,7 +139,7 @@ sudo python3 -m pip install git+https://github.com/ipython/traitlets@master
 
 #$ Install jupyter lab
 sudo apt-get install nodejs npm
-sudo pip3 install jupyter jupyterlab
+sudo pip3 install pip3 install --upgrade --force-reinstall --no-cache-dir jupyter jupyterlab
 sudo jupyter serverextension enable --py nbresuse
 sudo jupyter labextension install @jupyter-widgets/jupyterlab-manager
 cd ~/Jetson_nano
