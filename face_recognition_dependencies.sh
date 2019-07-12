@@ -52,7 +52,7 @@ sudo chmod 600 /swapfile
 ls -lh /swapfile
 sudo mkswap /swapfile
 sudo swapon /swapfile
-sudo swapon –show
+sudo swapon -show
 sudo cp /etc/fstab /etc/fstab.bak
 
 ## long time to use
@@ -139,7 +139,7 @@ sudo python3 -m pip install git+https://github.com/ipython/traitlets@master
 
 #$ Install jupyter lab
 sudo apt-get install nodejs npm
-sudo -H pip3 install jupyter jupyterlab
+sudo pip3 install jupyter jupyterlab
 sudo jupyter serverextension enable --py nbresuse
 sudo jupyter labextension install @jupyter-widgets/jupyterlab-manager
 cd ~/Jetson_nano
