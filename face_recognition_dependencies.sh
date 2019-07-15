@@ -142,7 +142,7 @@ sudo python3 -m pip install git+https://github.com/ipython/traitlets@master
 ## Install jupyter lab
 sudo apt-get install nodejs npm
 ## needt modified file「 /usr/bin/pip3 」  , 「 from  pip import main」 , 「 main() 」 
-sudo -H pip3 install pip3 install --upgrade --force-reinstall jupyter jupyterlab
+sudo -H pip3 install --upgrade --force-reinstall jupyter jupyterlab
 sudo jupyter serverextension enable --py nbresuse
 sudo jupyter labextension install @jupyter-widgets/jupyterlab-manager
 cd ~/Jetson_nano
