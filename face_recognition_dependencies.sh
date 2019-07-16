@@ -113,9 +113,9 @@ sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/
 
 # Download source for pytorch 
 wget https://nvidia.box.com/shared/static/veo87trfaawj5pfwuqvhl6mzc5b55fbj.whl -O torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl
-sudo pip3 install torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl --user
+sudo pip3 -U install torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl --user
 # install torchvision
-sudo pip3 install torchvision
+sudo pip3 -U install torchvision
 
 ## configure openCV_contrib
 work_path="Jetson_nano/OpenCV-Face-Recognition"
@@ -142,8 +142,8 @@ sudo python3 -m pip install git+https://github.com/ipython/traitlets@master
 ## Install jupyter lab
 sudo apt-get install nodejs npm
 ## needt modified file「 /usr/bin/pip3 」  , 「 from  pip import main」 , 「 main() 」 
-sudo -H pip3 install --upgrade --force-reinstall jupyter jupyterlab
-sudo jupyter serverextension enable --py nbresuse
+sudo pip3 install jupyter jupyterlab
+#sudo jupyter serverextension enable --py nbresuse
 sudo jupyter labextension install @jupyter-widgets/jupyterlab-manager
 cd ~/Jetson_nano
 git clone https://github.com/jupyterlab/jupyterlab-statusbar
@@ -175,7 +175,7 @@ python3 create_jupyter_service.py
 sudo mv jetbot_jupyter.service /etc/systemd/system/jetbot_jupyter.service
 sudo systemctl enable jetbot_jupyter
 sudo systemctl start jetbot_jupyter
-sudo chmod 777 /usr/local/lib/python3.6/dist-packages/jetbot-0.3.0-py3.6.egg/jetbot/* -R
+#sudo chmod 777 /usr/local/lib/python3.6/dist-packages/jetbot-0.3.0-py3.6.egg/jetbot/* -R
 #=======================================================================================
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
