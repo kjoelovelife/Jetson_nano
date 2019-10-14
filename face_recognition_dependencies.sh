@@ -178,5 +178,9 @@ sudo systemctl start jetbot_jupyter
 #sudo chmod 777 /usr/local/lib/python3.6/dist-packages/jetbot-0.3.0-py3.6.egg/jetbot/* -R
 #=======================================================================================
 
+#======= step8. configure Jetson nano GPIO =================
+sudo cp /usr/local/lib/python3.6/dist-packages/Jetson/GPIO/99-gpio.rules /etc/udev/rules.d
+sudo udevadm control --reload-rules && sudo udevadm trigger
+
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
 # sudo pip install --upgrade pip setuptools wheel
