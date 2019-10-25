@@ -32,6 +32,25 @@ if [[ `id -u` -eq 0 ]] ; then
     exit 1 ;
 fi
 
+#==== configure SWAP size , ideal is double RAM. Default is 8G =================
+## you can use [ df -h ] to see how space you can use on microSD now
+#             [ free -h ] to see how space you can use with swap    
+
+size=8G
+cd
+sudo fallocate -l $size /swapfile
+sudo chmod 600 /swapfile
+ls -lh /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+sudo swapon -show
+sudo cp /etc/fstab /etc/fstab.bak
+
+## long time to use
+echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+#====================================================================== =================
+
+
 #======== apt update and upgrade ==============================
 sudo apt-get update
 sudo apt-get upgrade
@@ -129,6 +148,15 @@ ls -l /usr/local/lib/python3.6/dist-packages/
 cd ~/envs/cv/lib/python3.6/site-packages/
 ln -s /usr/local/lib/python3.6/dist-packages/cv2.cpython-36m-x86_64-linux-gnu.so cv2.so
 cd
+
+#============ install pytorch and torchvision  ======================
+## information : https://pytorch.org/get-started/locally/
+## note : please double check python version !! Default python version is 3.6x . 
+sudo apt-get install python3-openssl
+sudo pip3 install https://download.pytorch.org/whl/cpu/torch-1.0.1-cp36-cp36m-win_amd64.whl
+sudo pip3 install torchvision
+#===================================================================
+
 
 #================== About python3 ===========================================================
 # if you want install in system , You need to upgrade pip3 :  [ python3 -m pip install --upgrade pip ]
