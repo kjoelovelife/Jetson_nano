@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Shell script scripts to install useful tools , ROS melodic on unbuntu 18.04 with Jetson-nano
+# Shell script scripts to install useful tools , such as opencv , pytorch...
 # -------------------------------------------------------------------------
 #Copyright © 2019 Wei-Chih Lin , kjoelovelife@gmail.com 
 
@@ -118,21 +118,21 @@ sudo pip3 install torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl
 sudo pip3 install torchvision
 
 ## configure openCV_contrib
-work_path="Jetson_nano/OpenCV-Face-Recognition"
-cd ~/$work_path
-wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.3.1.zip
-unzip opencv.zip
+#work_path="Jetson_nano/OpenCV-Face-Recognition"
+#cd ~/$work_path
+#wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.3.1.zip
+#unzip opencv.zip
 
-wget -O opencv_contrib.zip https://github.com/Itseez/opencv_contrib/archive/3.3.1.zip
-unzip opencv_contrib.zip
+#wget -O opencv_contrib.zip https://github.com/Itseez/opencv_contrib/archive/3.3.1.zip
+#unzip opencv_contrib.zip
 
-cd ~/$work_path/opencv-3.3.1
-mkdir build
-cd build
-cmake -D OPENCV_EXTRA_MODULES_PATH=~/$work_path/opencv_contrib-3.3.1/modules ..
-make -j5
-sudo make install
-sudo ldconfig
+#cd ~/$work_path/opencv-3.3.1
+#mkdir build
+#cd build
+#cmake -D OPENCV_EXTRA_MODULES_PATH=~/$work_path/opencv_contrib-3.3.1/modules ..
+#make -j5
+#sudo make install
+#sudo ldconfig
 #==================================================================
 
 #========= step6. configure jupyter lab ==============================================		 
