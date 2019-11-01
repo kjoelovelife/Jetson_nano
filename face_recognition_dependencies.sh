@@ -113,9 +113,9 @@ sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/
 
 # Download source for pytorch 
 wget https://nvidia.box.com/shared/static/veo87trfaawj5pfwuqvhl6mzc5b55fbj.whl -O torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl
-sudo pip3 -U install torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl --user
+sudo pip3 install torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl
 # install torchvision
-sudo pip3 -U install torchvision
+sudo pip3 install torchvision
 
 ## configure openCV_contrib
 work_path="Jetson_nano/OpenCV-Face-Recognition"
