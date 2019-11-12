@@ -18,7 +18,7 @@ cascadePath = "haarcascade_frontalface_default.xml"
 faceCascade = cv2.CascadeClassifier(cascadePath);
 present_image_folde = "present/"
 cv2.namedWindow('present_img',cv2.WINDOW_NORMAL)
-
+cv2.resizeWindow('present_img', 640, 480)
 
 font = cv2.FONT_HERSHEY_SIMPLEX
 
