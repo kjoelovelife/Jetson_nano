@@ -8,11 +8,11 @@ import traitlets
 
 class CSICamera(Camera):
     
-    capture_device = traitlets.Integer(default_value=0)
-    capture_fps = traitlets.Integer(default_value=30)
-    capture_width = traitlets.Integer(default_value=640)
-    capture_height = traitlets.Integer(default_value=480)
-    capture_flip = traitlets.Integer(default_value=0)
+    capture_device = traitlets.Integer(default_value=0).tag(config=True)
+    capture_fps = traitlets.Integer(default_value=30).tag(config=True)
+    capture_width = traitlets.Integer(default_value=640).tag(config=True)
+    capture_height = traitlets.Integer(default_value=480).tag(config=True)
+    capture_flip = traitlets.Integer(default_value=0).tag(config=True)
     
     def __init__(self, *args, **kwargs):
         super(CSICamera, self).__init__(*args, **kwargs)
