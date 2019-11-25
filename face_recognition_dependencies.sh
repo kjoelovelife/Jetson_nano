@@ -181,6 +181,24 @@ sudo systemctl start jetbot_jupyter
 #======= step8. configure Jetson nano GPIO =================
 sudo cp /usr/local/lib/python3.6/dist-packages/Jetson/GPIO/99-gpio.rules /etc/udev/rules.d
 sudo udevadm control --reload-rules && sudo udevadm trigger
+sudo groupadd -f -r gpio
+sudo usermode -a -Ggpio $USER
+
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
 # sudo pip install --upgrade pip setuptools wheel
+
+#===== step9. setup wifi SSID ===============
+## disconnect wifi
+#sudo nmcli device disconnect wlan0
+
+## rescan wifi 
+#sudo nmcli device wifi rescan
+
+## list wifi
+#sudo nmcli device wifi list
+
+## connect wifi
+#sudo nmcli device wifi connect "SSID" password "SSID password"
+
+#============================================
