@@ -157,6 +157,7 @@ jupyter notebook password
 
 # if jupyter notebook has the error : " bash: jupyter: command not found "
 # can enter this command to solve : " pip3 install --upgrade --force-reinstall jupyter notebook "
+# if you have problem with "get 403 ..." , can install ipykernel with this text : sudo python3 -m pip install ipykernel --user
 #=======================================================================================
 
 #========= step7. configure jetbot service  =========================================	 
