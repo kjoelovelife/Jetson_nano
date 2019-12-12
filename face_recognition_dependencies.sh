@@ -182,7 +182,7 @@ sudo systemctl start jetbot_jupyter
 sudo cp /usr/local/lib/python3.6/dist-packages/Jetson/GPIO/99-gpio.rules /etc/udev/rules.d
 sudo udevadm control --reload-rules && sudo udevadm trigger
 sudo groupadd -f -r gpio
-sudo usermode -a -Ggpio $USER
+sudo usermod -a -G gpio $USER
 
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
