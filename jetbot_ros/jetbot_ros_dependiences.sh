@@ -112,6 +112,8 @@ sudo apt install -y \
 cd ~/Jetson_nano/jetbot_ros/catkin_ws/src/ydlidar/startup
 sudo chmod 777 ./*
 sudo sh initenv.sh
+sudo udevadm control --reload-rules
+sudo udevadm trigger
 
 #==============================================================================
 
