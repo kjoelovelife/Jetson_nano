@@ -76,8 +76,35 @@ sudo make install
 #==============================================================================
 
 #=========step 4. Build jetson-inference ======================================
-# install dependencies
-sudo apt-get install ros-melodic-vision-msgs ros-melodic-image-transport ros-melodic-image-publisher
+# install dependencies 
+sudo apt install -y \
+	python-frozendict \
+	libxslt-dev \
+	libxml2-dev \
+	python-lxml \
+	python-bs4 \
+	python-tables \
+    python-sklearn \
+    apt-file \
+    iftop \
+    atop \
+    ntpdate \
+    python-termcolor \
+    python-sklearn \
+    libatlas-base-dev \
+    python-dev \
+    ipython \
+    python-sklearn \
+    python-smbus \
+    libmrpt-dev \
+    mrpt-apps \
+    ros-melodic-slam-gmapping \
+    ros-melodic-map-server \
+    ros-melodic-navigation \
+    ros-melodic-vision-msgs \
+    ros-melodic-image-transport \
+    ros-melodic-image-publisher
+
 #==============================================================================
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
