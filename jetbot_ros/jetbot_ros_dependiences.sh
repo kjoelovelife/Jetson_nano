@@ -107,5 +107,13 @@ sudo apt install -y \
 
 #==============================================================================
 
+#======  step 5. Create the name "/dev/ydlidar" for YDLIDAR  ==================
+# install dependencies 
+cd ~/Jetson_nano/jetbot_ros/catkin_ws/src/ydlidar/startup
+sudo chmod 777 ./*
+sudo sh initenv.sh
+
+#==============================================================================
+
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
 # sudo pip install --upgrade pip setuptools wheel
