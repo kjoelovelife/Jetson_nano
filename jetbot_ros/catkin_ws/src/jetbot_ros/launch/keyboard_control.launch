@@ -1,0 +1,15 @@
+<launch>
+
+    <!-- run jetbot motor node -->
+    <node pkg="jetbot_ros" type="jetbot_motors.py" name="jetbot_motors" output="screen">
+        <rosparam command="load" file="$(find jetbot_ros)/param/icshop.yaml" />    <!-- setup alpha for motor -->
+        
+$(find dagu_car)/launch/inverse_kinematics_node.launch
+    </node>
+
+    <!-- run teleop_key node -->
+    <node pkg="jetbot_ros" type="teleop_key.py" name="teleop" output="screen">
+	</node>
+
+
+</launch>

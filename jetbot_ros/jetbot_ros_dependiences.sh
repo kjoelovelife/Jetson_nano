@@ -103,7 +103,8 @@ sudo apt install -y \
     ros-melodic-navigation \
     ros-melodic-vision-msgs \
     ros-melodic-image-transport \
-    ros-melodic-image-publisher
+    ros-melodic-image-publisher \
+    byobu
 
 #==============================================================================
 
