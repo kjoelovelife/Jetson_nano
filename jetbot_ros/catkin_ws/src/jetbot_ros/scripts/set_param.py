@@ -51,7 +51,6 @@ class Set_Param(object):
         # Set local variable by reading parameters
         self.gain = rospy.get_param( "/" + self.veh_name + "/gain", 1.0)
         self.trim = rospy.get_param("/" + self.veh_name + "/trim", 0.0)
-        print(self.trim)
         self.baseline = rospy.get_param("/" + self.veh_name + "/baseline", 0.1)
         self.radius = rospy.get_param("/" + self.veh_name + "/radius", 0.0318)
         self.k = rospy.get_param("/" + self.veh_name + "/k", 27.0)

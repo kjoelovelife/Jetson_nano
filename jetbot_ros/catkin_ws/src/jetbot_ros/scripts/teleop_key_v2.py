@@ -105,7 +105,7 @@ def checkAngularLimitVelocity(vel):
 if __name__ == '__main__':
     settings = termios.tcgetattr(sys.stdin)
 
-    rospy.init_node('jetbot_ros_teleop', anonymous=True)
+    rospy.init_node('teleop', anonymous=False)
     pub = rospy.Publisher('~cmd_vel', Twist, queue_size=10)
     rate = rospy.Rate(rospy.get_param('~hz', 6))
 

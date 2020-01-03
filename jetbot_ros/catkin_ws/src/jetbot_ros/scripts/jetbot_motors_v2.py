@@ -141,7 +141,7 @@ if __name__ == '__main__':
 	# setup ros node
 	rospy.init_node('jetbot_motors')
 	
-	rospy.Subscriber('~cmd_vel', Twist, on_cmd_vel)
+	rospy.Subscriber('/teleop/cmd_vel', Twist, on_cmd_vel)
 
 
 

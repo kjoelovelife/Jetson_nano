@@ -11,6 +11,7 @@
 
     <!-- run jetbot motor node -->
     <node ns="$(arg veh)" pkg="jetbot_ros" type="jetbot_motors_v2.py" name="jetbot_motors">
+        <remap from="/teleop/cmd_vel" to="/$(arg veh)/jetbot_motors/cmd_vel"/>
     </node>
 
     <!-- run set_param node -->
