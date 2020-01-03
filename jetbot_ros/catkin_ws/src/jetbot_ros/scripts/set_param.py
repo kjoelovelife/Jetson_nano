@@ -35,137 +35,141 @@ import roslib
 import rospy
 from geometry_msgs.msg import Twist
 from std_msgs.msg import String
+from std_srvs.srv import EmptyRequest, EmptyResponse, Empty
+from jetbot_msgs.srv import SetValueRequest , SetValueResponse, SetValue
+import rospkg , yaml , time , os 
+import numpy as np
 
-MAX_LIN_VEL = 1.0
-MAX_ANG_VEL = 8.0
+class Set_Param(object):
+    def __init__(self):
+        # Get node name and vehicle name
+        self.node_name = rospy.get_name()      
+        self.veh_name = "icshop"
+        # Set parameters using yaml file
+        self.readParamFromFile()
 
-LIN_VEL_STEP_SIZE = 0.1
-ANG_VEL_STEP_SIZE = 1
+        # Set local variable by reading parameters
+        self.gain = self.setup_parameter("~gain", 1.0)
+        self.trim = self.setup_parameter("~trim", 0.0)
+        self.baseline = self.setup_parameter("~baseline", 0.1)
+        self.radius = self.setup_parameter("~radius", 0.0318)
+        self.k = self.setup_parameter("~k", 27.0)
+        self.limit = self.setup_parameter("~limit", 1.0)
+        self.limit_max = 1.0
+        self.limit_min = 0.0
 
-msg = """
-Control Your Jetbot!!
----------------------------
-Moving around:
-        w
-   a    s    d
-        x
-w/x : increase/decrease linear velocity (Max : 1.0)
-a/d : increase/decrease angular velocity (Max : 1.0)
-space key, s : force stop
-CTRL-C to quit
-"""
-error = """
-Communications Failed
-"""
+        # Prepare services
+        self.srv_set_gain = rospy.Service("~set_gain", SetValue, self.cbSrvSetGain)
+        self.srv_set_trim = rospy.Service("~set_trim", SetValue, self.cbSrvSetTrim)
+        self.srv_set_baseline = rospy.Service("~set_baseline", SetValue, self.cbSrvSetBaseline)
+        self.srv_set_radius = rospy.Service("~set_radius", SetValue, self.cbSrvSetRadius)
+        self.srv_set_k = rospy.Service("~set_k", SetValue, self.cbSrvSetK)
+        self.srv_set_limit = rospy.Service("~set_limit", SetValue, self.cbSrvSetLimit)
+        self.srv_save = rospy.Service("~save_calibration", Empty, self.cbSrvSaveCalibration)
 
-def getKey():
-    tty.setraw(sys.stdin.fileno())
-    rlist, _, _ = select.select([sys.stdin], [], [], 0.1)
-    if rlist:
-        key = sys.stdin.read(1)
-    else:
-        key = ''
+        # Setup the publisher and subscriber
+        #self.sub_car_cmd = rospy.Subscriber("~car_cmd", Twist2DStamped, self.car_cmd_callback)
+        #self.pub_wheels_cmd = rospy.Publisher("~wheels_cmd", WheelsCmdStamped, queue_size=1)
+        #rospy.loginfo("[%s] Initialized.", self.node_name)
+        #self.printValues()
 
-    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
-    return key
+    def readParamFromFile(self):
+        # Check file existence
+        fname = self.getFilePath(self.veh_name)
+        # Use default.yaml if file doesn't exsit
+        if not os.path.isfile(fname):
+            rospy.logwarn("[%s] %s does not exist. Using default.yaml." %(self.node_name,fname))
+            fname = self.getFilePath("default")
 
-def vels(target_linear_vel, target_angular_vel):
-    return "currently:\tlinear vel %s\t angular vel %s " % (target_linear_vel,target_angular_vel)
+        with open(fname, 'r') as in_file:
+            try:
+                yaml_dict = yaml.load(in_file)
+            except yaml.YAMLError as exc:
+                rospy.logfatal("[%s] YAML syntax error. File: %s fname. Exc: %s" %(self.node_name, fname, exc))
+                rospy.signal_shutdown()
+                return
 
-def makeSimpleProfile(output, input, slop):
-    if input > output:
-        output = min( input, output + slop )
-    elif input < output:
-        output = max( input, output - slop )
-    else:
-        output = input
+    def getFilePath(self, name):
+        rospack = rospkg.RosPack()
+        return rospack.get_path('jetbot_ros')+'/param/' + name + ".yaml"   
 
-    return output
 
-def constrain(input, low, high):
-    if input < low:
-      input = low
-    elif input > high:
-      input = high
-    else:
-      input = input
+    def saveCalibration(self):
+        # Write to yaml
+        data = {
+            "calibration_time": time.strftime("%Y-%m-%d-%H-%M-%S"),
+            "gain": self.gain,
+            "trim": self.trim,
+            "baseline": self.baseline,
+            "radius": self.radius,
+            "k": self.k,
+            "limit": self.limit,
+        }
 
-    return input
+        # Write to file
+        file_name = self.getFilePath(self.veh_name)
+        with open(file_name, 'w') as outfile:
+            outfile.write(yaml.dump(data, default_flow_style=False))
+        # Printout
+        self.printValues()
+        rospy.loginfo("[%s] Saved to %s" %(self.node_name, file_name))
 
-def checkLinearLimitVelocity(vel):
-    vel = constrain(vel, -MAX_LIN_VEL, MAX_LIN_VEL)
+    def cbSrvSaveCalibration(self, req):
+        self.saveCalibration()
+        return EmptyResponse()
 
-    return vel
+    def cbSrvSetGain(self, req):
+        self.gain = req.value
+        self.printValues()
+        return SetValueResponse()
 
-def checkAngularLimitVelocity(vel):
-    vel = constrain(vel, -MAX_ANG_VEL, MAX_ANG_VEL)
+    def cbSrvSetTrim(self, req):
+        self.trim = req.value
+        self.printValues()
+        return SetValueResponse()
 
-    return vel
+    def cbSrvSetBaseline(self, req):
+        self.baseline = req.value
+        self.printValues()
+        return SetValueResponse()
+
+    def cbSrvSetRadius(self, req):
+        self.radius = req.value
+        self.printValues()
+        return SetValueResponse()
+
+    def cbSrvSetK(self, req):
+        self.k = req.value
+        self.printValues()
+        return SetValueResponse()
+
+    def cbSrvSetLimit(self, req):
+        self.limit = self.setLimit(req.value)
+        self.printValues()
+        return SetValueResponse()
+
+    def setLimit(self, value):
+        if value > self.limit_max:
+            rospy.logwarn("[%s] limit (%s) larger than max at %s" % (self.node_name, value, self.limit_max))
+            limit = self.limit_max
+        elif value < self.limit_min:
+            rospy.logwarn("[%s] limit (%s) smaller than allowable min at %s" % (self.node_name, value, self.limit_min))
+            limit = self.limit_min
+        else:
+            limit = value
+        return limit
+
+    def printValues(self):
+        rospy.loginfo("[%s] gain: %s trim: %s baseline: %s radius: %s k: %s limit: %s" % (self.node_name, self.gain, self.trim, self.baseline, self.radius, self.k, self.limit))
+
+    def setup_parameter(self, param_name, default_value):
+        value = rospy.get_param(param_name, default_value)
+        # Write to parameter server for transparency
+        rospy.set_param(param_name, value)
+        rospy.loginfo("[%s] %s = %s " % (self.node_name, param_name, value))
+        return value
 
 if __name__ == '__main__':
-    settings = termios.tcgetattr(sys.stdin)
-
-    rospy.init_node('jetbot_ros_teleop', anonymous=True)
-    pub = rospy.Publisher('/jetbot_motors/cmd_vel', Twist, queue_size=10)
-    rate = rospy.Rate(rospy.get_param('~hz', 6))
-
-    status = 0
-    target_linear_vel   = 0.0
-    target_angular_vel  = 0.0
-    control_linear_vel  = 0.0
-    control_angular_vel = 0.0
-
-    try:
-        print msg
-        while(1):
-            key = getKey()
-            if key == 'w' :
-                target_linear_vel = checkLinearLimitVelocity(target_linear_vel + LIN_VEL_STEP_SIZE)
-                status = status + 1
-                print vels(target_linear_vel,target_angular_vel)
-            elif key == 'x' :
-                target_linear_vel = checkLinearLimitVelocity(target_linear_vel - LIN_VEL_STEP_SIZE)
-                status = status + 1
-                print vels(target_linear_vel,target_angular_vel)
-            elif key == 'a' :
-                target_angular_vel = checkAngularLimitVelocity(target_angular_vel + ANG_VEL_STEP_SIZE)
-                status = status + 1
-                print vels(target_linear_vel,target_angular_vel)
-            elif key == 'd' :
-                target_angular_vel = checkAngularLimitVelocity(target_angular_vel - ANG_VEL_STEP_SIZE)
-                status = status + 1
-                print vels(target_linear_vel,target_angular_vel)
-            elif key == ' ' or key == 's' :
-                target_linear_vel   = 0.0
-                control_linear_vel  = 0.0
-                target_angular_vel  = 0.0
-                control_angular_vel = 0.0
-                print vels(target_linear_vel, target_angular_vel)
-            else:
-                if (key == '\x03'):
-                    break
-
-            if status == 20 :
-                print msg
-                status = 0
-
-            twist = Twist()
-
-            control_linear_vel = makeSimpleProfile(control_linear_vel, target_linear_vel, (LIN_VEL_STEP_SIZE/2.0))
-            twist.linear.x = control_linear_vel; twist.linear.y = 0.0; twist.linear.z = 0.0
-
-            control_angular_vel = makeSimpleProfile(control_angular_vel, target_angular_vel, (ANG_VEL_STEP_SIZE/2.0))
-            twist.angular.x = 0.0; twist.angular.y = 0.0; twist.angular.z = control_angular_vel
-
-            pub.publish(twist)
-
-    except:
-        print error
-
-    finally:
-        twist = Twist()
-        twist.linear.x = 0.0; twist.linear.y = 0.0; twist.linear.z = 0.0
-        twist.angular.x = 0.0; twist.angular.y = 0.0; twist.angular.z = 0.0
-        pub.publish(twist)
-
-    termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
+    rospy.init_node('set_param_node', anonymous=False)
+    set_param_node = Set_Param()
+    rospy.spin()

@@ -75,9 +75,9 @@ def on_cmd_vel(data):
     global right_speed , left_speed
 
     # set param
-    gain = rospy.get_param('~gain', 1.0)
+    gain = rospy.get_param('~gain', 2.0)
     trim = rospy.get_param('~trim', 0.1)
-    baseline = rospy.get_param('~baseline', 1)
+    baseline = rospy.get_param('~baseline', 0.1)
     radius = rospy.get_param('~radius', 0.0725)
     k = rospy.get_param('~k', 27.0)
     motor_alpha = rospy.get_param("~motor_alpha",-1.0)
@@ -116,7 +116,7 @@ def on_cmd_vel(data):
     #show information
     rospy.loginfo(" right_speed = {}  ".format(u_r_limited) )
     rospy.loginfo(" left_speed  = {}  ".format(u_l_limited) )
-    #rospy.loginfo(" omega_r = {}  ".format(omega_r) )
+    #rospy.loginfo(" node_name = {}  ".format(rospy.get_name()) )
     #rospy.loginfo(" omega_l  = {}  ".format(omega_l) )
     #rospy.loginfo(" Vx = {}  ".format(Vx) )
     #rospy.loginfo(" Vw = {}  ".format(Vw) )
