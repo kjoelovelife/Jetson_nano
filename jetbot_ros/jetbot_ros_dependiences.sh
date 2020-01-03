@@ -85,6 +85,7 @@ sudo apt install -y \
 	python-bs4 \
 	python-tables \
     python-sklearn \
+    python-rospkg \
     apt-file \
     iftop \
     atop \
