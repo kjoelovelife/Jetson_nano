@@ -8,10 +8,4 @@ else
 	export ROS_MASTER_URI=http://$HOSTNAME.local:11311/
 fi
 
-export ROS_HOSTNAME=$HOSTNAME.local
-
-echo "Setting up PYTHONPATH."
-export PYTHONPATH=~/Jetson_nano/jetbot_ros/catkin_ws/src:$PYTHONPATH
-
 echo "ROS_MASTER_URI set to $ROS_MASTER_URI"
-echo "ROS_HOSTNAME set to $HOSTNAME.local"

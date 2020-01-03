@@ -44,17 +44,18 @@ class Set_Param(object):
     def __init__(self):
         # Get node name and vehicle name
         self.node_name = rospy.get_name()      
-        self.veh_name = "icshop"
+        self.veh_name = self.node_name.split("/")[1]
         # Set parameters using yaml file
         self.readParamFromFile()
 
         # Set local variable by reading parameters
-        self.gain = self.setup_parameter("~gain", 1.0)
-        self.trim = self.setup_parameter("~trim", 0.0)
-        self.baseline = self.setup_parameter("~baseline", 0.1)
-        self.radius = self.setup_parameter("~radius", 0.0318)
-        self.k = self.setup_parameter("~k", 27.0)
-        self.limit = self.setup_parameter("~limit", 1.0)
+        self.gain = rospy.get_param( "/" + self.veh_name + "/gain", 1.0)
+        self.trim = rospy.get_param("/" + self.veh_name + "/trim", 0.0)
+        print(self.trim)
+        self.baseline = rospy.get_param("/" + self.veh_name + "/baseline", 0.1)
+        self.radius = rospy.get_param("/" + self.veh_name + "/radius", 0.0318)
+        self.k = rospy.get_param("/" + self.veh_name + "/k", 27.0)
+        self.limit = rospy.get_param("/" + self.veh_name + "/limit", 1.0)
         self.limit_max = 1.0
         self.limit_min = 0.0
 
@@ -162,12 +163,6 @@ class Set_Param(object):
     def printValues(self):
         rospy.loginfo("[%s] gain: %s trim: %s baseline: %s radius: %s k: %s limit: %s" % (self.node_name, self.gain, self.trim, self.baseline, self.radius, self.k, self.limit))
 
-    def setup_parameter(self, param_name, default_value):
-        value = rospy.get_param(param_name, default_value)
-        # Write to parameter server for transparency
-        rospy.set_param(param_name, value)
-        rospy.loginfo("[%s] %s = %s " % (self.node_name, param_name, value))
-        return value
 
 if __name__ == '__main__':
     rospy.init_node('set_param_node', anonymous=False)

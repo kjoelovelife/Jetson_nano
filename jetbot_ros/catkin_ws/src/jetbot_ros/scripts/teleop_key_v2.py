@@ -106,7 +106,7 @@ if __name__ == '__main__':
     settings = termios.tcgetattr(sys.stdin)
 
     rospy.init_node('jetbot_ros_teleop', anonymous=True)
-    pub = rospy.Publisher('/jetbot_motors/cmd_vel', Twist, queue_size=10)
+    pub = rospy.Publisher('~cmd_vel', Twist, queue_size=10)
     rate = rospy.Rate(rospy.get_param('~hz', 6))
 
     status = 0

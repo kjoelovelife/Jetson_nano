@@ -70,11 +70,10 @@ def all_stop():
 	motor_left.run(Adafruit_MotorHAT.RELEASE)
 	motor_right.run(Adafruit_MotorHAT.RELEASE)
 
-# simple string commands (left/right/forward/backward/stop)
 def on_cmd_vel(data):
     global right_speed , left_speed
 
-    # set param
+    # get param
     gain = rospy.get_param('~gain', 2.0)
     trim = rospy.get_param('~trim', 0.1)
     baseline = rospy.get_param('~baseline', 0.1)

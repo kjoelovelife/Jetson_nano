@@ -1,15 +1,21 @@
 <launch>
-
-    <!-- run jetbot motor node -->
-    <node pkg="jetbot_ros" type="jetbot_motors.py" name="jetbot_motors" output="screen">
-        <rosparam command="load" file="$(find jetbot_ros)/param/icshop.yaml" />    <!-- setup alpha for motor -->
-        
-$(find dagu_car)/launch/inverse_kinematics_node.launch
-    </node>
+  
+    <arg name="veh" value="$(env VEHICLE_NAME)" doc="Name of vehicle. ex: megaman"/>
+    <rosparam ns="$(arg veh)" command="load" file="$(find jetbot_ros)/param/icshop.yaml" />    <!-- set parameter -->
 
     <!-- run teleop_key node -->
-    <node pkg="jetbot_ros" type="teleop_key.py" name="teleop" output="screen">
-	</node>
+    <node ns="$(arg veh)" pkg="jetbot_ros" type="teleop_key_v2.py" name="teleop" output="screen">
+        <remap from="/$(arg veh)/teleop/cmd_vel" to="/$(arg veh)/jetbot_motors/cmd_vel"/>
+    </node>
+
+
+    <!-- run jetbot motor node -->
+    <node ns="$(arg veh)" pkg="jetbot_ros" type="jetbot_motors_v2.py" name="jetbot_motors">
+    </node>
+
+    <!-- run set_param node -->
+    <node ns="$(arg veh)" pkg="jetbot_ros" type="set_param.py" name="set_param_node" output="screen">
+    </node>
 
 
 </launch>
