@@ -61,7 +61,7 @@ sleep $sleep_time
 sudo apt-get install python-pip
 
 # install Adafruit libraries
-sudo pip install Adafruit-MotorHAT Adafruit-SSD1306
+sudo pip2 install Adafruit-MotorHAT Adafruit-SSD1306
 #==============================================================================
 
 #=========step 2. Grant your user access to the i2c bus =======================
