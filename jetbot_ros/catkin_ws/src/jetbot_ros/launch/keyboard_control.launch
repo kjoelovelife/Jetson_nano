@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <launch>
   
     <arg name="veh" value="$(env VEHICLE_NAME)" doc="Name of vehicle. ex: megaman"/>
