@@ -32,14 +32,24 @@ if [[ `id -u` -eq 0 ]] ; then
     exit 1 ;
 fi
 
-# Configure power mode : 5W
-sudo nvpmodel -m1
+# get hardware-platform
+hardware_platform=$(uname -i)
 
-# Configure power mode : 10W
-#sudo nvpmodel -m0
+# judge hardware platform
+if [ "$(hardware_platform)" == "aarch64"  ] ; then
+    # Configure power mode : 5W
+    sudo nvpmodel -m1
 
-## If you want to see power mode , use 
-sudo nvpmodel -q
+    # Configure power mode : 10W
+    #sudo nvpmodel -m0
+
+    ## If you want to see power mode , use 
+    sudo nvpmodel -q
+else 
+    # show information
+    echo " You don't use Jeton-nano. Will not setup power"
+
+fi
 
 #=========step 1. install Adafruit Libraries ==================================
 # pip should be installed
@@ -58,21 +68,37 @@ sudo usermod -aG i2c $USER
 # git and cmake should be installed
 sudo apt-get install git cmake
 
-# clone the repo and submodules
+# get workspace
 workspace="Jetson_nano/jetbot_ros"
-cd ~/$workspace
-git clone https://github.com/dusty-nv/jetson-inference
-cd jetson-inference
-git submodule update --init
 
-# build from source
-mkdir build
-cd build
-cmake ../
-make
+if [ "$(hardware_platform)" == "aarch64"  ] ; then
 
-# install libraries
-sudo make install
+    # clone the repo and submodules
+    cd ~/$workspace
+    git clone https://github.com/dusty-nv/jetson-inference
+    cd jetson-inference
+    git submodule update --init
+
+    # build from source
+    mkdir build
+    cd build
+    cmake ../
+    make
+
+    # install libraries
+    sudo make install
+
+else
+
+    # show information    
+    echo "You don't use Jetson-nano. Will remove package jetbot_ros and "
+
+    # delete jetbot_ros and ros_deep_learning package in file "src" , because theese package just can make with jetson family 
+    sudo rm -rf ~/$workspace/catkin_ws/src/jetbot_ros
+    sudo rm -rf ~/$workspace/catkin_ws/src/ros_deep_learning
+
+fi
+
 #==============================================================================
 
 #=========step 4. Build jetson-inference ======================================
@@ -116,7 +142,7 @@ sudo chmod 777 ./*
 sudo sh initenv.sh
 sudo udevadm control --reload-rules
 sudo udevadm trigger
-
+cd ~/$workspace
 #==============================================================================
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
