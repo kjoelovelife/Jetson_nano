@@ -32,11 +32,14 @@ if [[ `id -u` -eq 0 ]] ; then
     exit 1 ;
 fi
 
+# setup sleep time
+sleep_time=3s
+
 # get hardware-platform
 hardware_platform=$(uname -i)
 
 # judge hardware platform
-if [ "$(hardware_platform)" == "aarch64"  ] ; then
+if [ "${hardware_platform}" == "aarch64"  ] ; then
     # Configure power mode : 5W
     sudo nvpmodel -m1
 
@@ -47,9 +50,11 @@ if [ "$(hardware_platform)" == "aarch64"  ] ; then
     sudo nvpmodel -q
 else 
     # show information
-    echo " You don't use Jeton-nano. Will not setup power"
+    echo "You don't use Jeton-nano. Will not setup power mode."
 
 fi
+
+sleep $sleep_time
 
 #=========step 1. install Adafruit Libraries ==================================
 # pip should be installed
@@ -71,7 +76,7 @@ sudo apt-get install git cmake
 # get workspace
 workspace="Jetson_nano/jetbot_ros"
 
-if [ "$(hardware_platform)" == "aarch64"  ] ; then
+if [ "${hardware_platform}" == "aarch64"  ] ; then
 
     # clone the repo and submodules
     cd ~/$workspace
@@ -91,13 +96,15 @@ if [ "$(hardware_platform)" == "aarch64"  ] ; then
 else
 
     # show information    
-    echo "You don't use Jetson-nano. Will remove package jetbot_ros and "
+    echo "You don't use Jetson-nano. Will remove package jetbot_ros and ros_deep_learning in ~/${workspace}/catkin_ws/src "
 
     # delete jetbot_ros and ros_deep_learning package in file "src" , because theese package just can make with jetson family 
     sudo rm -rf ~/$workspace/catkin_ws/src/jetbot_ros
     sudo rm -rf ~/$workspace/catkin_ws/src/ros_deep_learning
 
 fi
+
+sleep $sleep_time
 
 #==============================================================================
 
@@ -137,6 +144,7 @@ sudo apt install -y \
 
 #======  step 5. Create the name "/dev/ydlidar" for YDLIDAR  ==================
 # install dependencies 
+echo "Setup YDLidar X4 , and it information in ~/${workspace}/catkin_ws/src/ydlidar/README.md "
 cd ~/Jetson_nano/jetbot_ros/catkin_ws/src/ydlidar/startup
 sudo chmod 777 ./*
 sudo sh initenv.sh
