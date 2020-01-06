@@ -1,3 +1,4 @@
+<?xml version="1.0"?>
 <launch>
     <arg name="veh" doc="Name of vehicle. ex: megaman"/>
     <arg name="local" default="false" doc="true for running on laptop. false for running on vehicle."/>
