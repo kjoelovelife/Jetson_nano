@@ -8,7 +8,6 @@ project(on_laptop)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
-  python-rospkg
   roscpp
   rospy
   std_msgs
