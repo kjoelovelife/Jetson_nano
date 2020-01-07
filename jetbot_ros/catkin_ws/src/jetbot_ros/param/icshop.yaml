@@ -1,8 +1,8 @@
 baseline: 0.1
-calibration_time: 2020-01-03-15-37-19
+calibration_time: 2020-01-07-16-21-16
 gain: 2.0
 k: 27.0
 limit: 1.0
+motor_alpha: -1.0
 radius: 0.0725
 trim: 0.5
-motor_alpha: -1.0

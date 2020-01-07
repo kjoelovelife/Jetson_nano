@@ -106,6 +106,7 @@ class Set_Param(object):
             "radius": self.radius,
             "k": self.k,
             "limit": self.limit,
+            "motor_alpha": self.motor_alpha,
         }
 
         # Write to file
