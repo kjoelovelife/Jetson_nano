@@ -114,37 +114,43 @@ class Set_Param(object):
         self.printValues()
         rospy.loginfo("[%s] Saved to %s" %(self.node_name, file_name))
 
-    def cbSrvSaveCalibration(self, req):
+    def cbSrvSaveCalibration(self, req):        
         self.saveCalibration()
         return EmptyResponse()
 
     def cbSrvSetGain(self, req):
         self.gain = req.value
+        rospy.set_param( "/" + self.veh_name + "/gain", self.gain)
         self.printValues()
         return SetValueResponse()
 
     def cbSrvSetTrim(self, req):
         self.trim = req.value
+        rospy.set_param( "/" + self.veh_name + "/trim", self.trim)
         self.printValues()
         return SetValueResponse()
 
     def cbSrvSetBaseline(self, req):
         self.baseline = req.value
+        rospy.set_param( "/" + self.veh_name + "/baseline", self.baseline)
         self.printValues()
         return SetValueResponse()
 
     def cbSrvSetRadius(self, req):
         self.radius = req.value
+        rospy.set_param( "/" + self.veh_name + "/radius", self.radius)
         self.printValues()
         return SetValueResponse()
 
     def cbSrvSetK(self, req):
         self.k = req.value
+        rospy.set_param( "/" + self.veh_name + "/k", self.k)
         self.printValues()
         return SetValueResponse()
 
     def cbSrvSetLimit(self, req):
         self.limit = self.setLimit(req.value)
+        rospy.set_param( "/" + self.veh_name + "/limit", self.limit)
         self.printValues()
         return SetValueResponse()
 
