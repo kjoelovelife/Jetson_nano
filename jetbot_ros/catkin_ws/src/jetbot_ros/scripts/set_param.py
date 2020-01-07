@@ -55,6 +55,7 @@ class Set_Param(object):
         self.radius = rospy.get_param("/" + self.veh_name + "/radius", 0.0318)
         self.k = rospy.get_param("/" + self.veh_name + "/k", 27.0)
         self.limit = rospy.get_param("/" + self.veh_name + "/limit", 1.0)
+        self.motor_alpha = rospy.get_param("/" + self.veh_name + "/motor_alpha", -1.0)
         self.limit_max = 1.0
         self.limit_min = 0.0
 
@@ -65,6 +66,7 @@ class Set_Param(object):
         self.srv_set_radius = rospy.Service("~set_radius", SetValue, self.cbSrvSetRadius)
         self.srv_set_k = rospy.Service("~set_k", SetValue, self.cbSrvSetK)
         self.srv_set_limit = rospy.Service("~set_limit", SetValue, self.cbSrvSetLimit)
+        self.srv_set_motor_alpha = rospy.Service("~set_motor_alpha", SetValue, self.cbSrvSetMotorAlpha)
         self.srv_save = rospy.Service("~save_calibration", Empty, self.cbSrvSaveCalibration)
 
         # Setup the publisher and subscriber
@@ -151,6 +153,12 @@ class Set_Param(object):
     def cbSrvSetLimit(self, req):
         self.limit = self.setLimit(req.value)
         rospy.set_param( "/" + self.veh_name + "/limit", self.limit)
+        self.printValues()
+        return SetValueResponse()
+
+    def cbSrvSetMotorAlpha(self, req):
+        self.motor_alpha = req.value
+        rospy.set_param( "/" + self.veh_name + "/motor_alpha", self.motor_alpha)
         self.printValues()
         return SetValueResponse()
 

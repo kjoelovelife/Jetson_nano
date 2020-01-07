@@ -71,16 +71,25 @@ def all_stop():
 	motor_right.run(Adafruit_MotorHAT.RELEASE)
 
 def on_cmd_vel(data):
-    global right_speed , left_speed
-
+    global right_speed , left_speed , veh_name
     # get param
-    gain = rospy.get_param('~gain', 2.0)
-    trim = rospy.get_param('~trim', 0.1)
-    baseline = rospy.get_param('~baseline', 0.1)
-    radius = rospy.get_param('~radius', 0.0725)
-    k = rospy.get_param('~k', 27.0)
-    motor_alpha = rospy.get_param("~motor_alpha",-1.0)
-    limit = rospy.get_param('~limit', 1.0)
+    if veh_name != "unnamed":
+        gain = rospy.get_param('/' + veh_name + '/gain', 2.0)
+        trim = rospy.get_param('/' + veh_name + '/trim', 0.0)
+        baseline = rospy.get_param('/' + veh_name + '/baseline', 0.1)
+        radius = rospy.get_param('/' + veh_name + '/radius', 0.0725)
+        k = rospy.get_param('/' + veh_name + '/k', 27.0)
+        motor_alpha = rospy.get_param('/' + veh_name + '/motor_alpha',-1.0)
+        limit = rospy.get_param('/' + veh_name + '/limit', 1.0)
+
+    else:
+        gain = rospy.get_param('~gain', 2.0)
+        trim = rospy.get_param('~trim', 0.0)
+        baseline = rospy.get_param('~baseline', 0.1)
+        radius = rospy.get_param('~radius', 0.0725)
+        k = rospy.get_param('~k', 27.0)
+        motor_alpha = rospy.get_param("~motor_alpha",-1.0)
+        limit = rospy.get_param('~limit', 1.0)
 
     # get cmd velocity
     twist = data
@@ -123,6 +132,12 @@ def on_cmd_vel(data):
 
 # initialization
 if __name__ == '__main__':
+
+        # get node information
+        global veh_name
+        node_name = rospy.get_name()      
+        veh_name = node_name.split("/")[1]
+        print(veh_name)
 
 	# setup motor controller
 	motor_driver = Adafruit_MotorHAT(i2c_bus=1)
