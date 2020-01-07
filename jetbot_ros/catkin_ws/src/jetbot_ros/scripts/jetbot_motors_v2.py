@@ -74,18 +74,18 @@ def on_cmd_vel(data):
     global right_speed , left_speed , veh_name
     # get param
     if veh_name != "unnamed":
-        gain = rospy.get_param('/' + veh_name + '/gain', 2.0)
-        trim = rospy.get_param('/' + veh_name + '/trim', 0.0)
-        baseline = rospy.get_param('/' + veh_name + '/baseline', 0.1)
+        gain = rospy.get_param('/' + veh_name + '/gain', 1.0)
+        trim = rospy.get_param('/' + veh_name + '/trim', -0.05000000074505806)
+        baseline = rospy.get_param('/' + veh_name + '/baseline', 0.12)
         radius = rospy.get_param('/' + veh_name + '/radius', 0.0725)
         k = rospy.get_param('/' + veh_name + '/k', 27.0)
         motor_alpha = rospy.get_param('/' + veh_name + '/motor_alpha',-1.0)
         limit = rospy.get_param('/' + veh_name + '/limit', 1.0)
 
     else:
-        gain = rospy.get_param('~gain', 2.0)
-        trim = rospy.get_param('~trim', 0.0)
-        baseline = rospy.get_param('~baseline', 0.1)
+        gain = rospy.get_param('~gain', 1.0)
+        trim = rospy.get_param('~trim', -0.05000000074505806)
+        baseline = rospy.get_param('~baseline', 0.12)
         radius = rospy.get_param('~radius', 0.0725)
         k = rospy.get_param('~k', 27.0)
         motor_alpha = rospy.get_param("~motor_alpha",-1.0)
@@ -102,10 +102,10 @@ def on_cmd_vel(data):
     k_l = k
 
     # adjusting k by gain and trim
-    k_r_inv = (gain + trim) / k_r
-    k_l_inv = (gain - trim) / k_l
-    omega_r = (Vx + 0.5 * Vw * baseline) / radius
-    omega_l = (Vx - 0.5 * Vw * baseline) / radius
+    k_r_inv = (gain + trim) #/ k_r
+    k_l_inv = (gain - trim) #/ k_l
+    omega_r = (Vx + 0.5 * Vw * baseline) #/ radius
+    omega_l = (Vx - 0.5 * Vw * baseline) #/ radius
 
     # conversion from motor rotation rate to duty cycle
     # u_r = (gain + trim) (v + 0.5 * omega * b) / (r * k_r)

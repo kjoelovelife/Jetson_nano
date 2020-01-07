@@ -36,11 +36,16 @@ import rospy
 from geometry_msgs.msg import Twist
 from std_msgs.msg import String
 
-MAX_LIN_VEL = 1.0
-MAX_ANG_VEL = 8.0
+START_LIN_VALUE = 0.6
+START_ANG_VALUE = 0.0
+
+MAX_LIN_VEL = 1.0 - START_LIN_VALUE
+MAX_ANG_VEL = 13.0 - START_ANG_VALUE
 
 LIN_VEL_STEP_SIZE = 0.1
 ANG_VEL_STEP_SIZE = 1
+    
+
 
 msg = """
 Control Your Jetbot!!
@@ -70,6 +75,22 @@ def getKey():
     return key
 
 def vels(target_linear_vel, target_angular_vel):
+    global START_LIN_VALUE , START_ANG_VALUE
+
+    if target_linear_vel > 0 :
+        target_linear_vel = target_linear_vel + START_LIN_VALUE
+    elif target_linear_vel < 0 :
+        target_linear_vel = target_linear_vel - START_LIN_VALUE
+    else :
+        target_linear_vel = 0
+
+    if target_angular_vel > 0 :
+        target_angular_vel = target_angular_vel + START_ANG_VALUE
+    elif target_angular_vel < 0 :
+        target_angular_vel = target_angular_vel - START_ANG_VALUE
+    else :
+        target_angular_vel = 0
+
     return "currently:\tlinear vel %s\t angular vel %s " % (target_linear_vel,target_angular_vel)
 
 def makeSimpleProfile(output, input, slop):
@@ -94,12 +115,30 @@ def constrain(input, low, high):
 
 def checkLinearLimitVelocity(vel):
     vel = constrain(vel, -MAX_LIN_VEL, MAX_LIN_VEL)
-
     return vel
 
 def checkAngularLimitVelocity(vel):
     vel = constrain(vel, -MAX_ANG_VEL, MAX_ANG_VEL)
+    return vel
 
+def AddStartLinValue(vel):
+    global START_LIN_VALUE
+    if vel > 0 :
+        vel = vel + START_LIN_VALUE
+    elif vel < 0 :
+        vel = vel - START_LIN_VALUE
+    else :
+        vel = 0
+    return vel
+
+def AddStartAngValue(vel):
+    global START_ANG_VALUE
+    if vel > 0 :
+        vel = vel + START_ANG_VALUE
+    elif vel < 0 :
+        vel = vel - START_ANG_VALUE
+    else :
+        vel = 0
     return vel
 
 if __name__ == '__main__':
@@ -114,6 +153,7 @@ if __name__ == '__main__':
     target_angular_vel  = 0.0
     control_linear_vel  = 0.0
     control_angular_vel = 0.0
+
 
     try:
         print msg
@@ -152,10 +192,10 @@ if __name__ == '__main__':
             twist = Twist()
 
             control_linear_vel = makeSimpleProfile(control_linear_vel, target_linear_vel, (LIN_VEL_STEP_SIZE/2.0))
-            twist.linear.x = control_linear_vel; twist.linear.y = 0.0; twist.linear.z = 0.0
+            twist.linear.x = AddStartLinValue(control_linear_vel) ; twist.linear.y = 0.0; twist.linear.z = 0.0
 
             control_angular_vel = makeSimpleProfile(control_angular_vel, target_angular_vel, (ANG_VEL_STEP_SIZE/2.0))
-            twist.angular.x = 0.0; twist.angular.y = 0.0; twist.angular.z = control_angular_vel
+            twist.angular.x = 0.0; twist.angular.y = 0.0; twist.angular.z = AddStartAngValue(control_angular_vel)
 
             pub.publish(twist)
 
