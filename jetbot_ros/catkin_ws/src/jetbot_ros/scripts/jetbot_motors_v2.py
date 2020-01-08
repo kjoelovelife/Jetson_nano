@@ -31,7 +31,7 @@
 
 import rospy
 import time
-
+import math
 from Adafruit_MotorHAT import Adafruit_MotorHAT
 from std_msgs.msg import String
 from std_msgs.msg import Float64
@@ -81,6 +81,10 @@ def on_cmd_vel(data):
         k = rospy.get_param('/' + veh_name + '/k', 27.0)
         motor_alpha = rospy.get_param('/' + veh_name + '/motor_alpha',-1.0)
         limit = rospy.get_param('/' + veh_name + '/limit', 1.0)
+        v_gain = rospy.get_param('/' + veh_name + '/v_gain', 0.41)
+        omega_gain = rospy.get_param('/' + veh_name + '/steer_gain', 8.3)
+        steer_angle_gain = rospy.get_param('/' + veh_name + '/steer_angle_gain', 1)
+        simulated_vehicle_length = rospy.get_param('/' + veh_name + '/simulated_vehicle_length', 0.2)
 
     else:
         gain = rospy.get_param('~gain', 1.0)
@@ -90,12 +94,18 @@ def on_cmd_vel(data):
         k = rospy.get_param('~k', 27.0)
         motor_alpha = rospy.get_param("~motor_alpha",-1.0)
         limit = rospy.get_param('~limit', 1.0)
+        v_gain = rospy.get_param("~speed_gain", 0.41)
+        omega_gain = rospy.get_param("~steer_gain", 8.3)
+        steer_angle_gain = rospy.get_param("~steer_angle_gain", 1)
+        simulated_vehicle_length = rospy.get_param('~simulated_vehicle_length', 0.2)
 
     # get cmd velocity
     twist = data
-    Vx = twist.linear.x
+    Vx = twist.linear.x * v_gain
     Vy = twist.linear.y
-    Vw = twist.angular.z
+    Vw = twist.angular.z * omega_gain  #Vx / simulated_vehicle_length * math.tan( twist.angular.z * steer_angle_gain )
+
+
 
     # assuming same motor constants k for both motors
     k_r = k

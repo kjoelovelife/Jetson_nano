@@ -37,13 +37,13 @@ from geometry_msgs.msg import Twist
 from std_msgs.msg import String
 
 START_LIN_VALUE = 0.6
-START_ANG_VALUE = 0.0
+START_ANG_VALUE = 0.4
 
 MAX_LIN_VEL = 1.0 - START_LIN_VALUE
-MAX_ANG_VEL = 13.0 - START_ANG_VALUE
+MAX_ANG_VEL = 1.0 - START_ANG_VALUE # default : 13.0 
 
 LIN_VEL_STEP_SIZE = 0.1
-ANG_VEL_STEP_SIZE = 1
+ANG_VEL_STEP_SIZE = 0.01
     
 
 

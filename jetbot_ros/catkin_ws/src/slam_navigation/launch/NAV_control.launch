@@ -1,18 +1,13 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="veh" doc="Name of vehicle. ex: megaman"/>
-    <arg name="local" default="false" doc="true for running on laptop. false for running on vehicle."/>
-    <arg name="config" default="baseline" doc="Specify a config."/>
-    <arg name="param_file_name" default="default" doc="Specify a param file. ex:megaman." />
-
-
-    <include file="$(find duckietown)/machines"/>
+    <arg name="veh" value="$(env VEHICLE_NAME)" doc="Name of vehicle. ex: megaman"/>
+    <param name="param_veh" type="str" value="$(arg veh)"/>
 
     <!-- run nav_cmd_mapper_node -->
-    <node pkg="joy_mapper" type="nav_cmd_mapper.py" name="nav_cmd_mapper" output="screen">
+    <node ns="($arg veh)" pkg="slam_navigation" type="nav_cmd_mapper.py" name="nav_cmd_mapper" output="screen">
 	</node>
 
-    <!-- run inverse_kinematics_node -->
+    <!-- run setup_param_node -->
     <remap from="inverse_kinematics_node/car_cmd" to="joy_mapper_node/car_cmd"/>
     <remap from="inverse_kinematics_node/wheels_cmd" to="wheels_driver_node/wheels_cmd" />
     <include file="$(find dagu_car)/launch/inverse_kinematics_node.launch">
