@@ -22,7 +22,7 @@
     <node pkg="rf2o_laser_odometry" type="rf2o_laser_odometry_node" name="rf2o_laser_odometry">
         <param name="laser_scan_topic" value="scan"/>        <!-- topic where the lidar scans are being published -->
         <param name="base_frame_id" value="base_footprint"/>            <!-- frame_id (tf) of the mobile robot base. A tf transform from the laser_frame to the base_frame is mandatory -->
-        <param name="odom_frame_id" value="odom" />                <!-- frame_id (tf) to publish the odometry estimations -->
+        <param name="odom_frame_id" value="/odom" />                <!-- frame_id (tf) to publish the odometry estimations -->
         <param name="freq" value="10.0"/>                            <!-- Execution frequency. See "Planar Odometry from a Radial Laser Scanner. A Range Flow-based Approach. ICRA'16"-->
 
         <param name="init_pose_from_topic" value="" /> <!--(Odom topic) Leave empty to start at point (0,0) -->
@@ -95,6 +95,17 @@
         <!-- move_base params -->
         <rosparam file="$(find slam_navigation)/param/move_base_params.yaml" command="load"/>
         <remap from="/odom" to="/rf2o_laser_odometry/odom"/>
+        <remap from="/cmd_vel" to="/$(arg veh)/jetbot_motors/cmd_vel"/>
     </node>
+
+    <!-- run jetbot motor node -->
+    <node ns="$(arg veh)" pkg="jetbot_ros" type="jetbot_motors_v2.py" name="jetbot_motors" >
+        <remap from="/teleop/cmd_vel" to="/$(arg veh)/jetbot_motors/cmd_vel"/>
+    </node>
+
+    <!-- run set_param node -->
+    <node ns="$(arg veh)" pkg="jetbot_ros" type="set_param.py" name="set_param_node" output="screen">
+    </node>
+
 
 </launch>

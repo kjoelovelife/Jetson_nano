@@ -1,4 +1,4 @@
-image: /home/parallels/Knight_car/catkin_ws/src/kbot/map/map_lab.pgm
+image: /home/dlinano/Jetson_nano/jetbot_ros/catkin_ws/src/slam_navigation/map/map_lab.pgm
 resolution: 0.050000
 origin: [-50.000000, -50.000000, 0.000000]
 negate: 0
