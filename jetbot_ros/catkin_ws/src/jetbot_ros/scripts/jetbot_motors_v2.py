@@ -74,7 +74,7 @@ def on_cmd_vel(data):
     global right_speed , left_speed , veh_name
     # get param
     if veh_name != "unnamed":
-        gain = rospy.get_param('/' + veh_name + '/gain', 1.0)
+        gain = rospy.get_param('/' + veh_name + '/gain', 5.0)
         trim = rospy.get_param('/' + veh_name + '/trim', -0.05000000074505806)
         baseline = rospy.get_param('/' + veh_name + '/baseline', 0.12)
         radius = rospy.get_param('/' + veh_name + '/radius', 0.0725)
@@ -85,6 +85,7 @@ def on_cmd_vel(data):
         omega_gain = rospy.get_param('/' + veh_name + '/steer_gain', 8.3)
         steer_angle_gain = rospy.get_param('/' + veh_name + '/steer_angle_gain', 1)
         simulated_vehicle_length = rospy.get_param('/' + veh_name + '/simulated_vehicle_length', 0.2)
+        navigation_gain = rospy.get_param('/' + veh_name + '/navigation_gain', 1.0)
 
     else:
         gain = rospy.get_param('~gain', 1.0)
@@ -98,10 +99,11 @@ def on_cmd_vel(data):
         omega_gain = rospy.get_param("~steer_gain", 8.3)
         steer_angle_gain = rospy.get_param("~steer_angle_gain", 1)
         simulated_vehicle_length = rospy.get_param('~simulated_vehicle_length', 0.2)
+        navigation_gain = rospy.get_param('~/navigation_gain', 1.0)
 
     # get cmd velocity
     twist = data
-    Vx = twist.linear.x * v_gain
+    Vx = twist.linear.x * v_gain * navigation_gain
     Vy = twist.linear.y
     Vw = twist.angular.z * omega_gain  #Vx / simulated_vehicle_length * math.tan( twist.angular.z * steer_angle_gain )
 

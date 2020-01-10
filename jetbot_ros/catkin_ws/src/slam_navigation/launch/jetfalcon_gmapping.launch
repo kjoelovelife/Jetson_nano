@@ -5,8 +5,8 @@
     <arg name="veh" value="$(env VEHICLE_NAME)" doc="Name of vehicle. ex: megaman"/>
 
     <!-- TF setting -->
-	<node pkg="tf" type="static_transform_publisher" name="base_footprint2base_link" args="0 0 0.08 0 0 0 base_footprint base_link 10"/>
-    <node pkg="tf" type="static_transform_publisher" name="base_link2laser_link" args="0 0 0.057 3.1415927 0 0 base_link laser_frame 10"/>
+    <node pkg="tf" type="static_transform_publisher" name="base_footprint2base_link" args="0 0 0.085 0 0 0 base_footprint base_link 10"/>
+    <node pkg="tf" type="static_transform_publisher" name="base_link2laser_link" args="0 0 0.085 0 0 0 base_link laser_frame 10"/>
 
     <!-- YDLidar -->
     <!--<node pkg="ydlidar" type="ydlidar_node" name="ydlidar_node" output="screen">
