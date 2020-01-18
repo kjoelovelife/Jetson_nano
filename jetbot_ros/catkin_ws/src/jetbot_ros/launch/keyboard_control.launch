@@ -2,7 +2,7 @@
 <launch>
   
     <arg name="veh" value="$(env VEHICLE_NAME)" doc="Name of vehicle. ex: megaman"/>
-    <rosparam ns="$(arg veh)" command="load" file="$(find jetbot_ros)/param/icshop.yaml" />    <!-- set parameter -->
+    <rosparam ns="$(arg veh)" command="load" file="$(find jetbot_ros)/param/$(arg veh).yaml" />    <!-- set parameter -->
 
     <!-- run teleop_key node -->
     <node ns="$(arg veh)" pkg="jetbot_ros" type="teleop_key_v2.py" name="teleop" output="screen">
