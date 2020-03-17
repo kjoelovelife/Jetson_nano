@@ -12,7 +12,9 @@ If you buy the kit from IcShop , the password in image is 「 5564686 」or 「5
 
 ## reference
 
-*Jetson-nano-dev-kit-sd-card-image :https://developer.nvidia.com/embedded/dlc/jetson-nano-dev-kit-sd-card-image
+*Jetson-nano(I)-dev-kit-sd-card-image :https://developer.nvidia.com/embedded/dlc/jetson-nano-dev-kit-sd-card-image
+
+*Jetson-nano(II)-dev-kit-sd-card-image : https://developer.nvidia.com/jetson-nano-sd-card-image
 
 *Information for Jetson-nano : https://elinux.org/Jetson_Nano
 
