@@ -45,19 +45,19 @@ sudo nvpmodel -q
 ## you can use [ df -h ] to see how space you can use on microSD now
 #             [ free -h ] to see how space you can use with swap    
 
-size=8G
-cd
-sudo fallocate -l $size /swapfile
-sudo chmod 600 /swapfile
-ls -lh /swapfile
-sudo mkswap /swapfile
-sudo swapon /swapfile
-sudo swapon -show
-sudo cp /etc/fstab /etc/fstab.bak
+#size=8G
+#cd
+#sudo fallocate -l $size /swapfile
+#sudo chmod 600 /swapfile
+#ls -lh /swapfile
+#sudo mkswap /swapfile
+#sudo swapon /swapfile
+#sudo swapon -show
+#sudo cp /etc/fstab /etc/fstab.bak
 
 ## long time to use
 
-echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
+#echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 
 ## After this step , please reboot , and can use " free -h " to view information.
 #=======================================================================================
@@ -137,13 +137,13 @@ sudo ldconfig
 
 #========= step6. configure jupyter lab ==============================================		 
 #$ Install traitlets (master, to support the unlink() method)
-sudo python3 -m pip install git+https://github.com/ipython/traitlets@master
+#sudo python3 -m pip install git+https://github.com/ipython/traitlets@master
 
 ## Install jupyter lab
 sudo apt-get install nodejs npm
 ## needt modified file「 /usr/bin/pip3 」  , 「 from  pip import main」 , 「 main() 」 
 sudo pip3 install jupyter jupyterlab
-#sudo jupyter serverextension enable --py nbresuse
+sudo jupyter serverextension enable --py nbresuse
 sudo jupyter labextension install @jupyter-widgets/jupyterlab-manager
 cd ~/Jetson_nano
 git clone https://github.com/jupyterlab/jupyterlab-statusbar
@@ -151,7 +151,7 @@ cd jupyterlab-statusbar
 npm install
 npm run build
 sudo jupyter lab build
-#sudo jupyter labextension install @jupyterlab/statusbar
+sudo jupyter labextension install @jupyterlab/statusbar
 jupyter lab --generate-config
 jupyter notebook password
 
@@ -162,9 +162,8 @@ jupyter notebook password
 
 #========= step7. configure jetbot service  =========================================	 
 ## clone the jetbot repo with git 
-cd ~/Jetson_nano
-git clone https://github.com/NVIDIA-AI-IOT/jetbot
-/bin/'cp' ~/Jetson_nano/OpenCV-Face-Recognition/USB_camera/camera.py ~/Jetson_nano/jetbot/jetbot/camera.py  
+#cd ~/Jetson_nano
+#git clone https://github.com/NVIDIA-AI-IOT/jetbot 
 cd ~/Jetson_nano/jetbot
 sudo python3 setup.py install
 cd jetbot/utils
@@ -180,10 +179,20 @@ sudo systemctl start jetbot_jupyter
 #=======================================================================================
 
 #======= step8. configure Jetson nano GPIO =================
-sudo cp /usr/local/lib/python3.6/dist-packages/Jetson/GPIO/99-gpio.rules /etc/udev/rules.d
+sudo cp ~/Jetson_nano/driver/jetson-gpio/etc/99-gpio.rules /etc/udev/rules.d
 sudo udevadm control --reload-rules && sudo udevadm trigger
 sudo groupadd -f -r gpio
 sudo usermod -a -G gpio $USER
+
+#======= ste9. configure i2c ===============
+# Enable i2c permissions
+sudo usermod -aG i2c $USER
+#===========================================
+
+#======= ste10. configure jetcam ===============
+cd ~/Jetson_nano/jetcam
+sudo python3 setup.py install
+#===========================================
 
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
