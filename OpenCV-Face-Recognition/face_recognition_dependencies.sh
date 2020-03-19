@@ -110,7 +110,7 @@ sudo pip3 install -U numpy nbresuse matplotlib keras Cython Jetson.GPIO Adafruit
 # if you want to install tensorflow must enter this command : sudo pip3 install --upgrade pip
 # And , then modified file  「/usr/bin/pip3」 , 「 from  pip import __main__」 , 「 __main__._main() 」 
 ## Install tensorflow
-sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 tensorflow-gpu
+sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v43 'tensorflow<2'
 ## can find on this page : https://docs.nvidia.com/deeplearning/frameworks/install-tf-jetson-platform/index.html
 
 # Download source for pytorch 
