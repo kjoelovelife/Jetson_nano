@@ -100,10 +100,12 @@ virtualenv -p python3 AI
 #========= Step5. install library with python. ===================
 ## Install package with python3
 sudo python3 -m pip install --upgrade pip setuptools wheel
+sudo python3 -m pip install git+https://github.com/ipython/traitlets@master
 #  For installing scipy , need to install gfortran :   
 sudo pip3 install -U numpy nbresuse matplotlib keras Cython Jetson.GPIO Adafruit-MotorHAT h5py \
                 scipy imutils testresources \
                 grpcio absl-py py-cpuinfo psutil portpicker six mock requests gast h5py astor termcolor protobuf keras-applications keras-preprocessing wrapt google-pasta
+
 
 # if you want to install tensorflow must enter this command : sudo pip3 install --upgrade pip
 # And , then modified file  「/usr/bin/pip3」 , 「 from  pip import __main__」 , 「 __main__._main() 」 
@@ -141,20 +143,18 @@ sudo ldconfig
 
 ## Install jupyter lab
 sudo apt-get install nodejs npm
-## needt modified file「 /usr/bin/pip3 」  , 「 from  pip import main」 , 「 main() 」 
-sudo pip3 install jupyter jupyterlab
+## need modified file「 /usr/bin/pip3 」  , 「 from  pip import main」 , 「 main() 」 
+sudo pip3 install jupyter jupyterlab nbresuse
 sudo jupyter serverextension enable --py nbresuse
+cd ~/Jetson_nano/driver
+wget https://nodejs.org/dist/v12.13.0/node-v12.13.0-linux-arm64.tar.xz
+tar -xJf node-v12.13.0-linux-arm64.tar.xz
+cd node-v12.13.0-linux-arm64
+sudo cp -R * /usr/local/
 sudo jupyter labextension install @jupyter-widgets/jupyterlab-manager
-cd ~/Jetson_nano
-git clone https://github.com/jupyterlab/jupyterlab-statusbar
-cd jupyterlab-statusbar 
-npm install
-npm run build
-sudo jupyter lab build
 sudo jupyter labextension install @jupyterlab/statusbar
 jupyter lab --generate-config
 jupyter notebook password
-
 # if jupyter notebook has the error : " bash: jupyter: command not found "
 # can enter this command to solve : " pip3 install --upgrade --force-reinstall jupyter notebook "
 # if you have problem with "get 403 ..." , can install ipykernel with this text : sudo python3 -m pip install ipykernel --user
