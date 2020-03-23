@@ -50,7 +50,9 @@ If you buy the kit from IcShop , the password in image is 「 5564686 」or 「5
 
 ## Usage & Tutorial
 
-If you can connect the internet , then you can install userfultools by  " source  jetson_nano_userfultools.sh "  .
+If you can connect the internet , then you can install userfultools by  " OpenCV-Face-Recognition/face_recognition_dependencies.sh[https://github.com/kjoelovelife/Jetson_nano/blob/master/OpenCV-Face-Recognition/face_recognition_dependencies.sh
+]
+ "  .
 
 I will update continue , and will show how to play the jetbot without the electronic modules that Nvidia use in 2019/7 .
 
