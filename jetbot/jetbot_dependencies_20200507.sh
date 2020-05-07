@@ -49,23 +49,22 @@ sudo usermod -aG i2c $USER
 
 #======== Step2. apt update and upgrade ==============================
 sudo apt-get update
-sudo apt install python3-pip python3-pil
+sudo apt install -y python3-pip python3-pil
 sudo pip3 install cython
 sudo pip3 install --upgrade numpy 
 #==============================================================
 
 #========= Step3. install tensorflow ==========================
 cd
-sudo apt-get install libhdf5-serial-dev \
-                     hdf5-tools \ 
-                     libhdf5-dev \
-                     zlib1g-dev \
-                     'zip' \
-                     libjpeg8-dev \
-                     liblapack-dev \
-                     libblas-dev \
-                     gfortran \
-                     python3-pip    
+sudo apt-get install -y libhdf5-serial-dev \
+                        hdf5-tools \ 
+                        libhdf5-dev \
+                        zlib1g-dev \
+                        'zip' \
+                        libjpeg8-dev \
+                        liblapack-dev \
+                        libblas-dev \
+                        gfortran
 sudo pip3 install -U pip testresources setuptools
 sudo pip3 install -U numpy==1.16.1 \
                      future==0.17.1 \
@@ -104,7 +103,7 @@ sudo pip3 install torchvision
 
 #======== Step6. install traitlets and jupyterlab  ============
 sudo python3 -m pip install git+https://github.com/ipython/traitlets@master
-sudo apt install npm
+sudo apt install -y npm
 cd ~/Jetson_nano/driver
 wget https://nodejs.org/dist/v12.13.0/node-v12.13.0-linux-arm64.tar.xz
 tar -xJf node-v12.13.0-linux-arm64.tar.xz
