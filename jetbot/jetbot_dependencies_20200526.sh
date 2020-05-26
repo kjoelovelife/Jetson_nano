@@ -120,8 +120,9 @@ sudo make install
 #==============================================================
 
 #======== Step6. install traitlets and jupyterlab  ============
+sudo apt-get install -y npm 
+sudo pip3 install jupyter jupyterlab
 sudo python3 -m pip install git+https://github.com/ipython/traitlets@master
-sudo apt install -y npm
 cd ~/Jetson_nano/driver
 wget https://nodejs.org/dist/v12.13.0/node-v12.13.0-linux-arm64.tar.xz
 tar -xJf node-v12.13.0-linux-arm64.tar.xz
@@ -157,7 +158,7 @@ sudo systemctl start jetbot_jupyter
 #======= step8. configure Jetson nano GPIO =================
 sudo pip3 install Jetson.GPIO
 sudo apt-get install git-all
-cd ~/Jetson_nano
+cd ~/Jetson_nano/driver
 git clone https://github.com/NVIDIA/jetson-gpio.git
 cd jetson-gpio
 sudo python3 setup.py install

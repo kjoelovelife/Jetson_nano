@@ -142,7 +142,7 @@ sudo ldconfig
 #sudo python3 -m pip install git+https://github.com/ipython/traitlets@master
 
 ## Install jupyter lab
-sudo apt-get install nodejs npm
+sudo apt-get install npm
 ## need modified file「 /usr/bin/pip3 」  , 「 from  pip import main」 , 「 main() 」 
 sudo pip3 install jupyter jupyterlab nbresuse
 sudo jupyter serverextension enable --py nbresuse
