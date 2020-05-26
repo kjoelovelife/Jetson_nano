@@ -95,13 +95,28 @@ virtualenv -p python3 AI
 #ln -s /usr/lib/python3.6/dist-packages/cv2.cpython-36m-aarch64-linux-gnu.so
 #=======================================================================================
 
-#======== Step5. install pytorch =============================
-# Download source for pytorch 
-cd ~/Jetson_nano/driver
-wget https://nvidia.box.com/shared/static/veo87trfaawj5pfwuqvhl6mzc5b55fbj.whl -O torch-1.5.0a0+8f84ded-cp36-cp36m-linux_aarch64.whl
-sudo pip3 install torch-1.5.0a0+8f84ded-cp36-cp36m-linux_aarch64.whl
-# install torchvision
-sudo pip3 install torchvision
+#=========step 5. Build jetson-inference ======================================
+## clone the repo and submodules
+cd ~/Jetson_nano/jetbot_ros
+git clone https://github.com/dusty-nv/jetson-inference
+cd jetson-inference
+git submodule update --init
+## build from source
+mkdir build
+cd build
+cmake ../
+make
+## install libraries
+sudo make install
+#==============================================================================
+
+#======== Step5. just install pytorch 1.4 =============================
+## Download source for pytorch 
+#cd ~/Jetson_nano/driver
+#wget 'https://public.boxcloud.com/d/1/b1!LhuklG9Zh0C0PKCc0A_B5EQA0FMUp2dRkAzQ3DoRJJTd5Xvk3lU9Qa5_YfFrii0IiYgqjABt5t827vB5kdGHsOMr_nTY2SQpeAj0zoNk2W-4aoyMesuxqjN1Aq23veJCSL2tNj9gM99GYISaq17Q0eI3tabEBpDJPQ13bf5uINAA_YFhorpW7jgHdi1vsruH0kinRj3hWlGKAzOJheXPLdtDKwqJXivFy4wdC1gfZS6aJscWqO8s0ISCl-AviZi_2BFVgUNVgK91AgBB-dpFZMPUjISb2kXgtNV9dIoj4mxBQblay02lYkt8R7_8uPcAD4X0x4a1fdehCcH5diqSIlFifyiDPC5rdH5GjAeFDyjkblrgw7sCzilWNkgwmss1qd0B_suDJTwBCHxpA-Ej3BoqQbTSitMe5sssglFBr9ntjDdPGYGdq3i4B7krH4-YHgqf9hKxRnQWlpCgrwOUO2LI6NyLx_01TF2XBY9StDy4AS8qP5jUDikTbCjFWk6IBNTgMsOZ47NpFSiyoxxEGmBm4pAUqs18CW-JeqOLRhkh5BD_gEH1hZo4uhtYOS33dkOT-Wwcwjbe_0j5fRrm3I1guPg6F0G2yN_i0ZEsa7OBR7RsKDNDaephCL1XbJ6CUZTJPBzSRrJfGxV3TA7J5h-8SGNPg18MjKzRQfLGkegsu0DWfdZSy9fU7zMT-KJ8eX-y3L3O_L09r11jMVzqUex9VQrbmYNh5DmVvx6nFi39ngvzDdidK1uc8rWu9sOA2klXwZk0AbRuqkjS-qQdC3R7AbG6fVNgFunTzhjN15-o_bQYB1hV8MX6HpoPiZxALnuFbynNKLzt-G-6Cch3vqrQe3JiLxL9zck1kpHOupY4H5QjiRqTaSUvek6rJomI_0EHIRV_ZGSeiyqDDOs8femiRAFm9dnHhilRbN9LNLFe-J1Cr8K5z1DorZLwPpe-e1jLkPWyhQjf82qXPNrne78UgkOaYTYZMtYE2Wy4K6mKkPhwZSQCsF2wk8Sur1K3TfoC7cN_Rc1NjarEg0s7GLZTEqbyDOe4p0aQ6K7a0A-F0aPn9II81l_Iqy0T3iK9MQ2T-9gv0Nj9vFdKF_CE8nbs8xR_rXxVWogzU-CPpsG4wM-onQGtdWeIK9B4yVc4W_QAoP5zHtuwTP3j4NcEiCIrbU7rHE0tuyu-ThuiLVnXYSuCehFNqNaaWHUpqhgU2NHZOwMWGSZOU3IAjglt_XxCMVkeOFCj7WefuLjzm1PoGuH0JfALKvEvxyMi2nY2NKcSRbjN5cfZf0dSwmXOtJw16rAHOugrYZi9d4-hBaZJ1UGnMg../download' -O torch-1.4.0-cp36-cp36m-linux_aarch64.whl
+#sudo pip3 install torch-1.4.0-cp36-cp36m-linux_aarch64.whl
+## install torchvision
+#sudo pip3 install torchvision
 #==============================================================
 
 #======== Step6. install traitlets and jupyterlab  ============
