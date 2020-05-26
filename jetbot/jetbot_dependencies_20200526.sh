@@ -97,6 +97,7 @@ virtualenv -p python3 AI
 
 #======== Step5. install pytorch =============================
 # Download source for pytorch 
+cd ~/Jetson_nano/driver
 wget https://nvidia.box.com/shared/static/veo87trfaawj5pfwuqvhl6mzc5b55fbj.whl -O torch-1.5.0a0+8f84ded-cp36-cp36m-linux_aarch64.whl
 sudo pip3 install torch-1.5.0a0+8f84ded-cp36-cp36m-linux_aarch64.whl
 # install torchvision
