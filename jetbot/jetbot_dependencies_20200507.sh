@@ -64,7 +64,9 @@ sudo apt-get install -y libhdf5-serial-dev \
                         libjpeg8-dev \
                         liblapack-dev \
                         libblas-dev \
-                        gfortran
+                        gfortran \
+                        libcanberra-gtk-module \
+                        libcanberra-gtk3-module
 sudo pip3 install -U pip testresources setuptools
 sudo pip3 install -U numpy==1.16.1 \
                      future==0.17.1 \
@@ -95,8 +97,8 @@ virtualenv -p python3 AI
 
 #======== Step5. install pytorch =============================
 # Download source for pytorch 
-wget https://nvidia.box.com/shared/static/veo87trfaawj5pfwuqvhl6mzc5b55fbj.whl -O torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl
-sudo pip3 install torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl
+wget https://nvidia.box.com/shared/static/veo87trfaawj5pfwuqvhl6mzc5b55fbj.whl -O torch-1.5.0a0+8f84ded-cp36-cp36m-linux_aarch64.whl
+sudo pip3 install torch-1.5.0a0+8f84ded-cp36-cp36m-linux_aarch64.whl
 # install torchvision
 sudo pip3 install torchvision
 #==============================================================

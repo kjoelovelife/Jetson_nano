@@ -120,19 +120,19 @@ sudo pip3 install torch-1.1.0a0+b457266-cp36-cp36m-linux_aarch64.whl
 sudo pip3 install torchvision
 
 ## configure openCV_contrib
-work_path="Jetson_nano/OpenCV-Face-Recognition"
+work_path="Jetson_nano/driver"
 cd ~/$work_path
-wget -O opencv.zip https://github.com/Itseez/opencv/archive/3.3.1.zip
+wget -O opencv.zip https://github.com/opencv/opencv/archive/4.1.1.zip
 unzip opencv.zip
 
-wget -O opencv_contrib.zip https://github.com/Itseez/opencv_contrib/archive/3.3.1.zip
+wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.1.1.zip
 unzip opencv_contrib.zip
 
-cd ~/$work_path/opencv-3.3.1
+cd ~/$work_path/opencv-4.1.1
 mkdir build
 cd build
-cmake -D OPENCV_EXTRA_MODULES_PATH=~/$work_path/opencv_contrib-3.3.1/modules ..
-make -j5
+cmake -DOPENCV_EXTRA_MODULES_PATH=~/$work_path/opencv_contrib-4.1.1/modules ..
+make
 sudo make install
 sudo ldconfig
 #==================================================================
