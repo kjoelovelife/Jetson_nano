@@ -131,8 +131,8 @@ unzip opencv_contrib.zip
 cd ~/$work_path/opencv-4.1.1
 mkdir build
 cd build
-cmake -DOPENCV_EXTRA_MODULES_PATH=~/$work_path/opencv_contrib-4.1.1/modules ..
-make
+cmake -DOPENCV_EXTRA_MODULES_PATH=~/$work_path/opencv_contrib-4.1.1/modules -D BUILD_opencv_python3=ON..
+sudo make
 sudo make install
 sudo ldconfig
 #==================================================================
