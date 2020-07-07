@@ -122,16 +122,26 @@ sudo pip3 install torchvision
 ## configure openCV_contrib
 work_path="Jetson_nano/driver"
 cd ~/$work_path
-wget -O opencv.zip https://github.com/opencv/opencv/archive/4.1.1.zip
-unzip opencv.zip
-
-wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.1.1.zip
-unzip opencv_contrib.zip
+curl -L https://github.com/opencv/opencv/archive/4.1.0.zip -o opencv-4.1.1.zip
+curl -L https://github.com/opencv/opencv_contrib/archive/4.1.0.zip -o opencv_contrib-4.1.1.zip
+unzip opencv-4.1.1.zip
+unzip opencv_contrib-4.1.1.zip
+# remember to edit ../opencv-4.1.1/modules/core/include/opencv2/core/private.hpp , "eigen3/Eigen/Core" on line 66
 
 cd ~/$work_path/opencv-4.1.1
 mkdir build
 cd build
-cmake -DOPENCV_EXTRA_MODULES_PATH=~/$work_path/opencv_contrib-4.1.1/modules -D BUILD_opencv_python3=ON..
+cmake -D WITH_CUDA=ON \
+    	-D OPENCV_EXTRA_MODULES_PATH=../../opencv_contrib-4.1.1/modules \
+    	-D WITH_GSTREAMER=ON \
+    	-D WITH_LIBV4L=ON \
+    	-D BUILD_opencv_python2=ON \
+    	-D BUILD_opencv_python3=ON \
+    	-D BUILD_TESTS=OFF \
+    	-D BUILD_PERF_TESTS=OFF \
+    	-D BUILD_EXAMPLES=OFF \
+    	-D CMAKE_BUILD_TYPE=RELEASE \
+    	-D CMAKE_INSTALL_PREFIX=/usr/local ..
 sudo make
 sudo make install
 sudo ldconfig
