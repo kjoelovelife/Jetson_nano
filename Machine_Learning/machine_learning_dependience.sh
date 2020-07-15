@@ -103,7 +103,7 @@ sudo python3 -m pip install --upgrade pip setuptools wheel
 #  For installing scipy , need to install gfortran :   
 sudo pip3 install -U numpy nbresuse matplotlib keras Cython Jetson.GPIO Adafruit-MotorHAT h5py \
                 scipy imutils testresources \
-                grpcio absl-py py-cpuinfo psutil portpicker six mock requests gast h5py astor termcolor protobuf keras-applications keras-preprocessing wrapt google-pasta
+                grpcio absl-py py-cpuinfo psutil portpicker six mock requests gast h5py astor termcolor protobuf keras-applications keras-preprocessing wrapt google-pasta pandas
 
 # if you want to install tensorflow must enter this command : sudo pip3 install --upgrade pip
 # And , then modified file  「/usr/bin/pip3」 , 「 from  pip import __main__」 , 「 __main__._main() 」 
