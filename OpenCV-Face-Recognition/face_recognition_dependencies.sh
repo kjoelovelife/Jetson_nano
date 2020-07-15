@@ -122,8 +122,8 @@ sudo pip3 install torchvision
 ## configure openCV_contrib
 work_path="Jetson_nano/driver"
 cd ~/$work_path
-curl -L https://github.com/opencv/opencv/archive/4.1.0.zip -o opencv-4.1.1.zip
-curl -L https://github.com/opencv/opencv_contrib/archive/4.1.0.zip -o opencv_contrib-4.1.1.zip
+curl -L https://github.com/opencv/opencv/archive/4.1.1.zip -o opencv-4.1.1.zip
+curl -L https://github.com/opencv/opencv_contrib/archive/4.1.1.zip -o opencv_contrib-4.1.1.zip
 unzip opencv-4.1.1.zip
 unzip opencv_contrib-4.1.1.zip
 # remember to edit ../opencv-4.1.1/modules/core/include/opencv2/core/private.hpp , "eigen3/Eigen/Core" on line 66
