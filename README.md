@@ -8,7 +8,7 @@
 
 This repository contains use Jetson_nano
 
-If you buy the kit from IcShop , the password in image is 「 075564686 」.
+If you buy the kit from iCShop , the password in image is 「 075564686 」.
 
 ## reference
 
