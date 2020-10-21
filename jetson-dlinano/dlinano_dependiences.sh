@@ -42,7 +42,13 @@ sudo nvpmodel -m0
 sudo nvpmodel -q
 
 #==== Step1. install Jupyter Clickable Image Widget =================
-sudo npm install -g typescript
+# reference : https://computingforgeeks.com/how-to-install-nodejs-on-ubuntu-debian-linux-mint/
+#             https://github.com/jaybdub/jupyter_clickable_image_widget/tree/no_typescript
+sudo apt update
+sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt -y install nodejs
+sudo apt -y  install gcc g++ make
 cd ~/Jetson_nano/jetson-dlinano
 git clone https://github.com/jaybdub/jupyter_clickable_image_widget
 cd jupyter_clickable_image_widget
