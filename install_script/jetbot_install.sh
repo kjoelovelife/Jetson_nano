@@ -27,19 +27,9 @@
 #
 # -------------------------------------------------------------------------
 
-if [[ `id -u` -eq 0 ]] ; then
-    echo "Do not run this with sudo (do not run random things with sudo!)." ;
-    exit 1 ;
-fi
 
-# Configure power mode : 5W
-#sudo nvpmodel -m1
-
-# Configure power mode : 10W
-sudo nvpmodel -m0
-
-## If you want to see power mode , use 
-sudo nvpmodel -q
+main_path="~/Jetson_nano"
+sudo apt-get update
 
 #======= ste1. Enable i2c ===============
 # Enable i2c permissions
@@ -57,7 +47,7 @@ sudo pip3 install --upgrade numpy
 #========= Step3. install tensorflow ==========================
 cd
 sudo apt-get install -y libhdf5-serial-dev \
-                        hdf5-tools \ 
+                        hdf5-tools \
                         libhdf5-dev \
                         zlib1g-dev \
                         'zip' \
@@ -68,7 +58,7 @@ sudo apt-get install -y libhdf5-serial-dev \
                         libcanberra-gtk-module \
                         libcanberra-gtk3-module
 sudo pip3 install -U pip testresources setuptools
-sudo pip3 install -U numpy==1.16.1 \
+sudo pip3 install -U numpy \
                      future==0.17.1 \
                      mock==3.0.5 \
                      h5py==2.9.0 \
@@ -78,7 +68,7 @@ sudo pip3 install -U numpy==1.16.1 \
                      futures \
                      protobuf \
                      pybind11
-sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 tensorflow
+sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 'tensorflow<2'
 #=============================================================
 
 #======== Step4. configure virtualenv ================================
@@ -95,42 +85,21 @@ virtualenv -p python3 AI
 #ln -s /usr/lib/python3.6/dist-packages/cv2.cpython-36m-aarch64-linux-gnu.so
 #=======================================================================================
 
-#=========step 5. Build jetson-inference ======================================
-## clone the repo and submodules
-cd ~/Jetson_nano/jetbot_ros
-git clone https://github.com/dusty-nv/jetson-inference
-cd jetson-inference
-git submodule update --init
-## build from source
-mkdir build
-cd build
-cmake ../
-make
-## install libraries
-sudo make install
-#==============================================================================
-
-#======== Step5. just install pytorch 1.4 =============================
-## Download source for pytorch 
-#cd ~/Jetson_nano/driver
-#wget 'https://public.boxcloud.com/d/1/b1!LhuklG9Zh0C0PKCc0A_B5EQA0FMUp2dRkAzQ3DoRJJTd5Xvk3lU9Qa5_YfFrii0IiYgqjABt5t827vB5kdGHsOMr_nTY2SQpeAj0zoNk2W-4aoyMesuxqjN1Aq23veJCSL2tNj9gM99GYISaq17Q0eI3tabEBpDJPQ13bf5uINAA_YFhorpW7jgHdi1vsruH0kinRj3hWlGKAzOJheXPLdtDKwqJXivFy4wdC1gfZS6aJscWqO8s0ISCl-AviZi_2BFVgUNVgK91AgBB-dpFZMPUjISb2kXgtNV9dIoj4mxBQblay02lYkt8R7_8uPcAD4X0x4a1fdehCcH5diqSIlFifyiDPC5rdH5GjAeFDyjkblrgw7sCzilWNkgwmss1qd0B_suDJTwBCHxpA-Ej3BoqQbTSitMe5sssglFBr9ntjDdPGYGdq3i4B7krH4-YHgqf9hKxRnQWlpCgrwOUO2LI6NyLx_01TF2XBY9StDy4AS8qP5jUDikTbCjFWk6IBNTgMsOZ47NpFSiyoxxEGmBm4pAUqs18CW-JeqOLRhkh5BD_gEH1hZo4uhtYOS33dkOT-Wwcwjbe_0j5fRrm3I1guPg6F0G2yN_i0ZEsa7OBR7RsKDNDaephCL1XbJ6CUZTJPBzSRrJfGxV3TA7J5h-8SGNPg18MjKzRQfLGkegsu0DWfdZSy9fU7zMT-KJ8eX-y3L3O_L09r11jMVzqUex9VQrbmYNh5DmVvx6nFi39ngvzDdidK1uc8rWu9sOA2klXwZk0AbRuqkjS-qQdC3R7AbG6fVNgFunTzhjN15-o_bQYB1hV8MX6HpoPiZxALnuFbynNKLzt-G-6Cch3vqrQe3JiLxL9zck1kpHOupY4H5QjiRqTaSUvek6rJomI_0EHIRV_ZGSeiyqDDOs8femiRAFm9dnHhilRbN9LNLFe-J1Cr8K5z1DorZLwPpe-e1jLkPWyhQjf82qXPNrne78UgkOaYTYZMtYE2Wy4K6mKkPhwZSQCsF2wk8Sur1K3TfoC7cN_Rc1NjarEg0s7GLZTEqbyDOe4p0aQ6K7a0A-F0aPn9II81l_Iqy0T3iK9MQ2T-9gv0Nj9vFdKF_CE8nbs8xR_rXxVWogzU-CPpsG4wM-onQGtdWeIK9B4yVc4W_QAoP5zHtuwTP3j4NcEiCIrbU7rHE0tuyu-ThuiLVnXYSuCehFNqNaaWHUpqhgU2NHZOwMWGSZOU3IAjglt_XxCMVkeOFCj7WefuLjzm1PoGuH0JfALKvEvxyMi2nY2NKcSRbjN5cfZf0dSwmXOtJw16rAHOugrYZi9d4-hBaZJ1UGnMg../download' -O torch-1.4.0-cp36-cp36m-linux_aarch64.whl
-#sudo pip3 install torch-1.4.0-cp36-cp36m-linux_aarch64.whl
-## install torchvision
-#sudo pip3 install torchvision
-#==============================================================
-
 #======== Step6. install traitlets and jupyterlab  ============
-sudo apt-get install -y npm 
+sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+sudo apt -y install nodejs nodejs-dev node-gyp libssl1.0-dev npm 'gcc' g++ 'make'
 sudo pip3 install jupyter jupyterlab
 sudo python3 -m pip install git+https://github.com/ipython/traitlets@master
-cd ~/Jetson_nano/driver
-wget https://nodejs.org/dist/v12.13.0/node-v12.13.0-linux-arm64.tar.xz
-tar -xJf node-v12.13.0-linux-arm64.tar.xz
-cd node-v12.13.0-linux-arm64
-sudo cp -R * /usr/local/
 sudo jupyter labextension install @jupyter-widgets/jupyterlab-manager
 sudo jupyter labextension install @jupyterlab/statusbar
+git clone https://github.com/jaybdub/jupyter_clickable_image_widget -b no_typescript $main_path/jupyter_clickable_image_widget
+cd $main_path/jupyter_clickable_image_widget
+sudo pip3 install -e .
+jupyter labextension install js 
 jupyter lab --generate-config
+#echo $PASSWORD | jupyter notebook password
+#echo $PASSWORD
 # if jupyter notebook has the error : " bash: jupyter: command not found "
 # can enter this command to solve : " pip3 install --upgrade --force-reinstall jupyter notebook "
 # if you have problem with "get 403 ..." , can install ipykernel with this text : sudo python3 -m pip install ipykernel --user
@@ -140,10 +109,10 @@ jupyter lab --generate-config
 ## clone the jetbot repo with git 
 #cd ~/Jetson_nano
 #git clone https://github.com/NVIDIA-AI-IOT/jetbot 
-cd ~/Jetson_nano/jetbot
+cd $main_path/jetbot
 sudo apt install python3-smbus cmake
 sudo python3 setup.py install
-cd jetbot/utils
+cd $main_path/jetbot/jetbot/utils
 python3 create_stats_service.py
 sudo mv jetbot_stats.service /etc/systemd/system/jetbot_stats.service
 sudo systemctl enable jetbot_stats
@@ -158,34 +127,12 @@ sudo systemctl start jetbot_jupyter
 #======= step8. configure Jetson nano GPIO =================
 sudo pip3 install Jetson.GPIO
 sudo apt-get install git-all
-cd ~/Jetson_nano/driver
+cd  /driver
 git clone https://github.com/NVIDIA/jetson-gpio.git
 cd jetson-gpio
 sudo python3 setup.py install
 #===========================================================
 
-#======= ste19. configure jetcam ===============
-cd ~/Jetson_nano/jetcam
-sudo python3 setup.py install
-#===========================================
-
-#==== Step10. configure SWAP size , ideal is double RAM. Default is 4G =================
-## you can use [ df -h ] to see how space you can use on microSD now
-#             [ free -h ] to see how space you can use with swap    
-
-size=4G
-cd
-sudo fallocate -l $size /swapfile
-sudo chmod 600 /swapfile
-ls -lh /swapfile
-sudo mkswap /swapfile
-sudo swapon /swapfile
-sudo swapon -show
-sudo cp /etc/fstab /etc/fstab.bak
-## long time to use
-sudo echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
-## After this step , please reboot , and can use " free -h " to view information.
-#=======================================================================================
 
 # None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
 # sudo pip install --upgrade pip setuptools wheel
