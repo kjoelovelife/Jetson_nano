@@ -29,7 +29,7 @@
 
 
 main_path="~/Jetson_nano"
-sudo apt-get update
+#sudo apt-get update
 
 #======= ste1. Enable i2c ===============
 # Enable i2c permissions
@@ -68,7 +68,7 @@ sudo pip3 install -U numpy \
                      futures \
                      protobuf \
                      pybind11
-sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42 'tensorflow<2'
+sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42
 #=============================================================
 
 #======== Step4. configure virtualenv ================================
@@ -88,7 +88,7 @@ virtualenv -p python3 AI
 #======== Step6. install traitlets and jupyterlab  ============
 sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
 curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-sudo apt -y install nodejs nodejs-dev node-gyp libssl1.0-dev npm 'gcc' g++ 'make'
+sudo apt -y install nodejs node-gyp 'gcc' g++ 'make'
 sudo pip3 install jupyter jupyterlab
 sudo python3 -m pip install git+https://github.com/ipython/traitlets@master
 sudo jupyter labextension install @jupyter-widgets/jupyterlab-manager

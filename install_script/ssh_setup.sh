@@ -26,10 +26,10 @@
 # Visit https://github.com/duckietown
 # -------------------------------------------------------------------------
 
-if [[ `id -u` -eq 0 ]] ; then
-    echo "Do not run this with sudo (do not run random things with sudo!)." ;
-    exit 1 ;
-fi
+#if [[ `id -u` -eq 0 ]] ; then
+#    echo "Do not run this with sudo (do not run random things with sudo!)." ;
+#    exit 1 ;
+#fi
 
 sudo apt-get install -y vim
 sudo apt-get install -y gedit

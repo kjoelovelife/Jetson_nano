@@ -13,6 +13,9 @@ echo $PASSWORD | sudo -S apt-add-repository restricted
 echo $PASSWORD | sudo -S sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 echo $PASSWORD | sudo -S apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 
+sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
+curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
+
 ## delete ROS old key : sudo apt-key del 421C365BD9FF1F717815A3895523BAEEB01FA116 
 
 # install ROS desktop-full
