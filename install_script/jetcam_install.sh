@@ -26,9 +26,9 @@
 #
 # -------------------------------------------------------------------------
 
-main_path="~/Jetson_nano"
+main_path="Jetson_nano"
 #======= configure jetcam ===============
-cd $main_path/jetcam
+cd ~/$main_path/jetcam
 sudo python3 setup.py install
 #===========================================
 

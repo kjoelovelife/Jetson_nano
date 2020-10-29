@@ -9,7 +9,7 @@
 # license agreement from NVIDIA Corporation is strictly prohibited.
 #
 
-main_path="~/Jetson_nano"
+main_path="Jetson_nano"
 
 echo "** Remove other OpenCV first"
 #sudo sudo apt-get purge *libopencv*
@@ -27,7 +27,7 @@ sudo apt-get update
 
 
 echo "** Download opencv-4.3.0"
-cd $main_path/driver
+cd ~/$main_path/driver
 curl -L https://github.com/opencv/opencv/archive/4.3.0.zip -o opencv-4.3.0.zip
 curl -L https://github.com/opencv/opencv_contrib/archive/4.3.0.zip -o opencv_contrib-4.3.0.zip
 unzip opencv-4.3.0.zip

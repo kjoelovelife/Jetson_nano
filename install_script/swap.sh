@@ -22,9 +22,6 @@
 #SOFTWARE.
 # -------------------------------------------------------------------------
 
-## file path
-main_path="~/Jetson_nano/install_script"
-
 ## you can use [ df -h ] to see how space you can use on microSD now
 #             [ free -h ] to see how space you can use with swap    
 
