@@ -28,7 +28,7 @@
 # -------------------------------------------------------------------------
 
 
-main_path="~/Jetson_nano"
+main_path="Jetson_nano"
 #sudo apt-get update
 
 #======= ste1. Enable i2c ===============
@@ -41,7 +41,6 @@ sudo usermod -aG i2c $USER
 sudo apt-get update
 sudo apt install -y python3-pip python3-pil
 sudo pip3 install cython
-sudo pip3 install --upgrade numpy 
 #==============================================================
 
 #========= Step3. install tensorflow ==========================
@@ -58,7 +57,7 @@ sudo apt-get install -y libhdf5-serial-dev \
                         libcanberra-gtk-module \
                         libcanberra-gtk3-module
 sudo pip3 install -U pip testresources setuptools
-sudo pip3 install -U numpy \
+sudo pip3 install -U numpy==1.18.5 \
                      future==0.17.1 \
                      mock==3.0.5 \
                      h5py==2.9.0 \
@@ -68,12 +67,12 @@ sudo pip3 install -U numpy \
                      futures \
                      protobuf \
                      pybind11
-sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v42
+sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 'tensorflow<2'
 #=============================================================
 
 #======== Step4. configure virtualenv ================================
 ## if you want to exit virtualenv , just enter "deactivate"
-sudo apt-get install -y virtualenv
+echo $PASSWORD | sudo apt-get install -y virtualenv
 cd
 mkdir envs;cd envs
 virtualenv -p python3 AI
@@ -90,29 +89,25 @@ sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
 curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
 sudo apt -y install nodejs node-gyp 'gcc' g++ 'make'
 sudo pip3 install jupyter jupyterlab
-sudo python3 -m pip install git+https://github.com/ipython/traitlets@master
+sudo python3 -m pip install git+https://github.com/ipython/traitlets@4.x
 sudo jupyter labextension install @jupyter-widgets/jupyterlab-manager
 sudo jupyter labextension install @jupyterlab/statusbar
-git clone https://github.com/jaybdub/jupyter_clickable_image_widget -b no_typescript $main_path/jupyter_clickable_image_widget
-cd $main_path/jupyter_clickable_image_widget
-sudo pip3 install -e .
-jupyter labextension install js 
-jupyter lab --generate-config
+#jupyter lab --generate-config
 #echo $PASSWORD | jupyter notebook password
 #echo $PASSWORD
 # if jupyter notebook has the error : " bash: jupyter: command not found "
-# can enter this command to solve : " pip3 install --upgrade --force-reinstall jupyter notebook "
+# can enter this command to solve : " pip3 install --upgrade --force-reinstall jupyter note  book "
 # if you have problem with "get 403 ..." , can install ipykernel with this text : sudo python3 -m pip install ipykernel --user
 #=============================================================
 
 #========= step7. install repo of jetbot and configure jetbot service ==================	 
 ## clone the jetbot repo with git 
 #cd ~/Jetson_nano
-#git clone https://github.com/NVIDIA-AI-IOT/jetbot 
-cd $main_path/jetbot
-sudo apt install python3-smbus cmake
+#git clone https://github.com/NVIDIA-AI-IOT/jetbot ~/$main_path/jetbot 
+cd ~/$main_path/jetbot
+echo $PASSWORD | sudo apt install python3-smbus cmake
 sudo python3 setup.py install
-cd $main_path/jetbot/jetbot/utils
+cd ~/$main_path/jetbot/jetbot/utils
 python3 create_stats_service.py
 sudo mv jetbot_stats.service /etc/systemd/system/jetbot_stats.service
 sudo systemctl enable jetbot_stats
