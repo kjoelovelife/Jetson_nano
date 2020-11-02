@@ -139,15 +139,14 @@ then
     # setup opencv430
     opencv_430=true
 else
-    echo "Skip setup jetbot."
+    echo "Skip setup opencv-4.3.0 ."
 fi
 
 ## configure SWAP size
-echo -n "Do you want to configure SWAP size? (y/N): "
+echo -n "Do you want to configure SWAP size(4G)? (y/N): "
 read swap_
 if [ "$swap_" '==' "y" ] || [ "$swap_" '==' "Y" ];
 then
-    echo -n "How big do yo want to configure ? (2G ~ 8G): "
     read swap_size
 else
     echo "Skip swap"
@@ -158,10 +157,11 @@ fi
 #sudo apt-get install firefox gedit
 
 ## which package install
-if [ $ros1 == true ] ; then
+
+if [ $swap_ == true ] ; then
     cd ~/$main_path/$install_source
-    echo $PASSWORD | ./ros_install_melodic.sh
-    msg_ros="ROS , version : $ros1_distro ."
+    ./swap.sh
+    msg_swap="swap $size "
 fi
 
 if [ $ssh_setup == true ] ; then
@@ -194,10 +194,10 @@ if [ $opencv_430 == true ] ; then
     msg_opencv430="opencv-4.3.0 and opencv-4.3.0-contrib"
 fi
 
-if [ $swap_ == true ] ; then
+if [ $ros1 == true ] ; then
     cd ~/$main_path/$install_source
-    echo $PASSWORD | sudo source $main_path/$install_source/swap.sh
-    msg_swap="swap $size "
+    echo $PASSWORD | ./ros_install_melodic.sh
+    msg_ros="ROS , version : $ros1_distro ."
 fi
 
 ## install done

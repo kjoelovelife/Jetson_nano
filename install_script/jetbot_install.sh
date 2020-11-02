@@ -106,22 +106,22 @@ sudo jupyter labextension install @jupyterlab/statusbar
 #git clone https://github.com/NVIDIA-AI-IOT/jetbot ~/$main_path/jetbot 
 cd ~/$main_path/jetbot
 echo $PASSWORD | sudo apt install python3-smbus cmake
-sudo python3 setup.py install
+echo $PASSWORD | sudo python3 setup.py install
 cd ~/$main_path/jetbot/jetbot/utils
 python3 create_stats_service.py
-sudo mv jetbot_stats.service /etc/systemd/system/jetbot_stats.service
-sudo systemctl enable jetbot_stats
-sudo systemctl start jetbot_stats
+echo $PASSWORD | sudo mv jetbot_stats.service /etc/systemd/system/jetbot_stats.service
+echo $PASSWORD | sudo systemctl enable jetbot_stats
+echo $PASSWORD | sudo systemctl start jetbot_stats
 python3 create_jupyter_service.py
-sudo mv jetbot_jupyter.service /etc/systemd/system/jetbot_jupyter.service
-sudo systemctl enable jetbot_jupyter
-sudo systemctl start jetbot_jupyter
+echo $PASSWORD | sudo mv jetbot_jupyter.service /etc/systemd/system/jetbot_jupyter.service
+echo $PASSWORD | sudo systemctl enable jetbot_jupyter
+echo $PASSWORD | sudo systemctl start jetbot_jupyter
 #sudo chmod 777 /usr/local/lib/python3.6/dist-packages/jetbot-0.3.0-py3.6.egg/jetbot/* -R
 #=======================================================================================
 
 #======= step8. configure Jetson nano GPIO =================
 sudo pip3 install Jetson.GPIO
-sudo apt-get install git-all
+sudo apt-get -y install git-all
 cd  /driver
 git clone https://github.com/NVIDIA/jetson-gpio.git
 cd jetson-gpio
