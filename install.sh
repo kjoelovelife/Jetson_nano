@@ -74,6 +74,7 @@ if [[ $kernel =~ $platform ]] ; then
     #echo $PASSWORD | sudo -S nvpmodel -m1 # 5W
     sudo -S nvpmodel -m0 # 10W
     sudo -S nvpmodel -q
+    sudo sh -c 'echo 200 > /sys/devices/pwm-fan/target_pwm'
 fi
 
 ## install ros

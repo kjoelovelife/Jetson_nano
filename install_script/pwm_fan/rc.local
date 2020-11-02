@@ -1,0 +1,7 @@
+#!/bin/bash
+
+sleep 3
+
+sudo /usr/bin/jetson_clocks
+
+sudo sh -c 'echo 200 > /sys/devices/pwm-fan/target_pwm'
