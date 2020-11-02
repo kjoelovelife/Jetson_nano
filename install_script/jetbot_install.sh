@@ -67,6 +67,7 @@ sudo pip3 install -U numpy==1.18.5 \
                      futures \
                      protobuf \
                      pybind11
+sudo -H pip3 install jetson-stats
 sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 'tensorflow<2'
 #=============================================================
 

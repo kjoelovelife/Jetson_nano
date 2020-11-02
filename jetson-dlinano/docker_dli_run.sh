@@ -30,7 +30,11 @@
 #
 # -------------------------------------------------------------------------
 
+#mkdir -p ~/nvdli-data
+#sudo mv ~/Jetson_nano/jetcam ~/nvdli-data/jetcam
+
 echo "Welcome to class Getting Started with AI on Jetson Nano !"
+echo "The jupyter lab in docker password is dlinano "
 echo "Please choose your camera.If you don't type anything , default is usb camera."
 echo "(U/u : usb camera  ,  C/c : CSI camera.)"
 echo -n "Your camera is : "

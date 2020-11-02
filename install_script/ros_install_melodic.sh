@@ -38,7 +38,7 @@ echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 
 echo "ROS $ros1_distro installed successfully." 
-sudo chown -R $USER: $HOME
+#sudo chown -R $USER: $HOME
 #==============================================================================
 
 

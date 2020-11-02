@@ -72,8 +72,8 @@ msg_swap=""
 ## Configure power mode
 if [[ $kernel =~ $platform ]] ; then
     #echo $PASSWORD | sudo -S nvpmodel -m1 # 5W
-    echo $PASSWORD | sudo -S nvpmodel -m0 # 10W
-    echo $PASSWORD | sudo -S nvpmodel -q
+    sudo -S nvpmodel -m0 # 10W
+    sudo -S nvpmodel -q
 fi
 
 ## install ros
@@ -147,7 +147,8 @@ echo -n "Do you want to configure SWAP size(4G)? (y/N): "
 read swap_
 if [ "$swap_" '==' "y" ] || [ "$swap_" '==' "Y" ];
 then
-    read swap_size
+    # read swap_size
+    swap=true
 else
     echo "Skip swap"
 fi
@@ -158,7 +159,7 @@ fi
 
 ## which package install
 
-if [ $swap_ == true ] ; then
+if [ $swap == true ] ; then
     cd ~/$main_path/$install_source
     ./swap.sh
     msg_swap="swap $size "
@@ -168,6 +169,12 @@ if [ $ssh_setup == true ] ; then
     cd ~/$main_path/$install_source
     echo $PASSWORD | ./ssh_setup.sh
     msg_ssh="SSH."
+fi
+
+if [ $opencv_430 == true ] ; then
+    cd ~/$main_path/$install_source
+    echo $PASSWORD | sudo ./opencv430_install.sh
+    msg_430="opencv-4.3.0 and opencv-4.3.0-contrib"
 fi
 
 if [ $jetson_inference == true ] ; then
@@ -186,12 +193,6 @@ if [ $jetcam == true ] ; then
     cd ~/$main_path/$install_source
     echo $PASSWORD | sudo ./jetcam_install.sh
     msg_jetcam="jetcam."
-fi
-
-if [ $opencv_430 == true ] ; then
-    cd ~/$main_path/$install_source
-    echo $PASSWORD | sudo ./opencv430_install.sh
-    msg_opencv430="opencv-4.3.0 and opencv-4.3.0-contrib"
 fi
 
 if [ $ros1 == true ] ; then
