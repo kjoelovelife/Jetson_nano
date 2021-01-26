@@ -1,0 +1,2 @@
+model_pth: best3-2021-01-18-17-02-42.pth
+use_cuda: true

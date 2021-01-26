@@ -1,0 +1,23 @@
+camera_matrix:
+  cols: 3
+  data: [137.58362388066217, 0.0, 116.48278335587493, 0.0, 247.7130165041514, 103.90313970357491,
+    0.0, 0.0, 1.0]
+  rows: 3
+camera_name: rosky01/camera
+distortion_coefficients:
+  cols: 5
+  data: [-0.321190264876939, 0.09580129013321884, 9.474616663839444e-05, -5.013744225753801e-05,
+    0.0]
+  rows: 1
+distortion_model: plumb_bob
+image_height: 224
+image_width: 224
+projection_matrix:
+  cols: 4
+  data: [103.78071594238281, 0.0, 117.87588198222875, 0.0, 0.0, 228.74169921875, 102.14614909715601,
+    0.0, 0.0, 0.0, 1.0, 0.0]
+  rows: 3
+rectification_matrix:
+  cols: 3
+  data: [1.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0, 0.0, 1.0]
+  rows: 3

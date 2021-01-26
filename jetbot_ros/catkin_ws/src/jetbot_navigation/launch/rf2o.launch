@@ -1,0 +1,40 @@
+<?xml version="1.0"?>   
+
+<launch>
+    
+    <!-- Parameter  -->
+    <arg name="local" default="false" doc="true for running on laptop. false for running on vehicle."/>
+    <arg name="veh" doc="Name of vehicle. ex: megaman"/>
+    <arg name="config" default="baseline" doc="Specify a config."/>
+    <arg name="param_file_name" default="default" doc="Specify a param file. ex:megaman." />
+
+    <include file="$(find duckietown)/machines"/>
+   
+    <!--<master auto="start"/>-->
+    <arg name="use_rviz" default="true" />
+
+    <!-- TF setting -->
+    <node pkg="tf" type="static_transform_publisher" name="base_footprint2base_link" args="0 0 0.08 0 0 0 /base_footprint /base_link 10"/>
+    <node pkg="tf" type="static_transform_publisher" name="base_link2laser_link" args="0 0 0.057 0 0 0 /base_link /laser_frame 10"/>
+    
+
+    <!-- YDLidar -->
+    <!--<node pkg="ydlidar" type="ydlidar_node" name="ydlidar_node" output="screen">
+    </node>
+    <node if="$(arg local)" pkg="ydlidar" type="ydlidar_node" name="ydlidar_node" output="screen">
+    </node>
+    <node unless="$(arg local)" machine="$(arg veh)" pkg="ydlidar" type="ydlidar_node" name="ydlidar_node" output="screen">
+    </node>
+    -->
+    <include file="$(find ydlidar)/launch/lidar.launch" />
+
+    <!--rf2o_Laser_Odometry-->
+    <node pkg="rf2o_laser_odometry" type="rf2o_laser_odometry_node" name="rf2o_laser_odometry">
+        <param name="laser_scan_topic" value="scan"/>            <!-- topic where the lidar scans are being published -->
+        <param name="base_frame_id" value="base_footprint"/>     <!-- frame_id (tf) of the mobile robot base. A tf transform from the laser_frame to the base_frame is mandatory -->
+        <param name="odom_frame_id" value="odom" />              <!-- frame_id (tf) to publish the odometry estimations -->
+        <param name="freq" value="7.0"/>                        <!-- Execution frequency. See "Planar Odometry from a Radial Laser Scanner. A Range Flow-based Approach. ICRA'16"-->
+        <param name="init_pose_from_topic" value="" /> <!--(Odom topic) Leave empty to start at point (0,0) -->
+    </node>
+
+</launch>

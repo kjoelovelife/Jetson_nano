@@ -49,20 +49,19 @@ def on_cmd_raw(msg):
 # simple string commands (left/right/forward/backward/stop)
 def on_cmd_str(msg):
 	rospy.loginfo(rospy.get_caller_id() + ' cmd_str=%s', msg.data)
-        motor_alpha = rospy.get_param("/jetbot_motors/motor_alpha",1.0)
 
 	if msg.data.lower() == "left":
-		set_speed(motor_left_ID,  -1.0 * motor_alpha)
-		set_speed(motor_right_ID,  1.0 * motor_alpha) 
+		set_speed(motor_left_ID,  -1.0)
+		set_speed(motor_right_ID,  1.0) 
 	elif msg.data.lower() == "right":
-		set_speed(motor_left_ID,   1.0 * motor_alpha)
-		set_speed(motor_right_ID, -1.0 * motor_alpha) 
+		set_speed(motor_left_ID,   1.0)
+		set_speed(motor_right_ID, -1.0) 
 	elif msg.data.lower() == "forward":
-		set_speed(motor_left_ID,   1.0 * motor_alpha)
-		set_speed(motor_right_ID,  1.0 * motor_alpha)
+		set_speed(motor_left_ID,   1.0)
+		set_speed(motor_right_ID,  1.0)
 	elif msg.data.lower() == "backward":
-		set_speed(motor_left_ID,  -1.0 * motor_alpha)
-		set_speed(motor_right_ID, -1.0 * motor_alpha)  
+		set_speed(motor_left_ID,  -1.0)
+		set_speed(motor_right_ID, -1.0)  
 	elif msg.data.lower() == "stop":
 		all_stop()
 	else:

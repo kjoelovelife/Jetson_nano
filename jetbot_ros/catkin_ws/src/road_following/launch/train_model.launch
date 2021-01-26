@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="pkg_name" default="img_recognition"/>
+    <arg name="node_name" default="train_model"/>
+    <arg name="veh" default="$(env VEHICLE_NAME)"/>
+    <arg name="output" default="screen"/>
+
+    <!-- run train model -->
+    <node ns="$(arg veh)" pkg="$(arg pkg_name)" type="$(arg node_name).py" name="$(arg node_name)" clear_params="true" output="$(arg output)">
+      <rosparam command="load" file="$(find img_recognition)/param/$(arg node_name).yaml"/>
+    </node>
+ 
+
+
+</launch>

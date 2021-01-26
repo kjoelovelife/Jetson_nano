@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="veh" default="$(env VEHICLE_NAME)" doc="Name of vehicle. ex: megaman"/>
+    <arg name="config" default="baseline" doc="Specify a config."/>
+    <arg name="param_file_name" default="default" doc="Specify a param file. ex:megaman." />
+
+    <!-- run keyboard_mapper_node and rename topic to nav_cmd_mapper -->
+    <remap from="/$(arg veh)/nav_cmd_mapper/cmd_vel" to="/cmd_vel"/>
+    <include file="$(find mapper)/launch/keyboard_mapper_node.launch">
+	    <arg name="node_name" value="nav_cmd_mapper"/>	
+        <arg name="veh" value="$(arg veh)"/>
+        <arg name="navigation" value="true"/>
+    </include>
+
+    <!-- run inverse_kinematics_node -->
+    <remap from="inverse_kinematics_node/car_cmd" to="nav_cmd_mapper/car_cmd"/>
+    <remap from="inverse_kinematics_node/wheels_cmd" to="wheels_driver_node/wheels_cmd" />
+    <include file="$(find ominibot_car)/launch/inverse_kinematics_node.launch">
+        <arg name="veh" value="$(arg veh)"/>
+        <arg name="config" value="$(arg config)"/>
+    </include>
+
+    <!-- Wheels Driver -->
+    <include file="$(find ominibot_car)/launch/wheels_ominibot_driver_node.launch">
+        <arg name="veh" value="$(arg veh)"/>
+    </include>
+</launch>

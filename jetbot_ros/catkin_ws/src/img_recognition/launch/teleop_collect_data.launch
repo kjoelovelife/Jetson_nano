@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="pkg_name" default="img_recognition"/>
+    <arg name="node_name" default="srv_client_save_image"/>
+    <arg name="veh" default="$(env VEHICLE_NAME)"/>
+    <arg name="config" default="baseline" doc="Specify a config."/>
+    <arg name="output_not" value="log"/>
+
+    <!-- save image service client -->
+    <node ns="$(arg veh)" pkg="$(arg pkg_name)" type="$(arg node_name).py" name="$(arg node_name)" clear_params="true" output="screen" required="true"/>
+
+    <!-- keyboard_mapper -->
+    <remap from="/$(arg veh)/keyboard_mapper_node/cmd_vel" to="/$(arg veh)/$(arg node_name)/cmd_vel"/>
+    <include file="$(find mapper)/launch/keyboard_mapper_node.launch">
+        <arg name="veh" value="$(arg veh)"/>
+        <arg name="output" value="$(arg output_not)"/>
+    </include>
+
+    <!-- run inverse_kinematics_node -->
+    <remap from="inverse_kinematics_node/car_cmd" to="keyboard_mapper_node/car_cmd"/>
+    <remap from="inverse_kinematics_node/wheels_cmd" to="wheels_driver_node/wheels_cmd" />
+    <include file="$(find ominibot_car)/launch/inverse_kinematics_node.launch">
+        <arg name="veh" value="$(arg veh)"/>
+        <arg name="config" value="$(arg config)"/>
+        <arg name="output" value="$(arg output_not)"/>
+    </include>
+
+
+    <!-- Wheels Driver -->
+    <include file="$(find ominibot_car)/launch/wheels_ominibot_driver_node.launch">
+        <arg name="veh" value="$(arg veh)"/>
+        <arg name="output" value="$(arg output_not)"/>
+    </include>
+
+
+</launch>

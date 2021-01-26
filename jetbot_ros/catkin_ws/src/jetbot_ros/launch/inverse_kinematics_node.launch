@@ -1,0 +1,13 @@
+<launch>
+    <arg name="pkg_name" value="ominibot_car"/>
+    <arg name="node_name" default="inverse_kinematics_node"/>
+
+    <arg name="veh" doc="Name of vehicle. ex: megaman"/>
+    <arg name="config" default="baseline" doc="Specify a config."/>
+    <arg name="output" default="screen"/>
+
+    <group ns="$(arg veh)">
+        <!-- run on ROSKY-->
+        <node name="$(arg node_name)" pkg="$(arg pkg_name)" type="$(arg node_name).py" output="$(arg output)" clear_params="true" required="true"/>
+    </group>
+</launch>

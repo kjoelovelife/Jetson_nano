@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<launch>
+
+    <arg name="veh" default="$(env VEHICLE_NAME)"/>
+    <arg name="node_name" default="display_xy"/>
+    <arg name="pkg_name" default="road_following"/>
+    <arg name="raw" default="true"/>
+    <arg name="picture_interval" default="0.5"/>
+    <arg name="label" default="default"/>
+    <arg name="config" default="baseline" />
+
+    <!-- jetson_camera -->
+    <include file="$(find jetson_camera)/launch/jetson_camera.launch">
+        <arg name="raw" value="$(arg raw)"/>     
+        <arg name="config" value="$(arg config)"/> 
+    </include>
+
+    <!-- display_xy -->
+    <remap from="/$(arg veh)/$(arg node_name)/image/raw" to="/$(arg veh)/jetson_camera/image/raw"/>
+    <node ns="$(arg veh)" pkg="$(arg pkg_name)" type="$(arg node_name).py" name="$(arg node_name)" clear_params="true" output="screen" required="true"/>
+</launch>
+
+
+
+    
+ 

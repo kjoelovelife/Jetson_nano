@@ -1,0 +1,24 @@
+<launch>
+	<arg name="veh" default="default"/>
+	<arg name="config" default="baseline"/>
+	<arg name="pkg_name" value="jetson_camera"/>
+	<arg name="node_name" default="cam_info_reader_node"/>
+	<arg name="image_type" default="compressed" />
+    <arg name="cali_file_name" default="default" />
+    <arg name="pub_freq" default="1"/>
+
+	<node ns="$(arg veh)" pkg="jetson_camera" type="cam_info_reader_node.py" name="$(arg node_name)" output="screen" clear_params="true" required="true">
+		<rosparam command="load" file="$(find jetson_camera)/camera_info/cam_info_reader_node/$(arg veh).yaml"/>
+		<!-- These are special in that the configs are set as parameter and should alway obey the arg -->
+		<param name="~config" value="$(arg config)"/>
+		<param name="~cali_file_name" value="$(arg cali_file_name)"/>
+		<param name="~image_type" value="$(arg image_type)"/>
+        <param name="~pub_freq" value="$(arg pub_freq)"/>
+	</node>	
+
+	<!-- Publication -->
+	<!-- "~camera_info": sensor_msgs/CameraInfo. Publishing camera info load from yaml file specified by parameters-->
+	
+	<!-- Subscription -->
+	<!-- "~compressed_image": sensor_msgs/CompressedImage. Input compressed image for the time stamp of the camera_info-->
+</launch>

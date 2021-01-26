@@ -1,0 +1,61 @@
+<?xml version="1.0"?>
+
+<launch>
+
+    <!-- initial arg-->
+    <arg name="veh" default="$(env VEHICLE_NAME)" doc="Name of vehicle. ex: megaman"/>
+    <arg name="config" default="baseline" doc="Specify a config."/>
+    <arg name="map" default="test0623.yaml" doc="Specify a param file. ex:megaman."/>
+    <arg name="use_rviz" default="false" />
+    <arg name="local_planner" default="dwa" doc="Local planner can be either dwa or teb"/>
+    <arg name="ominibotcar" default="false" doc="connect omnibotcar to move ROSKY or not"/>
+
+    <!-- Map server -->
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find rosky_slam)/map/$(arg map)"/>
+
+    <!-- YDLidar -->
+    <node name="ydlidar_node"  pkg="ydlidar"  type="ydlidar_node" output="screen" respawn="false">
+        <rosparam file="$(find ydlidar)/param/ydlidar_params.yaml" command="load"/>
+    </node>
+
+    <!-- TF setting -->
+    <node pkg="tf" type="static_transform_publisher" name="base_footprint2base_link" args="0 0 0.06 0 0 0 /base_footprint /base_link 10"/>
+
+    <node pkg="tf" type="static_transform_publisher" name="base_link2laser_link" args="0 0 0.09 3.1415927 0 0 /base_link /laser_frame 10"/>
+
+    <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser4" args="0.0 0.0 0.15 3.1415927 0.0  0.0 /base_footprint /laser_frame 40" />
+
+    <!-- ODOMETRY -->
+    <!--rf2o_Laser_Odometry-->
+    <node pkg="rf2o_laser_odometry" type="rf2o_laser_odometry_node" name="rf2o_laser_odometry">
+        <rosparam file="$(find rf2o_laser_odometry)/param/rf2o_laser_odometry_params.yaml" command="load"/>
+    </node>
+
+    <!-- AMCL arg-->
+    <arg name="init_x" default="0" />
+    <arg name="init_y" default="0" />
+    <arg name="init_a" default="0" />
+
+    <node pkg="amcl" type="amcl" name="amcl" output="screen">
+        <rosparam file="$(find rosky_navigation)/param/amcl_params.yaml" command="load"/>
+    </node>
+
+    <!-- Navstack -->
+    <node pkg="move_base" type="move_base" respawn="false" name="move_base">
+        <!-- local / global planner -->
+        <rosparam file="$(find rosky_navigation)/param/global_planner_params.yaml" command="load"/>
+        <rosparam file="$(find rosky_navigation)/param/$(arg local_planner)_local_planner_params.yaml" command="load"/>
+        
+        <!-- costmap layers -->    
+        <rosparam file="$(find rosky_navigation)/param/local_costmap_params.yaml" command="load"/>
+        <rosparam file="$(find rosky_navigation)/param/global_costmap_params.yaml" command="load"/> 
+        <!-- move_base params -->
+        <rosparam file="$(find rosky_navigation)/param/move_base_params.yaml" command="load"/>
+        <remap from="/odom" to="/rf2o_laser_odometry/odom"/>
+    </node>
+
+   <!-- launch nav_control.launch -->
+   <include if="$(arg ominibotcar)" file="$(find rosky_navigation)/launch/nav_control.launch">
+       <arg name="veh" value="$(arg veh)"/>
+   </include>
+</launch>

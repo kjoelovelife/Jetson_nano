@@ -1,0 +1,12 @@
+
+
+laser_scan_topic: scan                  # topic where the lidar scans are being published
+base_frame_id: base_footprint           # frame_id (tf) of the mobile robot base. A tf transform from the laser_frame to the base_frame is mandatory
+odom_frame_id: odom                     # frame_id (tf) to publish the odometry estimations
+freq: 7.0                               # Execution frequency. See "Planar Odometry from a Radial Laser Scanner. A Range Flow-based Approach. ICRA'16"
+init_pose_from_topic: ""                   
+# (Odom topic) Leave empty to start at point (0,0)
+
+
+
+

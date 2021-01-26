@@ -1,8 +1,0 @@
-baseline: 0.12
-calibration_time: 2020-01-09-11-46-39
-gain: 2.0
-k: 27.0
-limit: 0.8
-motor_alpha: -1.0
-radius: 0.0725
-trim: 0.019999999552965164

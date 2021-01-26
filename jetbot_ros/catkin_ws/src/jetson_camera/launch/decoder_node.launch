@@ -1,0 +1,19 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="veh" default="$(env VEHICLE_NAME)"/>
+    <arg name="config" default="baseline"/>
+    <arg name="param_file_name" default="default" doc="Specify a param file. ex:megaman"/>
+
+    <arg name="pkg_name" default="jetson_camera"/>
+    <arg name="node_name" default="decoder_node"/>
+
+    <node ns="$(arg veh)" pkg="$(arg pkg_name)" type="$(arg node_name).py" name="$(arg node_name)" output="screen" clear_params="true" required="true">
+        <rosparam file="$(find jetson_camera)/camera_info/$(arg node_name)/$(arg param_file_name).yaml"  command="load" />
+    </node>
+
+    <!-- Publication -->
+    <!-- "~image/raw": sensor_msgs/Image. Raw image by decoding a compressed image in jpeg format.-->
+    
+    <!-- Subscription -->
+    <!-- "~compressed_image": sensor_msgs/CompressedImage. Input compressed image in jpeg format.-->
+</launch>
