@@ -8,12 +8,17 @@ from dynamic_reconfigure.server import Server
 from road_following.cfg import Draw_XY_Line_ParamConfig
 from jetbot_msgs.msg import BoolStamped
 from jetcam_ros.utils import bgr8_to_jpeg
+from uuid import uuid1
 
 class Display_XY_Node(object):
     def __init__(self):
         self.package = "road_following"
         self.node_name = rospy.get_name()
         self.veh_name = self.node_name.split("/")[1]
+        self.interval = {
+            "timer": 0.5,
+            "save": 1,
+        }
         rospy.loginfo("[%s] Initializing......" %(self.node_name))
 
         # CV_bridge
@@ -27,6 +32,7 @@ class Display_XY_Node(object):
         self.yaml_dict = self.read_parameter_file()
         self.img_width = self.yaml_dict["width"] 
         self.img_height = self.yaml_dict["height"]
+        self.image_number = self.count_image_number(self.image_folder)
 
         self.is_shutdown = False
         self.update_framerate = False
@@ -35,8 +41,9 @@ class Display_XY_Node(object):
             "X": 0,
             "Y": 0,
         }
-        self.save_image = False
-        
+        self.save_image_status = False
+        self.save_image_done = False
+             
         # Create service (for camera_calibration)
         #self.srv_set_camera_info = rospy.Service("~set_camera_info",SetCameraInfo,self.cbSrvSetCameraInfo)
 
@@ -49,7 +56,7 @@ class Display_XY_Node(object):
         self.pub_img = rospy.Publisher("~image/raw/draw_xy_line", Image, queue_size=1)
 
         # Setup timer
-        #timer = rospy.Timer(rospy.Duration.from_sec(), self.cb_timer)
+        #timer = rospy.Timer(rospy.Duration.from_sec(self.interval["timer"]), self.cb_timer)
 
         rospy.loginfo("[%s] Initialized." %(self.node_name))
 
@@ -57,12 +64,18 @@ class Display_XY_Node(object):
         if self.initialize == True:
             for keys in self.line_parameter:
                 config[keys] = self.line_parameter[keys]
+                config["picture_interval"] = self.interval["save"]
+                config["image_number"] = str(self.count_image_number(self.image_folder))
             self.initialize = False
         else:
             for keys in self.line_parameter:
                 self.line_parameter[keys] = config[keys]
-        self.save_image = config["save_image"]
-        config["image_number"] = str(self.count_image_number(self.image_folder))
+            self.interval["save"] = config["picture_interval"]
+            self.save_image_status = config["save_image"]
+            while(self.save_image_status):
+                pass
+            config["save_image"] = self.save_image_status
+            config["image_number"] = str(self.count_image_number(self.image_folder))
         return config
 
     def convert_image_to_cv2(self, img_msg):
@@ -72,6 +85,12 @@ class Display_XY_Node(object):
         except CvBridgeError as e:
             print(e)
         self.draw_xy_line(img_cv2)
+        if self.save_image_status == True:
+            self.save_image(img_cv2)
+            count = self.count_image_number(self.image_folder)
+            if ( count - self.image_number) >= self.interval["save"]:
+                self.save_image_status = False
+                self.image_number = count
 
     def draw_xy_line(self, img_cv2):
         img = np.copy(img_cv2)
@@ -85,6 +104,13 @@ class Display_XY_Node(object):
         img_msg = self.cv_bridge.cv2_to_imgmsg(img, encoding="bgr8")
         self.publisher(img_msg)
 
+    def save_image(self, img_cv2):
+        img_jpeg = bgr8_to_jpeg(img_cv2)
+        img_name = "xy_%03d_%03d_%s" % (self.line_parameter["X"] * 50 + 50, self.line_parameter["Y"] * 50 + 50, uuid1())
+        img_path = os.path.join(self.image_folder, img_name + '.jpg')
+        with open(img_path, 'wb') as f:
+            f.write(img_jpeg)
+ 
     def publisher(self, msg):
         self.pub_img.publish(msg)
 
@@ -136,12 +162,13 @@ class Display_XY_Node(object):
 
     def onShutdown(self):
         rospy.loginfo("[%s] Closing camera." %(self.node_name))
-        self.is_shutdown=True
         rospy.loginfo("[%s] Shutdown." %(self.node_name))
         rospy.sleep(0.5)
+        rospy.is_shutdown=True
+ 
 
 if __name__ == '__main__': 
     rospy.init_node('Display_XY_Node',anonymous=False)
-    camera_node = Display_XY_Node()
-    rospy.on_shutdown(Display_XY_Node.onShutdown)
+    display_xy_node = Display_XY_Node()
+    rospy.on_shutdown(display_xy_node.onShutdown)
     rospy.spin()

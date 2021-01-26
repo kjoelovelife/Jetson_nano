@@ -1,6 +1,6 @@
 #!/usr/bin/env python
 
-import os, sys, argparse, errno, yaml, time, datetime
+import os, sys, argparse, errno, yaml, time, datetime, glob, PIL.Image
 import cv2, numpy 
 import rospy, rospkg, threading
 import torch, torchvision
@@ -10,46 +10,115 @@ import torchvision.datasets as datasets
 import torchvision.models as models
 import torchvision.transforms as transforms
 
+class XYDataset(torch.utils.data.Dataset):
+
+    def __init__(self, directory, random_hflips=False):
+        self.directory = directory
+        self.random_hflips = random_hflips
+        self.image_paths = glob.glob(os.path.join(self.directory, '*.jpg'))
+        self.color_jitter = transforms.ColorJitter(0.3, 0.3, 0.3, 0.3)
+        self.transforms_functional_resize = (224, 224)
+
+    def get_x(self, path):
+        return (float(int(path[3:6])) - 50.0 ) / 50.0
+
+    def get_y(self, path):
+        return (float(int(path[7:10])) - 50.0 ) / 50.0
+
+    def __len__(self):
+        return len(self.image_paths)
+
+    def __getitem__(self, idx):
+        image_path = self.image_paths[idx]
+        image = PIL.Image.open(image_path)
+        x = float(self.get_x(os.path.basename(image_path)))
+        y = float(self.get_y(os.path.basename(image_path)))
+        if float(numpy.random.rand(1)) > 0.5:
+            image = transforms.functional.hflip(image)
+            x = -x
+        image = self.color_jitter(image)
+        image = transforms.functional.resize(image, self.transforms_functional_resize)
+        image = transforms.functional.to_tensor(image)
+        image = image.numpy()[::-1].copy()
+        image = torch.from_numpy(image)
+        image = transforms.functional.normalize(image, [0.485, 0.456, 0.406], [0.229, 0.224, 0.225])
+        return image, torch.tensor([x, y]).float()
+
 class Train_Model_Node(object):
  
-    ####
-    # local param :
-    # ros param   : ~model, 
-    # service     : 
-    ####  
-
     def __init__(self):
-        self.package = "img_recognition"
+        self.package = "road_following"
         self.node_name = rospy.get_name()
         self.veh_name = self.node_name.split("/")[1]
         rospy.loginfo("{}  Initializing train_model.py......".format(self.node_name))
 
-        # set/get ros param
-        self.loader_batch_size  = rospy.get_param("~loader/batch_size",8)
-        self.loader_shuffle = rospy.get_param("~loader/shuffle",True)
-        self.loader_num_workers = rospy.get_param("~loader/num_workers",0)
-        self.use_cuda = rospy.get_param("~train/use_cuda",True)
-        self.param_model = rospy.get_param("~train/model","alexnet")
-        self.train_save_model_name  = rospy.get_param("~train/save_model_name","best")
-        self.train_epochs = rospy.get_param("~train/epochs",30)
-        self.train_lr = rospy.get_param("~train/learning_rate",0.001)
-        self.train_momentum = rospy.get_param("~train/momentum",0.9)
+        ## Set/get ros param
+        self.folder_name = self.setup_parameter("~dataset", "dataset_xy")
+        self.test_percent = self.setup_parameter("~test_percent", 0.1)
+        self.model_name = rospy.get_param("~model","resnet18")
+        self.pre_train = rospy.get_param("~pre_train", True)
+        #self.loader_batch_size  = rospy.get_param("~loader/batch_size",8)
+        #self.loader_shuffle = rospy.get_param("~loader/shuffle",True)
+        #self.loader_num_workers = rospy.get_param("~loader/num_workers",0)
+        #self.use_cuda = rospy.get_param("~train/use_cuda",True)
+        #self.train_save_model_name  = rospy.get_param("~train/save_model_name","best")
+        #self.train_epochs = rospy.get_param("~train/epochs",30)
+        #self.train_lr = rospy.get_param("~train/learning_rate",0.001)
+        #self.train_momentum = rospy.get_param("~train/momentum",0.9)
         
-        # set local param
-        self.yaml_dict = {}
-        self.kind_of_classifier = 0
+        ## Set local param
+        self.image_folder = self.check_folder(self.folder_name)
+        self.dataset = XYDataset(self.image_folder, random_hflips=False)
+
+        ## Split dataset into train and test sets
+        self.train_dataset, self.test_dataset = self.split_dataset(self.test_percent)
+
+        ## Create data loaders to load data in batches
+        self.train_loader = self.data_loader(self.train_dataset)
+        self.test_loader  = self.data_loader(self.test_dataset)
+
+        ### Define Neural Network Model
+        self.model = self.neural_network(self.model_name, self.pre_train)
+        
+
+        #self.yaml_dict = {}
+        #self.kind_of_classifier = 0
 
         # read label
-        self.yaml_dict, self.kind_of_classifier = self.read_param_from_file() # will get self.yaml_dict, self.kind_of_classifier
+        #self.yaml_dict, self.kind_of_classifier = self.read_param_from_file() # will get self.yaml_dict, self.kind_of_classifier
         
         # initial model
-        self.train_save_model_name  = self.compare_model_name(self.train_save_model_name)
-        _data = self.rule_for_datasets(batch_size=self.loader_batch_size, shuffle=self.loader_shuffle, num_workers=self.loader_num_workers)
-        _model = self.neural_network(model=self.param_model, param_pretrained=True, kind_of_classifier=self.kind_of_classifier)
-        _cuda = self.cuda(use=self.use_cuda) 
+        #self.train_save_model_name  = self.compare_model_name(self.train_save_model_name)
+        #_data = self.rule_for_datasets(batch_size=self.loader_batch_size, shuffle=self.loader_shuffle, num_workers=self.loader_num_workers)
+        #_model = self.neural_network(model=self.param_model, param_pretrained=True, kind_of_classifier=self.kind_of_classifier)
+        #_cuda = self.cuda(use=self.use_cuda) 
 
         # train model
-        self.train(epochs=self.train_epochs, best_model_path=self.train_save_model_name, learning_rate=self.train_lr, momentum=self.train_momentum)
+        #self.train(epochs=self.train_epochs, best_model_path=self.train_save_model_name, learning_rate=self.train_lr, momentum=self.train_momentum)
+
+    def check_folder(self, name):
+        rospack = rospkg.RosPack()
+        folder = rospack.get_path(self.package) + "/image/" + name
+        if not os.path.isdir(folder):
+            time_format = "%Y_%m_%d_%H_%M_%S"
+            now = datetime.datetime.now().strftime(time_format)
+            rospy.logwarn("[{}] Can't find folder: {}.\nWill make [dataset_xy_{}] in {}.".format(self.node_name, folder, now,rospack.get_path(self.package + "/image")))
+            self.on_shutdown()
+        return folder
+
+    def split_dataset(self, test_percent):
+        num_test = int(test_percent * len(self.dataset))
+        train_dataset, test_dataset = torch.utils.data.random_split(self.dataset, [len(self.dataset) - num_test, num_test])
+        return train_dataset, test_dataset
+
+    def data_loader(self, dataset, batch_size=16, shuffle=True, num_workers=4):
+        loader = torch.utils.data.DataLoader(
+            dataset,
+            batch_size=batch_size,
+            shuffle=shuffle,
+            num_workers=num_workers,
+        )
+        return loader
 
 
     def rule_for_datasets(self, batch_size=8, shuffle=True, num_workers=0):
@@ -70,53 +139,50 @@ class Train_Model_Node(object):
         self.train_loader = torch.utils.data.DataLoader(self.train_dataset, batch_size=batch_size, shuffle=shuffle, num_workers=num_workers)
         self.test_loader = torch.utils.data.DataLoader(self.test_dataset, batch_size=batch_size, shuffle=shuffle, num_workers=num_workers)
 
-    def neural_network(self, model="alexnet", param_pretrained=False, kind_of_classifier=2):
+    def neural_network(self, model="resnet18", pre_trained=True):
         # reference : https://pytorch.org/docs/stable/torchvision/models.html
         model_list = [
                       "resnet18", "alexnet", "squeezenet", "vgg16", 
                       "densenet", "inception", "googlenet", "shufflenet", 
                       "mobilenet", "resnet34", "wide_resnet50_2", "mnasnet" 
                      ]
-
         if model in model_list:
             rospy.loginfo("You use model [{}]. Need some time to load model...".format(model))
             start_time = rospy.get_time()
             if model == "resnet18":
-                self.model = models.resnet18(pretrained=param_pretrained)
-                self.model.fc = torch.nn.Linear(512,kind_of_classifier)
+                model = models.resnet18(pretrained=pre_trained)
+                model.fc = torch.nn.Linear(512, 2)
             elif model == "alexnet":
-                self.model = models.alexnet(pretrained=param_pretrained)
-                self.model.classifier[-1] = torch.nn.Linear(self.model.classifier[-1].in_features, int(kind_of_classifier))
+                model = models.alexnet(pretrained=pre_trained)
             elif model == "squeezenet":
-                self.model = models.squeezenet1_1(pretrained=param_pretrained)
-                self.model.classifier[1] = torch.nn.Conv2d(self.model.classifier[1].in_features, kind_of_classifier, kernel_size=1)
-                self.num_classes = kind_of_classifier
+                model = models.squeezenet1_1(pretrained=pre_trained)
             elif model == "vgg16":
-                self.model = models.vgg16(pretrained=param_pretrained)
+                model = models.vgg16(pretrained=pre_trained)
             elif model == "densenet":
-                self.model = models.densenet161(pretrained=param_pretrained)
+                model = models.densenet161(pretrained=pre_trained)
             elif model == "inception":
-                self.model = models.inception_v3(pretrained=param_pretrained)
+                model = models.inception_v3(pretrained=pre_trained)
             elif model == "googlenet":
-                self.model = models.googlenet(pretrained=param_pretrained)
+                model = models.googlenet(pretrained=pre_trained)
             elif model == "shufflenet":
-                self.model = models.shufflenet_v2_x1_0(pretrained=param_pretrained)
+                model = models.shufflenet_v2_x1_0(pretrained=pre_trained)
             elif model == "mobilenet":
-                self.model = models.mobilenet_v2(pretrained=param_pretrained)
+                model = models.mobilenet_v2(pretrained=pre_trained)
             elif model == "resnext50_32x4d":
-                self.model = models.resnext50_32x4d(pretrained=param_pretrained)
+                model = models.resnext50_32x4d(pretrained=pre_trained)
             elif model == "resnet34": 
-                self.model = models.resnet34(pretrained=param_pretrained)
-                self.model.fc = torch.nn.Linear(512, kind_of_classifier)
+                model = models.resnet34(pretrained=pre_trained)
             elif model == "wide_resnet50_2":
-                self.model = models.wide_resnet50_2(pretrained=param_pretrained)
+                self.model = models.wide_resnet50_2(pretrained=pre_trained)
             elif model == "mnasnet":
-                self.model = models.mnasnet1_0(pretrained=param_pretrained)
+                self.model = models.mnasnet1_0(pretrained=pre_trained)
             interval = rospy.get_time() - start_time
-            rospy.loginfo("Done with loading modle! Use {:.2f} seconds.".format(interval))
-            rospy.loginfo("There are [{}] objects you want to recognize.".format(kind_of_classifier))
+            rospy.loginfo("loading modle done! Use {:.2f} seconds.".format(interval))
+            return model
         else:
-            rospy.loginfo("Your classifier is wrong. Please check out image label!")
+            rospy.loginfo("We don't have the model in this rpoject. Please choose one of below: ")
+            rospy.loginfo(model_list)
+            self.on_shutdown()
 
     def cuda(self,use=False):
         if use == True:
