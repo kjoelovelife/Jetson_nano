@@ -8,14 +8,14 @@
     <arg name="map" default="test0623.yaml" doc="Specify a param file. ex:megaman."/>
     <arg name="use_rviz" default="false" />
     <arg name="local_planner" default="dwa" doc="Local planner can be either dwa or teb"/>
-    <arg name="ominibotcar" default="false" doc="connect omnibotcar to move ROSKY or not"/>
+    <arg name="wheels" default="false" doc="move wheels or not"/>
 
     <!-- Map server -->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find rosky_slam)/map/$(arg map)"/>
+    <node name="map_server" pkg="map_server" type="map_server" args="$(find jetbot_slam)/map/$(arg map)"/>
 
     <!-- YDLidar -->
     <node name="ydlidar_node"  pkg="ydlidar"  type="ydlidar_node" output="screen" respawn="false">
-        <rosparam file="$(find ydlidar)/param/ydlidar_params.yaml" command="load"/>
+        <rosparam file="$(find jetbot_slam)/param/ydlidar_params.yaml" command="load"/>
     </node>
 
     <!-- TF setting -->
@@ -37,25 +37,25 @@
     <arg name="init_a" default="0" />
 
     <node pkg="amcl" type="amcl" name="amcl" output="screen">
-        <rosparam file="$(find rosky_navigation)/param/amcl_params.yaml" command="load"/>
+        <rosparam file="$(find jetbot_navigation)/param/amcl_params.yaml" command="load"/>
     </node>
 
     <!-- Navstack -->
     <node pkg="move_base" type="move_base" respawn="false" name="move_base">
         <!-- local / global planner -->
-        <rosparam file="$(find rosky_navigation)/param/global_planner_params.yaml" command="load"/>
-        <rosparam file="$(find rosky_navigation)/param/$(arg local_planner)_local_planner_params.yaml" command="load"/>
+        <rosparam file="$(find jetbot_navigation)/param/global_planner_params.yaml" command="load"/>
+        <rosparam file="$(find jetbot_navigation)/param/$(arg local_planner)_local_planner_params.yaml" command="load"/>
         
         <!-- costmap layers -->    
-        <rosparam file="$(find rosky_navigation)/param/local_costmap_params.yaml" command="load"/>
-        <rosparam file="$(find rosky_navigation)/param/global_costmap_params.yaml" command="load"/> 
+        <rosparam file="$(find jetbot_navigation)/param/local_costmap_params.yaml" command="load"/>
+        <rosparam file="$(find jetbot_navigation)/param/global_costmap_params.yaml" command="load"/> 
         <!-- move_base params -->
-        <rosparam file="$(find rosky_navigation)/param/move_base_params.yaml" command="load"/>
+        <rosparam file="$(find jetbot_navigation)/param/move_base_params.yaml" command="load"/>
         <remap from="/odom" to="/rf2o_laser_odometry/odom"/>
     </node>
 
    <!-- launch nav_control.launch -->
-   <include if="$(arg ominibotcar)" file="$(find rosky_navigation)/launch/nav_control.launch">
+   <include if="$(arg wheels)" file="$(find jetbot_navigation)/launch/nav_control.launch">
        <arg name="veh" value="$(arg veh)"/>
    </include>
 </launch>

@@ -9,7 +9,7 @@
 
     <!-- YDLidar -->
     <node name="ydlidar_node"  pkg="ydlidar"  type="ydlidar_node" output="screen" respawn="false">
-        <rosparam file="$(find ydlidar)/param/ydlidar_params.yaml" command="load"/>
+        <rosparam file="$(find jetbot_slam)/param/ydlidar_params.yaml" command="load"/>
     </node>
 
     <!-- TF setting -->

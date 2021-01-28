@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 echo "Use map_server to save map..."
-path="/home/$USER/ROSKY/catkin_ws/src/rosky_slam/map"
+path="/home/$USER/Jetson_nano/jetbot_ros/catkin_ws/src/jetbot_slam/map"
 map_name="map_"$(date "+%Y%m%d_%H%M%S")
 if [ $# -gt 0 ]; then
     # provided a hostname, use it as map name

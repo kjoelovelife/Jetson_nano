@@ -1,0 +1,8 @@
+baseline: 0.1
+calibration_time: 2020-09-17-15-06-34
+speed_gain: 1.0
+steering_gain: 1.0
+k: 27.0
+limit: 1.0
+radius: 0.0318
+trim: 0.0
