@@ -1,51 +1,68 @@
 #!/usr/bin/env python
 import os, sys, argparse, errno, yaml, time, datetime
 import rospy, rospkg
-import torch, torchvision, cv2
+import torch, torchvision, cv2, PIL.Image
 import numpy as np
 from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import CompressedImage, Image
-from img_recognition.msg import Inference
+from road_following.msg import Inference
 from jetcam_ros.utils import bgr8_to_jpeg
 
 class Inference_Model_Node(object):
     def __init__(self):
-        self.package = "img_recognition"
+        self.package = "road_following"
         self.node_name = rospy.get_name()
         self.veh_name = self.node_name.split("/")[1]
         self.start = rospy.wait_for_message("/" + self.veh_name +"/jetson_camera/image/raw", Image)
         rospy.loginfo("{}  Initializing inference_model.py......".format(self.node_name))
 
-        # set/get ros param
-        self.model_name  = self.setup_parameter("~model_pth","best.pth")
-        self.use_cuda  = self.setup_parameter("~use_cuda",True)
+        ## set/get ros param
+        self.model_name  = self.setup_parameter("~model_pth", "best_steering_model_xy.pth")
+        self.use_cuda  = self.setup_parameter("~use_cuda", True)
 
-        # read information
+        ## read information
         self.recording = self.read_param_from_file(file_name="recording.yaml", file_folder="model")
 
-        # check model
+        ## check model
         if self.check_model_exist(self.model_name):
-            #configure model
-            self.labels = sorted(list(self.recording[self.model_name]["labels"].keys()))
-            self.kind_of_classifier = len(self.labels)
+            ## configure model
             self.model_struct = self.recording[self.model_name]["train"]["model"]
-            self.model = self.load_model(model=self.model_struct, param_pretrained=False, kind_of_classifier=self.kind_of_classifier) # configure: self.model 
+            self.model = self.load_model(model=self.model_struct, param_pretrained=False) # configure: self.model 
             self.cuda(use=self.use_cuda) # configure: self.device, self.model
 
-            # configure parameter with processing image
-            self.process_img_mean  = 255.0 * np.array([0.485, 0.456, 0.406])
-            self.process_img_stdev = 255.0 * np.array([0.229, 0.224, 0.225])
-            self.process_img_normalize = torchvision.transforms.Normalize(self.process_img_mean, self.process_img_stdev)
+            ## setup parameter with processing image
+            self.process_img_mean  = torch.Tensor([0.485, 0.456, 0.406]).cuda().half()
+            self.process_img_stdev = torch.Tensor([0.229, 0.224, 0.225]).cuda().half()
 
-            # CV_bridge
+            ## setup parameter with inference  
+            self.angle = 0.0
+            self.angle_last = 0.0
+
+
+            ## CV_bridge
             self.bridge = CvBridge()
      
-            # configure subscriber
+            ## configure subscriber
             self.first_sub = True
             self.sub_msg = rospy.Subscriber("~image/raw", Image, self.convert_image_to_cv2,queue_size=1)
 
-            # configure Publisher
+            ## configure Publisher
             self.pub_msg = rospy.Publisher("~inference", Inference, queue_size=1)
+        else:
+            self.on_shutdown()
+
+    def getFilePath(self, name, folder="image"):
+        rospack = rospkg.RosPack()
+        return rospack.get_path(self.package) + "/" + folder + "/" + name  
+
+    def read_param_from_file(self, file_name, file_folder):
+        fname = self.getFilePath(name=file_name,folder=file_folder)
+        with open(fname, 'r') as in_file:
+            try:
+                yaml_dict = yaml.load(in_file)
+            except yaml.YAMLError as exc:
+                print(" YAML syntax  error. File: {}".format(fname))
+        return yaml_dict
 
     def check_model_exist(self, name):
         if not name in self.recording.keys():
@@ -55,7 +72,7 @@ class Inference_Model_Node(object):
             return False
         return True
 
-    def load_model(self, model="alexnet", param_pretrained=False, kind_of_classifier=2):
+    def load_model(self, model="resnet18", param_pretrained=False, kind_of_classifier=2):
         # reference : https://pytorch.org/docs/stable/torchvision/models.html
         model_list = [
                       "resnet18", "alexnet", "squeezenet", "vgg16", 
@@ -68,7 +85,7 @@ class Inference_Model_Node(object):
             start_time = rospy.get_time()
             if model == "resnet18":
                 self.model = torchvision.models.resnet18(pretrained=param_pretrained)
-                self.model.fc = torch.nn.Linear(512,kind_of_classifier)
+                self.model.fc = torch.nn.Linear(512, 2)
             elif model == "alexnet":
                 self.model = torchvision.models.alexnet(pretrained=param_pretrained)
                 self.model.classifier[-1] = torch.nn.Linear(self.model.classifier[-1].in_features, int(kind_of_classifier))
@@ -101,7 +118,6 @@ class Inference_Model_Node(object):
             self.model.load_state_dict(torch.load(model_pth))
             interval = rospy.get_time() - start_time
             rospy.loginfo("Done with loading model! Use {:.2f} seconds.".format(interval))
-            rospy.loginfo("There are {} objects you want to recognize.".format(kind_of_classifier))
             return self.model
         else:
             rospy.loginfo("Your classifier is wrong. Please check out model struct!")
@@ -113,77 +129,63 @@ class Inference_Model_Node(object):
             self.device = torch.device('cuda')
             start_time = rospy.get_time()
             self.model = self.model.to(self.device)
+            self.model = self.model.eval().half()
             interval = rospy.get_time() - start_time
             rospy.loginfo("Done with starting! Can use cuda now! Use {:.2f} seconds to start.".format(interval)) 
         else:
             rospy.loginfo("Do not use cuda!")
 
-    def getFilePath(self,name ,folder="image"):
-        rospack = rospkg.RosPack()
-        return rospack.get_path(self.package) + "/" + folder + "/" + name  
-
-
-    def read_param_from_file(self, file_name, file_folder):
-        fname = self.getFilePath(name=file_name,folder=file_folder)
-        with open(fname, 'r') as in_file:
-            try:
-                yaml_dict = yaml.load(in_file)
-            except yaml.YAMLError as exc:
-                print(" YAML syntax  error. File: {}".format(fname))
-        return yaml_dict
-
-    def convert_image_to_cv2(self,img_msg):
+    def convert_image_to_cv2(self, img_msg):
         try:
             # Convert your ROS Image ssage to opencv2
-            cv2_img = cv2.resize(self.bridge.imgmsg_to_cv2(img_msg, desired_encoding="bgr8"), (224, 224))
+            cv2_img = self.bridge.imgmsg_to_cv2(img_msg, desired_encoding="bgr8")
             #jpeg_img = cv2.resize(bgr8_to_jpeg(cv2_img), (224, 224))
-            self.inference(img=cv2_img, labels=self.labels)
+            self.inference(img=cv2_img)
         except CvBridgeError as e:
             print(e)
 
     def preprocess(self, camera_value): 
-        img = camera_value
-        img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-        img = img.transpose((2, 0, 1))
-        img = torch.from_numpy(img).float()
-        img = self.process_img_normalize(img)
-        img = img.to(self.device)
-        img = img[None, ...]
-        return img   
+        img = PIL.Image.fromarray(cv2.cvtColor(camera_value, cv2.COLOR_BGR2RGB))
+        img = torchvision.transforms.functional.to_tensor(img).to(self.device).half()
+        img.sub_(self.process_img_mean[:, None, None]).div_(self.process_img_stdev[:, None, None])
+        return img[None, ...] 
+ 
 
-    def inference(self, img, labels):
+    def inference(self, img):
         start_time = rospy.get_time()
+        inference_msg = Inference()
         if self.first_sub == True:
             rospy.loginfo("Deploy model to gpu. Please wait...")
         img = self.preprocess(img)
-        predict = self.model(img)
+        xy = self.model(img).detach().float().cpu().numpy().flatten()
         if self.first_sub == True:
             interval = rospy.get_time() - start_time
             self.inference_information(interval)
             self.first_sub = False
-        # we apply the 'softmax' function to normalize the output vector so it sums to 1 (which makes ti a probability distribution)
-        predict = torch.nn.functional.softmax(predict, dim=1)
-        local_confidence = {}
-        pub_confidence = Inference()
-        for text in self.labels:
-            local_confidence[text] = float(predict.flatten()[self.labels.index(text)])
-        pub_confidence.labels = local_confidence.keys()
-        pub_confidence.confidence = local_confidence.values()
-        self.pub_msg.publish(pub_confidence)
+        x = xy[0]
+        y = (0.5 - xy[1]) / 2.0
+
+        self.angle = np.arctan2(x, y)
+        self.angle_last = self.angle
+        #print("angle: {}, last_angle: {}".format(self.angle, self.angle_last))
+        inference_msg.angle = self.angle
+        inference_msg.angle_last = self.angle_last
+        self.pub_msg.publish(inference_msg)
         time.sleep(0.001)
 
     def inference_information(self, interval):
         rospy.loginfo("Deployment complete! Use {:.2f} seconds.".format(interval))
-        rospy.loginfo("Start to recognitize image! Theer are {} object you can recognitize: {}".format(len(self.labels), self.labels))
         rospy.loginfo("You can listen the topic to see how much the confidence about object: {}".format( self.node_name + "/inference"))
         rospy.loginfo("More information about {} :\n{}".format(self.model_name, self.recording[self.model_name]))
 
 
     def on_shutdown(self): 
-        rospy.loginfo("{} Close.".format(self.node_name))
-        rospy.loginfo("{} shutdown.".format(self.node_name))
+        rospy.loginfo("[{}] Close.".format(self.node_name))
+        rospy.loginfo("[{}] shutdown.".format(self.node_name))
+        rospy.loginfo("[{}] Now you can press [ctrl] + [c] to close this launch file.".format(self.node_name))
         rospy.sleep(1)
-        rospy.is_shutdown=True
+        rospy.is_shutdown = True
+        #sys.exit()
 
     def setup_parameter(self, param_name, default_value):
         value = rospy.get_param(param_name, default_value)

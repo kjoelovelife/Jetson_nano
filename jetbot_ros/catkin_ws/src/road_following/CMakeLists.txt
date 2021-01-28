@@ -100,6 +100,7 @@ generate_messages(
 ## Generate dynamic reconfigure parameters in the 'cfg' folder
 generate_dynamic_reconfigure_options(
    cfg/Draw_XY_Line.cfg
+   cfg/PID_Contorl.cfg
 #   cfg/DynReconf2.cfg
 )
 

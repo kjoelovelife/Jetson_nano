@@ -4,7 +4,7 @@
     <arg name="veh" default="$(env VEHICLE_NAME)"/>
     <arg name="inference_node_name" default="inference_model"/>
     <arg name="reaction_node_name" default="inference_to_reaction"/>
-    <arg name="pkg_name" default="img_recognition"/>   
+    <arg name="pkg_name" default="road_following"/>   
     <arg name="config" default="baseline" />
     <arg name="reaction_output" default="screen" />
     <arg name="confidence_threshold" default="0.8" />
@@ -28,13 +28,12 @@
     <group ns="$(arg veh)">
         <remap from="/$(arg veh)/$(arg inference_node_name)/image/raw" to="/$(arg veh)/jetson_camera/image/raw"/>
         <node  pkg="$(arg pkg_name)" type="$(arg inference_node_name).py" name="$(arg inference_node_name)" clear_params="true" output="screen" required="true">
-            <rosparam file="$(find img_recognition)/param/inference_model.yaml" command="load"/>
+            <rosparam file="$(find road_following)/param/inference_model.yaml" command="load"/>
         </node>
  
         <group if="$(arg reaction)">
             <remap from="/$(arg veh)/$(arg reaction_node_name)/inference" to="/$(arg veh)/$(arg inference_node_name)/inference"/>
             <node pkg="$(arg pkg_name)" type="$(arg reaction_node_name).py" name="$(arg reaction_node_name)" clear_params="true" output="$(arg reaction_output)" required="true"/>
-                <param name="confidence_threshold" type="double" value="$(arg confidence_threshold)"/>
         </group> <!-- group recation -->
     
     </group> <!-- group ns -->

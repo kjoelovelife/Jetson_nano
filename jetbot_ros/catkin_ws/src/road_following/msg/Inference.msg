@@ -1,2 +1,2 @@
-string[] labels
-float64[] confidence
+float64 angle
+float64 angle_last

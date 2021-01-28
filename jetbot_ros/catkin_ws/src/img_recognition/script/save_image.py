@@ -6,7 +6,7 @@ import rospy, rospkg, threading
 from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import CompressedImage, Image
 from uuid import uuid1
-from deep_learning.srv import save_action, save_actionResponse, select_label, select_labelResponse, picture_interval, picture_intervalResponse
+from img_recognition.srv import save_action, save_actionResponse, select_label, select_labelResponse, picture_interval, picture_intervalResponse
 from jetcam_ros.utils import bgr8_to_jpeg
 
 
