@@ -1,0 +1,34 @@
+<launch>
+    <arg name="pkg_name" value="jetbot_ros"/>
+    <arg name="veh" default="$(env VEHICLE_NAME)" doc="Name of vehicle. ex: megaman"/>
+    <arg name="teleop" default="false" doc="Auto start node teleop_twist_keyboard">
+
+    <!-- teleop_twist_keyboard -->
+    <group if="$(arg teleop)">
+        <group ns="$(arg veh)">
+            <node name="teleop_twist_keyboard" pkg="teleop_twist_keyboard" type="teleop_twist_keyboard.py" clear_params="true" required="true"/>
+        </group>
+
+    </group>
+
+    <!-- inverse_kinematics_twist_node -->
+    <group if="(arg teleop)">
+    <remap from="inverse_kinematics_twist_node/cmd_vel" to="$(arg veh)/cmd_vel"/>
+    <include file="$(find jetbot_ros)/launch/inverse_kinematics_twist_node.launch">
+        <arg name="veh" value="$(arg veh)"/>
+    </include>
+    </group>
+    <group unless="$(arg teleop)">
+    <remap from="inverse_kinematics_twist_node/cmd_vel" to="/cmd_vel"/>
+    <include file="$(find jetbot_ros)/launch/inverse_kinematics_twist_node.launch">
+        <arg name="veh" value="$(arg veh)"/>
+    </include>
+    </group>
+
+    <!-- wheels_driver_node -->>
+    <remap from="wheels_driver_node/wheels_cmd" to="inverse_kinematics_twist_node/wheels_cmd"/>
+    <include file="$(find jetbot_ros)/launch/wheels_driver_node.launch">
+        <arg name="veh" value="$(arg veh)"/>
+    </include>
+
+</launch>
