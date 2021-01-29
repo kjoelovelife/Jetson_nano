@@ -10,52 +10,55 @@
     <arg name="local_planner" default="dwa" doc="Local planner can be either dwa or teb"/>
     <arg name="wheels" default="false" doc="move wheels or not"/>
 
-    <!-- Map server -->
-    <node name="map_server" pkg="map_server" type="map_server" args="$(find jetbot_slam)/map/$(arg map)"/>
+        <!-- Map server -->
+        <node name="map_server" pkg="map_server" type="map_server" args="$(find jetbot_slam)/map/$(arg map)"/>
 
-    <!-- YDLidar -->
-    <node name="ydlidar_node"  pkg="ydlidar"  type="ydlidar_node" output="screen" respawn="false">
-        <rosparam file="$(find jetbot_slam)/param/ydlidar_params.yaml" command="load"/>
-    </node>
+        <!-- YDLidar -->
+        <node name="ydlidar_node"  pkg="ydlidar"  type="ydlidar_node" output="screen" respawn="false">
+            <rosparam file="$(find jetbot_slam)/param/ydlidar_params.yaml" command="load"/>
+        </node>
 
-    <!-- TF setting -->
-    <node pkg="tf" type="static_transform_publisher" name="base_footprint2base_link" args="0 0 0.06 0 0 0 /base_footprint /base_link 10"/>
+        <!-- TF setting -->
+        <node pkg="tf" type="static_transform_publisher" name="base_footprint2base_link" args="0 0 0.06 0 0 0 /base_footprint /base_link 10"/>
 
-    <node pkg="tf" type="static_transform_publisher" name="base_link2laser_link" args="0 0 0.09 3.1415927 0 0 /base_link /laser_frame 10"/>
+        <node pkg="tf" type="static_transform_publisher" name="base_link2laser_link" args="0 0 0.09 3.1415927 0 0 /base_link /laser_frame 10"/>
 
-    <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser4" args="0.0 0.0 0.15 3.1415927 0.0  0.0 /base_footprint /laser_frame 40" />
+        <node pkg="tf" type="static_transform_publisher" name="base_link_to_laser4" args="0.0 0.0 0.15 3.1415927 0.0  0.0 /base_footprint /laser_frame 40" />    
 
-    <!-- ODOMETRY -->
-    <!--rf2o_Laser_Odometry-->
-    <node pkg="rf2o_laser_odometry" type="rf2o_laser_odometry_node" name="rf2o_laser_odometry">
-        <rosparam file="$(find rf2o_laser_odometry)/param/rf2o_laser_odometry_params.yaml" command="load"/>
-    </node>
+        <!-- ODOMETRY -->
+        <!--rf2o_Laser_Odometry-->
+        <node pkg="rf2o_laser_odometry" type="rf2o_laser_odometry_node" name="rf2o_laser_odometry">
+            <rosparam file="$(find rf2o_laser_odometry)/param/rf2o_laser_odometry_params.yaml" command="load"/>
+        </node>
 
-    <!-- AMCL arg-->
-    <arg name="init_x" default="0" />
-    <arg name="init_y" default="0" />
-    <arg name="init_a" default="0" />
+        <!-- AMCL arg-->
+        <arg name="init_x" default="0" />
+        <arg name="init_y" default="0" />
+        <arg name="init_a" default="0" />
 
-    <node pkg="amcl" type="amcl" name="amcl" output="screen">
-        <rosparam file="$(find jetbot_navigation)/param/amcl_params.yaml" command="load"/>
-    </node>
+        <node pkg="amcl" type="amcl" name="amcl" output="screen">
+            <rosparam file="$(find jetbot_navigation)/param/amcl_params.yaml" command="load"/>
+        </node>
 
-    <!-- Navstack -->
-    <node pkg="move_base" type="move_base" respawn="false" name="move_base">
-        <!-- local / global planner -->
-        <rosparam file="$(find jetbot_navigation)/param/global_planner_params.yaml" command="load"/>
-        <rosparam file="$(find jetbot_navigation)/param/$(arg local_planner)_local_planner_params.yaml" command="load"/>
+        <!-- Navstack -->
+        <node pkg="move_base" type="move_base" respawn="false" name="move_base">
+            <!-- local / global planner -->
+            <rosparam file="$(find jetbot_navigation)/param/global_planner_params.yaml" command="load"/>
+            <rosparam file="$(find jetbot_navigation)/param/$(arg local_planner)_local_planner_params.yaml" command="load"/>
         
-        <!-- costmap layers -->    
-        <rosparam file="$(find jetbot_navigation)/param/local_costmap_params.yaml" command="load"/>
-        <rosparam file="$(find jetbot_navigation)/param/global_costmap_params.yaml" command="load"/> 
-        <!-- move_base params -->
-        <rosparam file="$(find jetbot_navigation)/param/move_base_params.yaml" command="load"/>
-        <remap from="/odom" to="/rf2o_laser_odometry/odom"/>
-    </node>
+            <!-- costmap layers -->    
+            <rosparam file="$(find jetbot_navigation)/param/local_costmap_params.yaml" command="load"/>
+            <rosparam file="$(find jetbot_navigation)/param/global_costmap_params.yaml" command="load"/> 
+            <!-- move_base params -->
+            <rosparam file="$(find jetbot_navigation)/param/move_base_params.yaml" command="load"/>
+            <remap from="/odom" to="/rf2o_laser_odometry/odom"/>
+        </node>
 
-   <!-- launch nav_control.launch -->
-   <include if="$(arg wheels)" file="$(find jetbot_navigation)/launch/nav_control.launch">
-       <arg name="veh" value="$(arg veh)"/>
-   </include>
+       <!-- launch nav_control.launch -->
+       <group if="$(arg wheels)">
+           <include if="$(arg wheels)" file="$(find jetbot_navigation)/launch/nav_control.launch"/>
+       </group>
+       <!-- End launch nav_control.launch -->
+
+
 </launch>

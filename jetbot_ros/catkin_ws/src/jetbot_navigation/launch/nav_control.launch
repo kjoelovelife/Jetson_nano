@@ -1,12 +1,12 @@
 <?xml version="1.0"?>
 <launch>
-    <arg name="veh" default="$(env VEHICLE_NAME)" doc="Name of vehicle. ex: megaman"/>
-    <arg name="teleop" value="false"/>
+    <!-- inverse_kinematics_twist_node -->
+    <remap from="inverse_kinematics_twist_node/cmd_vel" to="/cmd_vel"/>
+    <include file="$(find jetbot_ros)/launch/inverse_kinematics_twist_node.launch"/>
 
-
-    <include file="$(find jetbot_ros)/launch/jetbot_motion.launch">
-        <arg name="veh" value="$(arg veh)"/>
-        <arg name="teleop" value="$(arg teleop)"/>
-    </include>
+    <!-- wheels_driver_node -->
+    <remap from="wheels_driver_node/wheels_cmd" to="inverse_kinematics_twist_node/wheels_cmd"/>
+    <include file="$(find jetbot_ros)/launch/wheels_driver_node.launch"/>
+    <!-- End wheels_driver_node -->
 
 </launch>

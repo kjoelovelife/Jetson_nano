@@ -1,9 +1,5 @@
 <launch>
     <arg name="pkg_name" value="jetbot_ros"/>
     <arg name="node_name" default="inverse_kinematics_twist_node"/>
-    <arg name="veh" doc="Name of vehicle. ex: megaman"/>
-
-    <group ns="$(arg veh)">
-        <node name="$(arg node_name)" pkg="$(arg pkg_name)" type="$(arg node_name).py" clear_params="true" output="screen" required="true"/>
-    </group>
+    <node name="$(arg node_name)" pkg="$(arg pkg_name)" type="$(arg node_name).py" clear_params="true" output="screen" required="true"/>
 </launch>
