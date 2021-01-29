@@ -2,8 +2,8 @@
 <launch>
     <!-- start basic args -->
     <arg name="veh" default="$(env VEHICLE_NAME)"/>
-    <arg name="inference_node_name" default="inference_model"/>
-    <arg name="reaction_node_name" default="inference_to_reaction"/>
+    <arg name="inference_node_name" default="img_model_inference"/>
+    <arg name="reaction_node_name" default="img_inference_to_reaction"/>
     <arg name="pkg_name" default="img_recognition"/>   
     <arg name="config" default="baseline" />
     <arg name="reaction_output" default="screen" />

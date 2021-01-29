@@ -13,8 +13,8 @@ class Inference_To_Reaction(object):
         self.package = "road_following"
         self.node_name = rospy.get_name()
         self.veh_name = self.node_name.split("/")[1]
-        rospy.loginfo("{}  Initializing inference_model.py......".format(self.node_name))
-        self.start = rospy.wait_for_message("/" + self.veh_name +"/inference_model/inference", Inference)
+        rospy.loginfo("[{}]  Initializing road_inference_to_reaction.py......".format(self.node_name))
+        self.start = rospy.wait_for_message("/" + self.veh_name +"/road_model_inference/inference", Inference)
     
         # ros parameter
         self.pid_parameter = {
@@ -100,14 +100,14 @@ class Inference_To_Reaction(object):
         return value
 
     def on_shutdown(self): 
-        rospy.loginfo("{} Close.".format(self.node_name))
-        rospy.loginfo("{} shutdown.".format(self.node_name))
+        rospy.loginfo("[{}] Close.".format(self.node_name))
+        rospy.loginfo("[{}] shutdown.".format(self.node_name))
         rospy.sleep(1)
         rospy.is_shutdown=True
 
 
 if __name__ == "__main__" :
-    rospy.init_node("inference_to_reaction", anonymous=False)
+    rospy.init_node("road_inference_to_reaction", anonymous=False)
     inference_to_reaction_node = Inference_To_Reaction()
     rospy.on_shutdown(inference_to_reaction_node.on_shutdown)   
     rospy.spin()

@@ -15,7 +15,7 @@ class Inference_To_Reaction(object):
         self.node_name = rospy.get_name()
         self.veh_name = self.node_name.split("/")[1]
         rospy.loginfo("{}  Initializing inference_model.py......".format(self.node_name))
-        self.start = rospy.wait_for_message("/" + self.veh_name +"/inference_model/inference", Inference)
+        self.start = rospy.wait_for_message("/" + self.veh_name +"/img_model_inference/inference", Inference)
      
         # local parameter
         self.confidence = {}
@@ -83,7 +83,7 @@ class Inference_To_Reaction(object):
 
 
 if __name__ == "__main__" :
-    rospy.init_node("inference_to_reaction", anonymous=False)
+    rospy.init_node("img_inference_to_reaction", anonymous=False)
     inference_to_reaction_node = Inference_To_Reaction()
     rospy.on_shutdown(inference_to_reaction_node.on_shutdown)   
     rospy.spin()
