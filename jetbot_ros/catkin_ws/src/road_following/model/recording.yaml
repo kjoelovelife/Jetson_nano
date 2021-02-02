@@ -19,3 +19,4 @@ best_steering_model_xy.pth:
     train_loss: 0.018080394715070724
     train_time: 318.9
     use_cuda: true
+  purpose: regression

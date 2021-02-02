@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<launch>
+    <!-- start basic args -->
+    <arg name="veh" default="$(env VEHICLE_NAME)"/>
+    <arg name="inference_node_name" default="self_driving_inference_model"/>
+    <arg name="inference_reaction_node_name" default="self_driving_inference_to_reaction"/>
+    <arg name="pkg_name" default="self_driving"/>    
+    <arg name="config" default="baseline" />
+    <arg name="reaction_output" default="screen" />
+    <arg name="confidence_threshold" default="0.8"/>
+    
+    <!-- start switch args -->
+    <arg name="raw" default="true"/>
+    <arg name="reaction" default="false"/>
+    <arg name="camera" default="true"/>
+
+    <!-- jetson_camera -->
+    <group if="$(arg camera)">
+        <include file="$(find jetson_camera)/launch/jetson_camera.launch">
+		    <arg name="veh" value="$(arg veh)"/>
+		    <arg name="config" value="$(arg config)"/>
+            <arg name="raw" value="$(arg raw)"/>    
+        </include>
+
+    </group>
+
+    <!-- inference model -->
+    <group ns="$(arg veh)">
+        <!-- road following model inference -->
+        <remap from="/$(arg veh)/$(arg inference_node_name)/image/raw" to="/$(arg veh)/jetson_camera/image/raw"/>
+        <node  pkg="$(arg pkg_name)" type="$(arg inference_node_name).py" name="$(arg inference_node_name)" clear_params="true" output="screen" required="true"/>
+ 
+        <group if="$(arg reaction)">
+            <remap from="/$(arg veh)/$(arg reaction_node_name)/inference" to="/$(arg veh)/$(arg inference_node_name)/inference"/>       
+            <node pkg="$(arg pkg_name)" type="$(arg reaction_node_name).py" name="$(arg reaction_node_name)" clear_params="true" output="$(arg reaction_output)" required="true"/>
+           
+            <!-- inverse_kinematics_twist_node -->
+            <remap from="inverse_kinematics_twist_node/cmd_vel" to="inference_to_reaction/cmd_vel"/>
+            <include file="$(find jetbot_ros)/launch/inverse_kinematics_twist_node.launch"/>
+
+            <!-- wheels_driver_node -->
+            <remap from="wheels_driver_node/wheels_cmd" to="inverse_kinematics_twist_node/wheels_cmd"/>
+            <include file="$(find jetbot_ros)/launch/wheels_driver_node.launch"/>
+            <!-- End wheels_driver_node -->
+            </group> <!-- group recation -->  
+    </group> <!-- group ns -->
+</launch>

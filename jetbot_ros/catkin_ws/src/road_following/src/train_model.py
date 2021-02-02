@@ -250,8 +250,9 @@ class Train_Model_Node(object):
                         "eps": self.train_eps,
                         "weight_decay": self.train_weight_decay,
                     },
-
+                
                 },
+                "purpose": "regression",
             }
         }
         with open(fname, 'w') as outfile:

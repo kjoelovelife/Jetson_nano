@@ -242,6 +242,7 @@ class Train_Model_Node(object):
                     "train_time": train_time,
                     "accuracy"  : accuracy,
                 },
+                "purpose": "classifier",
             }
         }
         with open(fname, 'w') as outfile:

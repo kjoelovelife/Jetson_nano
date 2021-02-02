@@ -15,3 +15,4 @@ best2.pth:
     momentum: 0.09
     train_time: 310.81
     use_cuda: true
+  purpose: classifier

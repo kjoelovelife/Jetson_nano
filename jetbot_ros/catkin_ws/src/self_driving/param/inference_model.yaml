@@ -1,0 +1,10 @@
+road_following_model_pth: best_steering_model_xy.pth
+img_recognition_model_pth: best2.pth 
+use_cuda: true
+
+road_preprocess_mean: [0.485, 0.456, 0.406]   # image parameter for road_following
+road_preprocess_stdev: [0.229, 0.224, 0.225]  # image parameter for road_following
+
+img_preprocess_mean: [0.485, 0.456, 0.406]    # image parameter for img_recognition
+img_preprocess_stdev: [0.229, 0.224, 0.225]   # image parameter for img_recognition
+
