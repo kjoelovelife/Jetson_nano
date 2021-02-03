@@ -7,7 +7,7 @@ from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import CompressedImage, Image
 from geometry_msgs.msg import Twist
 from uuid import uuid1
-from object.srv import save_action, save_actionResponse, select_label, select_labelResponse
+from img_recognition.srv import save_action, save_actionResponse, select_label, select_labelResponse
 
 
 
@@ -16,6 +16,7 @@ class srv_client_save_image_action(object):
     def __init__(self):
         
         # node information
+        self.package = "img_recognition"
         self.node_name = rospy.get_name()
         self.veh_name = self.node_name.split("/")[1]
 
@@ -23,30 +24,30 @@ class srv_client_save_image_action(object):
         self.pub_car_cmd = rospy.Publisher("~cmd_vel", Twist, queue_size=1)
 
         # wait for service start
-        rospy.loginfo("wait for service.Please launch [save_image.launch] in [object] ")
+        rospy.loginfo("[{}] wait for service.Please launch [save_image.launch] in {}.".format(self.node_name, rospkg.RosPack().get_path(self.package)))
         self.start = rospy.wait_for_service("/" + self.veh_name +"/save_image/save_image_action")
         self.start = rospy.wait_for_service("/" + self.veh_name +"/save_image/select_label") 
 
         # set service client
         self.save_image_action = rospy.ServiceProxy("/" + self.veh_name + "/save_image/save_image_action",save_action)
-        self.select_label = rospy.ServiceProxy("/" + self.veh_name + "/save_image/select_label",select_label)
-       
-        # car parameter
-        read_gain = self.readParamFromFile_gain()
- 
-        # ros parameter
+        self.select_label = rospy.ServiceProxy("/" + self.veh_name + "/save_image/select_label", select_label)
+    
+        # setup/get ros parameter
+        self.inverse_kinematics_param = self.read_param_from_file(package="jetbot_ros", folder="param", file_name=(self.veh_name + ".yaml"))
+        for keys in self.inverse_kinematics_param.keys():
+            self.setup_parameter("~" + keys, self.inverse_kinematics_param[keys])
         self.label = rospy.get_param("/" +self.veh_name + "/save_image/label","default")
 
         # local parameter 
         self.picture = False
-        self.all_label = self.readParamFromFile_label()
+        self.all_label = self.read_param_from_file(package=self.package, folder="param", file_name="image_label.yaml").keys()
 
         # Done information
-        rospy.loginfo("You can press [w/a/s/d/x/q/r/z/c] to control the ROSKY with parameter in [{}] ".format(self.getFilePath_gain(self.veh_name)))
-        rospy.loginfo("Service Start! You can click [p] to save picture.")
-        rospy.logwarn("You can click [space] to change the label.")
-        rospy.loginfo("Don't forget check out the label now!")
-        rospy.logwarn("Now your label is [{}]".format(self.label))
+        rospy.loginfo("[{}] You can press [w/a/s/d/x/q/r/z/c] to control the Jet-falcon.".format(self.node_name))
+        rospy.loginfo("[{}] Service Start! You can click [p] to save picture.".format(self.node_name))
+        rospy.logwarn("[{}] You can click [space] to change the label.".format(self.node_name))
+        rospy.loginfo("[{}] Don't forget check out the label now!".format(self.node_name))
+        rospy.logwarn("[{}] Now your label is [{}]".format(self.node_name, self.label))
        
         # timer
         try:
@@ -56,34 +57,50 @@ class srv_client_save_image_action(object):
             termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
             _exit = sys.exit()    
 
-    def call_srv_save_image_action(self,picture):    
-        try :
-            if picture == True :
-                rospy.loginfo("Capturing picture now!")
-            else:
-                rospy.loginfo("Stop capturing!")       
-            send_signal = self.save_image_action(picture)
-            image_count = rospy.get_param("/" +self.veh_name + "/save_image/label_image_count","didn't get!")         
-            rospy.loginfo("The [ {} ] images you have : {}".format(self.label,image_count))
-        except rospy.ServiceException as e :
-            print("Service call failed".format(e))
+    def getFilePath(self, package, folder, file_name):
+        rospack = rospkg.RosPack()
+        return rospack.get_path(package) + "/" + folder + "/" + file_name  
 
-    def cb_timer(self,event):
+    def read_param_from_file(self, package, folder, file_name):
+        fname = self.getFilePath(package, folder, file_name)
+        if not os.path.isfile(fname):
+            rospy.logwarn("[{}] {} does not exist. Using name \"default\" to load file.".format(self.node_name, fname))
+            fname = self.getFilePath(package, folder, file_name="default.yaml")
+        with open(fname, 'r') as in_file:
+            try:
+                yaml_dict = yaml.load(in_file)
+            except yaml.YAMLError as exc:
+                rospy.logoinfo("[{}] YAML syntax  error. File: {}".format(self.node_name, fname))
+        return yaml_dict
+
+    def cb_timer(self, event):
         _label = rospy.get_param("/" + self.veh_name +"/save_image/label","default")
         if _label != self.label:
             self.label = _label
             termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
             print ""
-            rospy.logwarn("Now your label is [{}]".format(self.label))
-            rospy.loginfo("You always can click [space] to change the label.")
+            rospy.logwarn("[{}] Now your label is [{}]".format(self.node_name, self.label))
+            rospy.loginfo("[{}] You always can click [space] to change the label.".format(self.node_name))
             rospy.sleep(0.5)
 
-    def call_srv_select_label(self,label="default"):    
+    def call_srv_save_image_action(self, picture):    
+        try :
+            if picture == True :
+                rospy.loginfo("[{}] Capturing picture now!".format(self.node_name))
+            else:
+                rospy.loginfo("[{}] Stop capturing!".format(self.node_name))       
+            send_signal = self.save_image_action(picture)
+            image_count = rospy.get_param("/" +self.veh_name + "/save_image/label_image_count","didn't get!")         
+            rospy.loginfo("[{}] The [ {} ] images you have : {}".format(self.node_name, self.label,image_count))
+        except rospy.ServiceException as e :
+            print("Service call failed".format(e))
+
+    def call_srv_select_label(self, label="default"):    
         try :         
             send_signal = self.select_label(label)
             #rospy.loginfo("Select the label : {}".format(label))
         except rospy.ServiceException as e :
-            print("Service call failed".format(e))
+            rospy.loginfo("[{}] Service call failed. {} ".format(self.node_name, e))
             
     def getKey(self):
         tty.setraw(sys.stdin.fileno())
@@ -107,60 +124,6 @@ class srv_client_save_image_action(object):
         rospy.loginfo("[%s] %s = %s " % (self.node_name, param_name, value))
         return value
 
-    def readParamFromFile_gain(self):
-        # Check file existence
-        fname = self.getFilePath_gain(self.veh_name)
-        # Use default.yaml if file doesn't exsit
-        if not os.path.isfile(fname):
-            rospy.logwarn("[%s] %s does not exist. Using default.yaml." %(self.node_name,fname))
-            fname = self.getFilePath_gain("default")
-        with open(fname, 'r') as in_file:
-            try:
-                yaml_dict = yaml.load(in_file)
-            except yaml.YAMLError as exc:
-                rospy.logfatal("[%s] YAML syntax error. File: %s fname. Exc: %s" %(self.node_name, fname, exc))
-                rospy.signal_shutdown()
-                return
-
-        # Set parameters using value in yaml file
-        if yaml_dict is None:
-            # Empty yaml file
-            return
-        for param_name in ["keyboard_gain","keyboard_steerGain"]:
-            if param_name == "keyboard_gain":
-                self.keyboard_gain = yaml_dict.get(param_name)
-            else:
-                self.keyboard_steerGain = yaml_dict.get(param_name)
-
-    def getFilePath_gain(self, name):
-        rospack = rospkg.RosPack()
-        return rospack.get_path('rosky_base')+'/config/baseline/calibration/kinematics/' + name + ".yaml"
-
-    def readParamFromFile_label(self):
-        # Check file existence
-        fname = self.getFilePath_label()
-        # Use default.yaml if file doesn't exsit
-        if not os.path.isfile(fname):
-            rospy.logwarn("You don't have the label! Please check out {}".format(fname))
-            self.on_shutdown()
-        with open(fname, 'r') as in_file:
-            try:
-                yaml_dict = yaml.load(in_file)
-            except yaml.YAMLError as exc:
-                rospy.logfatal("[%s] YAML syntax error. File: %s fname. Exc: %s" %(self.node_name, fname, exc))
-                rospy.signal_shutdown()
-                return
-
-        # Set parameters using value in yaml file
-        if yaml_dict is None:
-            # Empty yaml file
-            return
-        return yaml_dict.keys() 
-
-    def getFilePath_label(self):
-        rospack = rospkg.RosPack()
-        return rospack.get_path('object') + "/param/image_label.yaml"
-
     def change_label(self):
         _all_label = {}
         for index in range(0,len(self.all_label)):
@@ -176,7 +139,6 @@ class srv_client_save_image_action(object):
 
     def public_car_cmd(self,speed=(0,0,0,0)):
         car_cmd = Twist()
-        speed = (self.keyboard_gain * speed[0],0,0, self.keyboard_steerGain * speed[3])
         car_cmd.linear.x = speed[0]
         car_cmd.linear.y = 0
         car_cmd.linear.z = 0

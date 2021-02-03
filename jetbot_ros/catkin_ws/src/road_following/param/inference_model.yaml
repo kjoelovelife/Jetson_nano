@@ -1,3 +1,0 @@
-model_pth: best_steering_model_xy.pth
-use_cuda: true
-

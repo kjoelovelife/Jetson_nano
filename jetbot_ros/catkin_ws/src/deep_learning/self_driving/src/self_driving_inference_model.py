@@ -17,7 +17,7 @@ class Inference_Model_Node(object):
         self.node_name = rospy.get_name()
         self.veh_name = self.node_name.split("/")[1]
         #_start = rospy.wait_for_message("/" + self.veh_name +"/jetson_camera/image/raw", Image)
-        rospy.loginfo("[{}]  Initializing inference_model.py......".format(self.node_name))
+        rospy.loginfo("[{}]  Initializing self_driving_inference_model.py......".format(self.node_name))
 
         ## set/get ros param
         self.inference_model_information = self.read_param_from_file(package=self.package, folder="param", file_name="inference_model.yaml")

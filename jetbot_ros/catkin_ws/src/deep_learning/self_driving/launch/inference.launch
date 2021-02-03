@@ -31,11 +31,14 @@
         <node  pkg="$(arg pkg_name)" type="$(arg inference_node_name).py" name="$(arg inference_node_name)" clear_params="true" output="screen" required="true"/>
  
         <group if="$(arg reaction)">
-            <remap from="/$(arg veh)/$(arg reaction_node_name)/inference" to="/$(arg veh)/$(arg inference_node_name)/inference"/>       
-            <node pkg="$(arg pkg_name)" type="$(arg reaction_node_name).py" name="$(arg reaction_node_name)" clear_params="true" output="$(arg reaction_output)" required="true"/>
+            <remap from="/$(arg veh)/$(arg inference_reaction_node_name)/road_following_inference" to="/$(arg veh)/$(arg inference_node_name)/road_following_inference"/>
+            <remap from="/$(arg veh)/$(arg inference_reaction_node_name)/img_recognition_inference" to="/$(arg veh)/$(arg inference_node_name)/img_recognition_inference"/>          
+            <node pkg="$(arg pkg_name)" type="$(arg inference_reaction_node_name).py" name="$(arg inference_reaction_node_name)" clear_params="true" output="$(arg reaction_output)" required="true">
+                <param name="confidence_threshold" type="double" value="$(arg confidence_threshold)"/>
+            </node>
            
             <!-- inverse_kinematics_twist_node -->
-            <remap from="inverse_kinematics_twist_node/cmd_vel" to="inference_to_reaction/cmd_vel"/>
+            <remap from="inverse_kinematics_twist_node/cmd_vel" to="$(arg inference_reaction_node_name)/cmd_vel"/>
             <include file="$(find jetbot_ros)/launch/inverse_kinematics_twist_node.launch"/>
 
             <!-- wheels_driver_node -->

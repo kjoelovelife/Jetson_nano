@@ -7,12 +7,11 @@
     <arg name="raw" default="true"/>
     <arg name="picture_interval" default="0.5"/>
     <arg name="label" default="default"/>
-    <arg name="config" default="baseline" />
+    <arg name="teleop" default="false"/>
 
     <!-- jetson_camera -->
     <include file="$(find jetson_camera)/launch/jetson_camera.launch">
         <arg name="raw" value="$(arg raw)"/>     
-        <arg name="config" value="$(arg config)"/> 
     </include>
 
     <!-- save_image -->
@@ -21,6 +20,22 @@
         <param name="picture_interval" type="double" value="$(arg picture_interval)"/>
         <param name="label" type="str" value="$(arg label)"/>
     </node>
+
+    <group if="$(arg teleop)">
+        <group ns="$(arg veh)">
+            <!-- srv_client_save image node -->
+            <node pkg="$(arg pkg_name)" type="srv_client_save_image.py" name="srv_client_save_image" clear_params="true" output="screen" required="true"/>
+
+            <!-- inverse kinematices mode -->
+            <remap from="inverse_kinematics_twist_node/cmd_vel" to="srv_client_save_image/cmd_vel"/>
+            <include file="$(find jetbot_ros)/launch/inverse_kinematics_twist_node.launch"/>
+        
+            <!-- wheels driverse node -->
+            <remap from="wheels_driver_node/wheels_cmd" to="inverse_kinematics_twist_node/wheels_cmd"/>
+            <include file="$(find jetbot_ros)/launch/wheels_driver_node.launch"/>
+        </group> <!-- group ns="$(arg veh)" --> 
+
+    </group> <!-- group if="$(arg teleop)" -->
  
 </launch>
 

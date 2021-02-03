@@ -22,12 +22,12 @@ class CamInfoReader(object):
         self.pub_camera_info = rospy.Publisher("~camera_info",CameraInfo,queue_size=1)
         # Get path to calibration yaml file
         rospack = rospkg.RosPack()
-        self.cali_file = rospack.get_path(self.package) + "/param/" + self.veh_name + "/.yaml"
+        self.cali_file = rospack.get_path(self.package) + "/param/" + self.veh_name + ".yaml"
         self.camera_info_msg = None
 
         # Load calibration yaml file
         if not os.path.isfile(self.cali_file):
-            rospy.logwarn("[%s] Can't find calibration file: %s.\nUsing intrinsic calibration instead." %(self.node_name,self.cali_file))
+            rospy.logwarn("[%s] Can't find calibration file: %s.\nUsing intrinsic_calibration instead." %(self.node_name, self.cali_file))
             self.cali_file = rospack.get_path(self.package) + "/param/" + self.default_yaml
 
         # Shutdown if no calibration file not found
