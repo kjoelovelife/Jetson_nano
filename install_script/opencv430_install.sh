@@ -12,7 +12,7 @@
 main_path="Jetson_nano"
 
 echo "** Remove other OpenCV first"
-#sudo sudo apt-get purge *libopencv*
+#sudo apt-get purge *libopencv*
 
 
 echo "** Install requirement"

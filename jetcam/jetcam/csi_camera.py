@@ -39,3 +39,7 @@ class CSICamera(Camera):
             return image
         else:
             raise RuntimeError('Could not read image from camera')
+
+    def stop(self):
+        self.cap.release()
+

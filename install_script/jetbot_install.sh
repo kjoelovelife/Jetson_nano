@@ -123,7 +123,7 @@ echo $PASSWORD | sudo systemctl start jetbot_jupyter
 #======= step8. configure Jetson nano GPIO =================
 sudo pip3 install Jetson.GPIO
 sudo apt-get -y install git-all
-cd  /driver
+cd ~/$main_path/driver
 git clone https://github.com/NVIDIA/jetson-gpio.git
 cd jetson-gpio
 sudo python3 setup.py install
