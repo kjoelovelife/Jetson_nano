@@ -24,6 +24,7 @@ jetbot_ros/catkin_ws/src/jetson_camera/src/jetson_camera.pyc
 jetbot_ros/catkin_ws/src/jetson_camera/include/jetcam_ros/utils.pyc
 jetbot_ros/catkin_ws/src/anti_instagram/include/anti_instagram/*.pyc
 jetbot_ros/catkin_ws/src/adafruit_drivers/include/../*.pyc
+jetbot_ros/catkin_ws/src/adafruit_drivers/include/Adafruit_GPIO/*.pyc
 jetbot_ros/catkin_ws/src/jetson_camera/include/jetcam_ros/*.pyc
 jetbot_ros/catkin_ws/src/ominibot_car/include/ominibot_car/*.pyc
 jetbot_ros/catkin_ws/src/rosky_slam/map/*.pgm

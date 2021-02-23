@@ -1,5 +1,5 @@
-road_following_model_pth: best_steering_model_xy.pth
-img_recognition_model_pth: best2.pth 
+road_following_model_pth: best_steering.pth
+img_recognition_model_pth: best3-2021-02-23-15-31-49.pth
 use_cuda: true
 
 road_preprocess_mean: [0.485, 0.456, 0.406]   # image parameter for road_following

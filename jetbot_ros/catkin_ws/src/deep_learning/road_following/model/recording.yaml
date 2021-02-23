@@ -1,0 +1,22 @@
+best_steering.pth:
+  build_time: 2021-02-23-16-26-10
+  loader:
+    batch_size: 8
+    num_workers: 0
+    shuffle: true
+  purpose: regression
+  train:
+    epochs: 10
+    model: resnet18
+    optimizer:
+      betas:
+      - 0.9
+      - 0.999
+      eps: 1.0e-08
+      learning_rate: 0.001
+      name: Adam
+      weight_decay: 0
+    test_loss: 0.0217537060379982
+    train_loss: 0.03531019017100334
+    train_time: 47.98
+    use_cuda: true

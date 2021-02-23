@@ -1,7 +1,0 @@
-vision_opencv/image_geometry
-/home/icshop/Jetson_nano/jetbot_ros/cvbridge_build_ws/devel/.private/image_geometry/cmake.lock /home/icshop/Jetson_nano/jetbot_ros/cvbridge_build_ws/devel/./cmake.lock
-/home/icshop/Jetson_nano/jetbot_ros/cvbridge_build_ws/devel/.private/image_geometry/lib/libimage_geometry.so /home/icshop/Jetson_nano/jetbot_ros/cvbridge_build_ws/devel/lib/libimage_geometry.so
-/home/icshop/Jetson_nano/jetbot_ros/cvbridge_build_ws/devel/.private/image_geometry/lib/python3/dist-packages/image_geometry/__init__.py /home/icshop/Jetson_nano/jetbot_ros/cvbridge_build_ws/devel/lib/python3/dist-packages/image_geometry/__init__.py
-/home/icshop/Jetson_nano/jetbot_ros/cvbridge_build_ws/devel/.private/image_geometry/lib/pkgconfig/image_geometry.pc /home/icshop/Jetson_nano/jetbot_ros/cvbridge_build_ws/devel/lib/pkgconfig/image_geometry.pc
-/home/icshop/Jetson_nano/jetbot_ros/cvbridge_build_ws/devel/.private/image_geometry/share/image_geometry/cmake/image_geometryConfig-version.cmake /home/icshop/Jetson_nano/jetbot_ros/cvbridge_build_ws/devel/share/image_geometry/cmake/image_geometryConfig-version.cmake
-/home/icshop/Jetson_nano/jetbot_ros/cvbridge_build_ws/devel/.private/image_geometry/share/image_geometry/cmake/image_geometryConfig.cmake /home/icshop/Jetson_nano/jetbot_ros/cvbridge_build_ws/devel/share/image_geometry/cmake/image_geometryConfig.cmake

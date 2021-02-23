@@ -2,8 +2,8 @@
 <launch>
     <!-- start basic args -->
     <arg name="veh" default="$(env VEHICLE_NAME)"/>
-    <arg name="inference_node_name" default="img_model_inference"/>
-    <arg name="reaction_node_name" default="img_inference_to_reaction"/>
+    <arg name="inference_node_name" default="inference_model"/>
+    <arg name="reaction_node_name" default="inference_to_reaction"/>
     <arg name="pkg_name" default="img_recognition"/>   
     <arg name="config" default="baseline" />
     <arg name="reaction_output" default="screen" />
@@ -33,8 +33,18 @@
  
         <group if="$(arg reaction)">
             <remap from="/$(arg veh)/$(arg reaction_node_name)/inference" to="/$(arg veh)/$(arg inference_node_name)/inference"/>
-            <node pkg="$(arg pkg_name)" type="$(arg reaction_node_name).py" name="$(arg reaction_node_name)" clear_params="true" output="$(arg reaction_output)" required="true"/>
+            <node pkg="$(arg pkg_name)" type="$(arg reaction_node_name).py" name="$(arg reaction_node_name)" clear_params="true" output="$(arg reaction_output)" required="true">
                 <param name="confidence_threshold" type="double" value="$(arg confidence_threshold)"/>
+            </node>
+
+            <!-- inverse_kinematics_twist_node -->
+            <remap from="inverse_kinematics_twist_node/cmd_vel" to="$(arg reaction_node_name)/pub_car_cmd"/>
+            <include file="$(find jetbot_ros)/launch/inverse_kinematics_twist_node.launch"/>
+
+            <!-- wheels_driver_node -->
+            <remap from="wheels_driver_node/wheels_cmd" to="inverse_kinematics_twist_node/wheels_cmd"/>
+            <include file="$(find jetbot_ros)/launch/wheels_driver_node.launch"/>
+            <!-- End wheels_driver_node -->
         </group> <!-- group recation -->
     
     </group> <!-- group ns -->

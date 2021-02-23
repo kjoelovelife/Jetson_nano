@@ -1,0 +1,13 @@
+dataset: dataset_xy_2021_02_23_16_16_39
+loader:
+  batch_size: 8
+  shuffle: true
+  num_workers: 0
+
+train:
+  use_cuda: true
+  model: "resnet18"
+  save_model_name: "best_steering"
+  epochs: 10
+  learning_rate: 0.001
+  momentum: 0.09

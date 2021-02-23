@@ -50,7 +50,7 @@ class Train_Model_Node(object):
         self.package = "road_following"
         self.node_name = rospy.get_name()
         self.veh_name = self.node_name.split("/")[1]
-        rospy.loginfo("{}  Initializing train_model.py......".format(self.node_name))
+        rospy.loginfo("[{}]  Initializing train_model.py......".format(self.node_name))
 
         ## Set/get ros param
         self.folder_name = self.setup_parameter("~dataset", "dataset_xy")
@@ -58,15 +58,15 @@ class Train_Model_Node(object):
         self.model_name = self.setup_parameter("~model", "resnet18")
         self.pre_train = self.setup_parameter("~pre_train", True)
         self.use_cuda = self.setup_parameter("~use_cuda", True)
-        self.loader_batch_size  = self.setup_parameter("~batch_size", 16)
-        self.loader_shuffle = self.setup_parameter("~shuffle", True)
-        self.loader_num_workers = self.setup_parameter("~num_workers", 4)
-        self.train_save_model_name = self.setup_parameter("~save_model_name", "best_steering_model_xy")
-        self.train_epochs = self.setup_parameter("~epochs", 30)
-        self.train_lr = self.setup_parameter("~learning_rate", 0.001)
-        self.train_betas = self.setup_parameter("~betas", (0.9, 0.999))
-        self.train_eps = self.setup_parameter("~eps", 1e-8) 
-        self.train_weight_decay = self.setup_parameter("~weight_decay", 0)
+        self.loader_batch_size  = self.setup_parameter("~loader/batch_size", 16)
+        self.loader_shuffle = self.setup_parameter("~loader/shuffle", True)
+        self.loader_num_workers = self.setup_parameter("~loader/num_workers", 4)
+        self.train_save_model_name = self.setup_parameter("~train/save_model_name", "best_steering_model_xy")
+        self.train_epochs = self.setup_parameter("~train/epochs", 30)
+        self.train_lr = self.setup_parameter("~train/learning_rate", 0.001)
+        self.train_betas = self.setup_parameter("~train/betas", (0.9, 0.999))
+        self.train_eps = self.setup_parameter("~train/eps", 1e-8) 
+        self.train_weight_decay = self.setup_parameter("~train/weight_decay", 0)
         
         ## Set local param
         self.image_folder = self.check_folder(self.folder_name)
@@ -116,7 +116,7 @@ class Train_Model_Node(object):
                       "mobilenet", "resnet34", "wide_resnet50_2", "mnasnet" 
                      ]
         if model in model_list:
-            rospy.loginfo("You use model [{}]. Need some time to load model...".format(model))
+            rospy.loginfo("[{}] You use model [{}]. Need some time to load model...".format(self.node_name, model))
             start_time = rospy.get_time()
             if model == "resnet18":
                 self.model = models.resnet18(pretrained=pre_trained)
@@ -146,22 +146,23 @@ class Train_Model_Node(object):
             elif model == "mnasnet":
                 self.model = models.mnasnet1_0(pretrained=pre_trained)
             interval = rospy.get_time() - start_time
-            rospy.loginfo("loading modle done! Use {:.2f} seconds.".format(interval))
+            rospy.loginfo("[{}] loading modle done! Use {:.2f} seconds.".format(self.node_name, interval))
         else:
-            rospy.loginfo("We don't have the model in this rpoject. Please choose one of below: ")
-            rospy.loginfo(model_list)
+            rospy.loginfo("[{}] We don't have the model in this rpoject. Please choose one of below: ".format(self.node_name))
+            rospy.loginfo("[{}] {}".format(self.node_name, model_list))
             self.on_shutdown()
 
     def cuda(self, use=False):
         if use == True:
-            rospy.loginfo("Using cuda! Need some time to start...")
+            rospy.loginfo("[{}] Using cuda! Need some time to start...".format(self.node_name))
             self.device = torch.device('cuda')
             start_time = rospy.get_time()
             self.model = self.model.to(self.device)
             interval = rospy.get_time() - start_time
-            rospy.loginfo("Done with starting! Can use cuda now! Use {:.2f} seconds to start.".format(interval)) 
+            rospy.loginfo("[{}] Done with starting! Can use cuda now! Use {:.2f} seconds to start.".format(self.node_name, interval)) 
         else:
-            rospy.loginfo("Do not use cuda!")
+            self.device = torch.device('cpu')
+            rospy.loginfo("[{}] Do not use cuda!".format(self.node_name))
     
     def train(self, epochs=70, best_model_name="best_model", learning_rate=1e-3, betas=(0.9, 0.999), eps=1e-08, weight_decay=0):
         NUM_EPOCHS = epochs
@@ -169,7 +170,7 @@ class Train_Model_Node(object):
         best_loss = 1e9
         optimizer = optim.Adam(self.model.parameters(), lr=learning_rate, betas=betas, eps=eps, weight_decay=weight_decay)
         start_time = rospy.get_time()
-        rospy.loginfo("Start training! Don't stop this process... ")
+        rospy.loginfo("[{}] Start training! Don't stop this process... ".format(self.node_name))
         for epoch in range(NUM_EPOCHS):
             epoch_start = rospy.get_time()
             self.model.train()
@@ -201,11 +202,11 @@ class Train_Model_Node(object):
                 torch.save(self.model.state_dict(), BEST_MODEL_PATH)
                 best_loss = test_loss
             epoch_interval = rospy.get_time() - epoch_start
-            rospy.loginfo("Epoch: {}, train_loss: {}, test_loss: {}, time: {:.2f}.".format(epoch + 1, train_loss, test_loss, epoch_interval))
+            rospy.loginfo("[{}] Epoch: {}, train_loss: {}, test_loss: {}, time: {:.2f}.".format(self.node_name, epoch + 1, train_loss, test_loss, epoch_interval))
         interval = rospy.get_time() - start_time
-        rospy.loginfo("Done! Use {:.2f} seconds to train model.".format(interval))
+        rospy.loginfo("[{}] Done! Use {:.2f} seconds to train model.".format(self.node_name, interval))
         self.recording(model_name=best_model_name, train_time=round(interval, 2), loss=(float(train_loss), float(test_loss)))
-        rospy.loginfo("Please check out you model and recording in [{}]".format(rospkg.RosPack().get_path(self.package) + '/model/'))
+        rospy.loginfo("[{}] Please check out you model and recording in [{}]".format(self.node_name, rospkg.RosPack().get_path(self.package) + '/model/'))
 
     def compare_model_name(self, model_name):
         fname = rospkg.RosPack().get_path(self.package) + "/model/"
@@ -213,7 +214,7 @@ class Train_Model_Node(object):
             time_format = '%Y_%m_%d_%H_%M_%S'
             now = datetime.datetime.now().strftime(time_format)
             name = self.train_save_model_name + "_" + str(now)
-            rospy.logwarn("Model name repeat nad will be reset! Now the name is: {}".format(name))
+            rospy.logwarn("[{}] Model name repeat nad will be reset! Now the name is: {}".format(self.node_name, name))
             return name
         return model_name
 
@@ -272,7 +273,7 @@ class Train_Model_Node(object):
     def on_shutdown(self): 
         rospy.loginfo("[{}] Close.".format(self.node_name))
         rospy.loginfo("[{}] shutdown.".format(self.node_name))
-        rospy.logwarn("Now you can press [ctrl] + [c] ro close the launch file.")
+        rospy.logwarn("[{}] Now you can press [ctrl] + [c] ro close the launch file.".format(self.node_name))
         rospy.sleep(1)
         rospy.is_shutdown=True
         #try:

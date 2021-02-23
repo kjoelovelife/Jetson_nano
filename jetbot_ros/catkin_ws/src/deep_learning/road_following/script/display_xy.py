@@ -146,7 +146,7 @@ class Display_XY_Node(object):
         if not os.path.isdir(folder):
             time_format = "%Y_%m_%d_%H_%M_%S"
             now = datetime.datetime.now().strftime(time_format)
-            rospy.logwarn("[{}] Can't find folder: {}.\nWill make [dataset_xy_{}] in {}.".format(self.node_name, folder, now,rospack.get_path(self.package + "/image")))
+            rospy.logwarn("[{}] Can't find folder: {}.\nWill make [dataset_xy_{}] in {}.".format(self.node_name, folder, now, rospack.get_path(self.package)+"/image"))
             name = "dataset_xy" + "_" + now
             folder = rospack.get_path(self.package) + "/image/" + name
             os.makedirs(folder)

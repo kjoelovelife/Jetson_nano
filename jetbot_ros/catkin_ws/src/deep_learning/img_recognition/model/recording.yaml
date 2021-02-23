@@ -1,0 +1,18 @@
+best3-2021-02-23-15-31-49.pth:
+  build_time: 2021-02-23-15-36-15
+  labels:
+    blocked: 56
+    free: 73
+  loader:
+    batch_size: 8
+    num_workers: 0
+    shuffle: true
+  purpose: classifier
+  train:
+    accuracy: 1.0
+    epochs: 10
+    learning_rate: 0.001
+    model: alexnet
+    momentum: 0.09
+    train_time: 194.45
+    use_cuda: true

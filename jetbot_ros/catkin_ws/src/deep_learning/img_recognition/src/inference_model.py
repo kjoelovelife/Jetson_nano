@@ -49,9 +49,9 @@ class Inference_Model_Node(object):
     
     def check_model_exist(self, name):
         if not name in self.recording.keys():
-            rospy.logwarn("[{}] does not exist in folder [model]. Please check your model_pth in [{}].".format(name,self.getFilePath(name="inference_model.yaml", folder="param") ))
-            rospy.logwarn("There are model_pth you can use below:")
-            rospy.logwarn(list(self.recording.keys()))
+            rospy.logerr("[{}] does not exist in folder [model]. Please check your model_pth in [{}].".format(name,self.getFilePath(name="inference_model.yaml", folder="param") ))
+            rospy.logerr("There are model_pth you can use below:")
+            rospy.logerr(list(self.recording.keys()))
             return False
         return True
 
