@@ -54,5 +54,5 @@ If you can connect the internet, then you can install userfultools by "[OpenCV-F
 
 I will update continue, and will show how to play the jetbot without the electronic modules that Nvidia use in 2019/7.
 
-It means you can use your own MotorHAT to control motor ... etc .
+It means you can use your own MotorHAT to control motor.
 
