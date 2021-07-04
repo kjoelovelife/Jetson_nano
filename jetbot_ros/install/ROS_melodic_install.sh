@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# Shell script scripts to install useful tools , such as opencv , pytorch...
+# Shell script scripts to install useful tools, such as opencv, pytorch...
 # -------------------------------------------------------------------------
-#Copyright © 2019 Wei-Chih Lin , kjoelovelife@gmail.com 
+#Copyright © 2019 Wei-Chih Lin, kjoelovelife@gmail.com 
 
 #Permission is hereby granted, free of charge, to any person obtaining a copy
 #of this software and associated documentation files (the "Software"), to deal
@@ -32,16 +32,16 @@ if [[ `id -u` -eq 0 ]] ; then
     exit 1 ;
 fi
 
-# Configure power mode : 5W
+# Configure power mode: 5W
 sudo nvpmodel -m1
 
-# Configure power mode : 10W
+# Configure power mode: 10W
 #sudo nvpmodel -m0
 
-## If you want to see power mode , use 
+## If you want to see power mode, use 
 sudo nvpmodel -q
 
-#================= step 1. Install ROS melodic =================================
+#================= step1. Install ROS melodic =================================
 cd
 # enable all Ubuntu packages:
 sudo apt-add-repository universe
@@ -52,7 +52,7 @@ sudo apt-add-repository restricted
 sudo sh -c 'echo "deb http://packages.ros.org/ros/ubuntu $(lsb_release -sc) main" > /etc/apt/sources.list.d/ros-latest.list'
 sudo apt-key adv --keyserver 'hkp://keyserver.ubuntu.com:80' --recv-key C1CF6E31E6BADE8868B172B4F42ED6FBAB17C654
 
-## delete ROS old key : sudo apt-key del 421C365BD9FF1F717815A3895523BAEEB01FA116 
+## delete ROS old key: sudo apt-key del 421C365BD9FF1F717815A3895523BAEEB01FA116 
 
 # install ROS desktop-full
 sudo apt-get update
