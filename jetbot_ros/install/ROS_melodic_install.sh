@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Shell script scripts to install useful tools, such as opencv, pytorch...
+# Shell script scripts to install ROS-melodic.
 # -------------------------------------------------------------------------
 #Copyright © 2019 Wei-Chih Lin, kjoelovelife@gmail.com 
 
