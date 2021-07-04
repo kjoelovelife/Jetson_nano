@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
-# Shell script scripts to install useful tools , ROS melodic on unbuntu 18.04 with Jetson-nano
+# Shell script scripts to install useful tools, ROS melodic on unbuntu 18.04 with Jetson-nano
 # -------------------------------------------------------------------------
-#Copyright © 2019 Wei-Chih Lin , kjoelovelife@gmail.com 
+#Copyright © 2019 Wei-Chih Lin, kjoelovelife@gmail.com 
 
 #Permission is hereby granted, free of charge, to any person obtaining a copy
 #of this software and associated documentation files (the "Software"), to deal
