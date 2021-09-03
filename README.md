@@ -12,29 +12,29 @@ If you buy the kit from iCShop, the password in image is "075564686".
 
 ## reference
 
-*Jetson-nano(I)-dev-kit-sd-card-image: https://developer.nvidia.com/embedded/dlc/jetson-nano-dev-kit-sd-card-image
+* [Jetson-nano(I)-dev-kit-sd-card-image](https://developer.nvidia.com/embedded/dlc/jetson-nano-dev-kit-sd-card-image)
 
-*Jetson-nano(II)-dev-kit-sd-card-image: https://developer.nvidia.com/jetson-nano-sd-card-image
+* [Jetson-nano(II)-dev-kit-sd-card-image](https://developer.nvidia.com/jetson-nano-sd-card-image)
 
-*Information for Jetson-nano: https://elinux.org/Jetson_Nano
+* [Information for Jetson-nano](https://elinux.org/Jetson_Nano)
 
-*Nvidia Jetbot: https://github.com/NVIDIA-AI-IOT/jetbot
+* [Nvidia Jetbot](https://github.com/NVIDIA-AI-IOT/jetbot)
 
-*Nvidia Jetbot-ROS: https://github.com/dusty-nv/jetbot_ros
+* [Nvidia Jetbot-ROS](https://github.com/dusty-nv/jetbot_ros)
 
-*Nvidia Jetson-inference: https://github.com/dusty-nv/jetson-inference
+* [Nvidia Jetson-inference](https://github.com/dusty-nv/jetson-inference)
 
-*How to Install jetpack: https://docs.nvidia.com/jetson/jetpack/install-jetpack/index.html
+* [How to Install jetpack](https://docs.nvidia.com/jetson/jetpack/install-jetpack/index.html)
 
-*How to run TensorFlow Object Detection model on Jetson Nano: https://www.dlology.com/blog/how-to-run-tensorflow-object-detection-model-on-jetson-nano/
+* [How to run TensorFlow Object Detection model on Jetson Nano](https://www.dlology.com/blog/how-to-run-tensorflow-object-detection-model-on-jetson-nano/)
 
-*How to run Keras model on Jetson Nano: https://www.dlology.com/blog/how-to-run-keras-model-on-jetson-nano/
+* [How to run Keras model on Jetson Nano](https://www.dlology.com/blog/how-to-run-keras-model-on-jetson-nano/)
 
-*Cavedu test on jetson-nano: https://blog.cavedu.com/2019/04/30/nvidia-jetson-nano-example/
+* [Cavedu test on jetson-nano](https://blog.cavedu.com/2019/04/30/nvidia-jetson-nano-example/)
 
-*TensorRT: https://developer.nvidia.com/tensorrt
+* [TensorRT](https://developer.nvidia.com/tensorrt)
 
-*Omnixri webpage about jetson-nano: https://omnixri.blogspot.com/2019/05/nvidia-jetson-nano.html
+* [Omnixri webpage about jetson-nano](https://omnixri.blogspot.com/2019/05/nvidia-jetson-nano.html)
 
 ## Demo Video
 
@@ -42,7 +42,7 @@ If you buy the kit from iCShop, the password in image is "075564686".
 
 ## Developer
 
-*Wei-Chih, Lin (kjoelovelife@gmail.com)
+* [Joe Lin](weichih.lin@protonmail.com)
 
 ## Collaborator
 
