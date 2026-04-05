@@ -27,27 +27,6 @@
 # -------------------------------------------------------------------------
 
 main_path="Jetson_nano"
-#======= configure jetcam ===============
+
 cd ~/$main_path/jetcam
 sudo python3 setup.py install
-#===========================================
-
-
-
-# None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
-# sudo pip install --upgrade pip setuptools wheel
-
-#===== setup wifi SSID ===============
-## disconnect wifi
-#sudo nmcli device disconnect wlan0
-
-## rescan wifi 
-#sudo nmcli device wifi rescan
-
-## list wifi
-#sudo nmcli device wifi list
-
-## connect wifi
-#sudo nmcli device wifi connect "SSID" password "SSID password"
-
-#============================================

@@ -37,8 +37,3 @@ sudo cp /etc/fstab /etc/fstab.bak
 ## long time to use
 sudo echo '/swapfile none swap sw 0 0' | sudo tee -a /etc/fstab
 ## After this step , please reboot , and can use " free -h " to view information.
-#=======================================================================================
-
-
-# None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
-# sudo pip install --upgrade pip setuptools wheel
