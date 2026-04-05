@@ -44,6 +44,3 @@ ssh-keygen -P "" -h -f $HOME/.ssh/$USER@$HOSTNAME
 echo "IdentityFile ~/.ssh/$USER@$HOSTNAME" >> ~/.ssh/config
 
 sudo service ssh restart
-
-# None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
-# sudo pip install --upgrade pip setuptools wheel

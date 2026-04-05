@@ -49,6 +49,5 @@ sudo make install
 echo 'export PYTHONPATH=$PYTHONPATH:'$PWD'/python_loader/' >> ~/.bashrc
 source ~/.bashrc
 
-2
 echo "** Install opencv-4.3.0 successfully"
 echo "** Bye :)"

@@ -29,27 +29,21 @@
 
 
 main_path="Jetson_nano"
-#sudo apt-get update
 
-#======= ste1. Enable i2c ===============
-# Enable i2c permissions
+# Step 1: Enable i2c permissions
 sudo usermod -aG i2c $USER
-#===========================================
 
-
-#======== Step2. apt update and upgrade ==============================
+# Step 2: apt update and install base Python packages
 sudo apt-get update
 sudo apt install -y python3-pip python3-pil
 sudo pip3 install cython
-#==============================================================
 
-#========= Step3. install tensorflow ==========================
-cd
+# Step 3: Install TensorFlow dependencies and TensorFlow for JetPack 4.4
 sudo apt-get install -y libhdf5-serial-dev \
                         hdf5-tools \
                         libhdf5-dev \
                         zlib1g-dev \
-                        'zip' \
+                        zip \
                         libjpeg8-dev \
                         liblapack-dev \
                         libblas-dev \
@@ -69,81 +63,40 @@ sudo pip3 install -U numpy==1.18.5 \
                      pybind11
 sudo -H pip3 install jetson-stats
 sudo pip3 install --pre --extra-index-url https://developer.download.nvidia.com/compute/redist/jp/v44 'tensorflow<2'
-#=============================================================
 
-#======== Step4. configure virtualenv ================================
-## if you want to exit virtualenv , just enter "deactivate"
-echo $PASSWORD | sudo apt-get install -y virtualenv
+# Step 4: Create a Python 3 virtualenv named 'AI' (optional, not activated by default)
+sudo apt-get install -y virtualenv
 cd
-mkdir envs;cd envs
+mkdir -p envs && cd envs
 virtualenv -p python3 AI
-## if you want to use virtualenv AI, please enter bellow command 
-#echo "source ~/envs/AI/bin/activate" >> ~/.bashrc
-#source ~/envs/AI/bin/activate
-#======== configure OpenCV ( Theese command just for Jetson-nano developer kit) ========
-#cd ~/envs/AI/lib/python3.6/site-packages/
-#ln -s /usr/lib/python3.6/dist-packages/cv2.cpython-36m-aarch64-linux-gnu.so
-#=======================================================================================
 
-#======== Step6. install traitlets and jupyterlab  ============
+# Step 5: Install traitlets and JupyterLab
 sudo apt -y install curl dirmngr apt-transport-https lsb-release ca-certificates
 curl -sL https://deb.nodesource.com/setup_12.x | sudo -E bash -
-sudo apt -y install nodejs node-gyp 'gcc' g++ 'make'
+sudo apt -y install nodejs node-gyp gcc g++ make
 sudo pip3 install jupyter jupyterlab
 sudo python3 -m pip install git+https://github.com/ipython/traitlets@4.x
 sudo jupyter labextension install @jupyter-widgets/jupyterlab-manager
 sudo jupyter labextension install @jupyterlab/statusbar
-#jupyter lab --generate-config
-#echo $PASSWORD | jupyter notebook password
-#echo $PASSWORD
-# if jupyter notebook has the error : " bash: jupyter: command not found "
-# can enter this command to solve : " pip3 install --upgrade --force-reinstall jupyter note  book "
-# if you have problem with "get 403 ..." , can install ipykernel with this text : sudo python3 -m pip install ipykernel --user
-#=============================================================
 
-#========= step7. install repo of jetbot and configure jetbot service ==================	 
-## clone the jetbot repo with git 
-#cd ~/Jetson_nano
-#git clone https://github.com/NVIDIA-AI-IOT/jetbot ~/$main_path/jetbot 
+# Step 6: Install JetBot Python package and register systemd services
 cd ~/$main_path/jetbot
-echo $PASSWORD | sudo apt install python3-smbus cmake
-echo $PASSWORD | sudo python3 setup.py install
+sudo apt install -y python3-smbus cmake
+sudo python3 setup.py install
 cd ~/$main_path/jetbot/jetbot/utils
 python3 create_stats_service.py
-echo $PASSWORD | sudo mv jetbot_stats.service /etc/systemd/system/jetbot_stats.service
-echo $PASSWORD | sudo systemctl enable jetbot_stats
-echo $PASSWORD | sudo systemctl start jetbot_stats
+sudo mv jetbot_stats.service /etc/systemd/system/jetbot_stats.service
+sudo systemctl enable jetbot_stats
+sudo systemctl start jetbot_stats
 python3 create_jupyter_service.py
-echo $PASSWORD | sudo mv jetbot_jupyter.service /etc/systemd/system/jetbot_jupyter.service
-echo $PASSWORD | sudo systemctl enable jetbot_jupyter
-echo $PASSWORD | sudo systemctl start jetbot_jupyter
-#sudo chmod 777 /usr/local/lib/python3.6/dist-packages/jetbot-0.3.0-py3.6.egg/jetbot/* -R
-#=======================================================================================
+sudo mv jetbot_jupyter.service /etc/systemd/system/jetbot_jupyter.service
+sudo systemctl enable jetbot_jupyter
+sudo systemctl start jetbot_jupyter
 
-#======= step8. configure Jetson nano GPIO =================
+# Step 7: Install Jetson.GPIO
 sudo pip3 install Jetson.GPIO
 sudo apt-get -y install git-all
 cd ~/$main_path/driver
 git clone https://github.com/NVIDIA/jetson-gpio.git
 cd jetson-gpio
 sudo python3 setup.py install
-#===========================================================
-
-
-# None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
-# sudo pip install --upgrade pip setuptools wheel
-
-#===== setup wifi SSID ===============
-## disconnect wifi
-#sudo nmcli device disconnect wlan0
-
-## rescan wifi 
-#sudo nmcli device wifi rescan
-
-## list wifi
-#sudo nmcli device wifi list
-
-## connect wifi
-#sudo nmcli device wifi connect "SSID" password "SSID password"
-
-#============================================

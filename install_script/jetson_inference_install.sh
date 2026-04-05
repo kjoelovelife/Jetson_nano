@@ -26,9 +26,12 @@
 ## file path
 main_path="Jetson_nano"
 
+# Detect Jetson platform by checking the kernel release string
+kernel=$(uname -r)
+platform="tegra"
 
 # git and cmake should be installed
-echo $PASSWORD | sudo -S apt-get install git cmake
+sudo apt-get install -y git cmake
 
 if [[ $kernel =~ $platform ]] ; then
     # clone the repo and submodules
@@ -36,8 +39,8 @@ if [[ $kernel =~ $platform ]] ; then
     cd ~/$main_path/driver/jetson-inference
     git submodule update --init
 
-    echo "Do not leave your seat!! Some package you need to chek...."
-    echo "We suggest you to install all software and net module."
+    echo "Do not leave your seat! Some packages require manual selection."
+    echo "We suggest you install all software and network modules."
     sleep 5s
 
     # build from source
@@ -47,11 +50,7 @@ if [[ $kernel =~ $platform ]] ; then
     make
 
     # install libraries
-    echo $PASSWORD | sudo -S make install
-    
+    sudo make install
+else
+    echo "Not running on a Jetson platform (kernel: $kernel). Skipping jetson-inference build."
 fi
-#===========================================================================
-
-
-# None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
-# sudo pip install --upgrade pip setuptools wheel

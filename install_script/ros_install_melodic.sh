@@ -37,10 +37,4 @@ echo $PASSWORD | sudo -S apt-get install -y python-rosinstall \
 echo "source /opt/ros/melodic/setup.bash" >> ~/.bashrc
 source ~/.bashrc
 
-echo "ROS $ros1_distro installed successfully." 
-#sudo chown -R $USER: $HOME
-#==============================================================================
-
-
-# None of this should be needed. Next time you think you need it, let me know and we figure it out. -AC
-# sudo pip install --upgrade pip setuptools wheel
+echo "ROS $ros1_distro installed successfully."
