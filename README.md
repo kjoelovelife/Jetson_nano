@@ -1,58 +1,96 @@
-# Jetson_nano
+# Jetson Nano
 
 <p align="center">
   <img src="https://github.com/kjoelovelife/Jetson_nano/blob/master/icshop_jetson_nano.jpg" width="280">
 </p>
 
-## Introduction
+A collection of projects and tools for the NVIDIA Jetson Nano, covering robot control, computer vision, deep learning, and ROS integration.
 
-This repository contains use Jetson_nano
+> If you purchased the kit from iCShop, the default image password is `075564686`.
 
-If you buy the kit from iCShop, the password in image is "075564686".
+## Contents
 
-## reference
+| Directory | Description |
+|-----------|-------------|
+| `install_script/` | Setup scripts for the Jetson Nano environment |
+| `jetbot/` | JetBot robot Python package (motors, camera, Jupyter notebooks) |
+| `jetcam/` | Camera library for CSI and USB cameras via GStreamer |
+| `jetbot_ros/` | ROS Melodic workspace with motor control, camera, and deep learning nodes |
+| `OpenCV-Face-Recognition/` | Real-time face detection and recognition with OpenCV |
+| `Machine_Learning/` | Classification and regression dataset utilities |
+| `jetson-dlinano/` | NVIDIA Deep Learning Institute course notebooks |
+| `driver/` | WiFi adapter drivers (rtl8812au, EW-7822ULC) |
 
-* [Jetson-nano(I)-dev-kit-sd-card-image](https://developer.nvidia.com/embedded/dlc/jetson-nano-dev-kit-sd-card-image)
+## Quick Start
 
-* [Jetson-nano(II)-dev-kit-sd-card-image](https://developer.nvidia.com/jetson-nano-sd-card-image)
+Clone this repository to your home directory as `Jetson_nano`:
 
-* [Information for Jetson-nano](https://elinux.org/Jetson_Nano)
+```bash
+git clone https://github.com/kjoelovelife/Jetson_nano ~/Jetson_nano
+cd ~/Jetson_nano
+```
 
-* [Nvidia Jetbot](https://github.com/NVIDIA-AI-IOT/jetbot)
+Run the interactive installer to set up the components you need:
 
-* [Nvidia Jetbot-ROS](https://github.com/dusty-nv/jetbot_ros)
+```bash
+./install.sh
+```
 
-* [Nvidia Jetson-inference](https://github.com/dusty-nv/jetson-inference)
+The installer prompts for each component individually:
+- Swap space (4 GB, recommended before any build)
+- SSH configuration
+- OpenCV 4.3.0 with CUDA support
+- jetson-inference
+- JetBot Python package + Jupyter service
+- JetCam Python package
+- ROS Melodic
 
-* [How to Install jetpack](https://docs.nvidia.com/jetson/jetpack/install-jetpack/index.html)
+## Requirements
 
-* [How to run TensorFlow Object Detection model on Jetson Nano](https://www.dlology.com/blog/how-to-run-tensorflow-object-detection-model-on-jetson-nano/)
+- NVIDIA Jetson Nano Developer Kit
+- JetPack 4.4 SD card image
+- 32 GB or larger microSD card (64 GB recommended for full installation)
 
-* [How to run Keras model on Jetson Nano](https://www.dlology.com/blog/how-to-run-keras-model-on-jetson-nano/)
+## Projects
 
-* [Cavedu test on jetson-nano](https://blog.cavedu.com/2019/04/30/nvidia-jetson-nano-example/)
+### JetBot (Standalone)
 
-* [TensorRT](https://developer.nvidia.com/tensorrt)
+Interactive robot control through Jupyter notebooks. Supports teleoperation, collision avoidance, road following, and object following.
 
-* [Omnixri webpage about jetson-nano](https://omnixri.blogspot.com/2019/05/nvidia-jetson-nano.html)
+```bash
+cd install_script && sudo ./jetbot_install.sh
+```
 
-## Demo Video
+### JetBot ROS
 
+ROS Melodic integration for the JetBot. Requires ROS Melodic, OpenCV 4.3.0, and PyTorch 1.4.0.
 
+```bash
+cd install_script && ./ros_install_melodic.sh
+cd ~/Jetson_nano/jetbot_ros && ./install/catkin_make.sh
+source setup/environment.sh
+```
+
+See [`jetbot_ros/README.md`](jetbot_ros/README.md) for node usage.
+
+### OpenCV Face Recognition
+
+Real-time face recognition pipeline using Haar cascades and LBPH. Works with USB and CSI (Raspberry Pi) cameras.
+
+```bash
+cd OpenCV-Face-Recognition && ./face_recognition_dependencies.sh
+# Then run scripts 01 → 02 → 03 in the USB_camera or raspi_camera subdirectory
+```
 
 ## Developer
 
-* [Joe Lin](weichih.lin@protonmail.com)
+- [Joe Lin](mailto:weichih.lin@protonmail.com)
 
-## Collaborator
+## References
 
-
-
-## Usage & Tutorial
-
-If you can connect the internet, then you can install userfultools by "[OpenCV-Face-Recognition/face_recognition_dependencies.sh](https://github.com/kjoelovelife/Jetson_nano/blob/master/OpenCV-Face-Recognition/face_recognition_dependencies.sh)".
-
-I will update continue, and will show how to play the jetbot without the electronic modules that Nvidia use in 2019/7.
-
-It means you can use your own MotorHAT to control motor.
-
+- [Jetson Nano Getting Started](https://developer.nvidia.com/embedded/learn/get-started-jetson-nano-devkit)
+- [JetPack Installation](https://docs.nvidia.com/jetson/jetpack/install-jetpack/index.html)
+- [NVIDIA JetBot](https://github.com/NVIDIA-AI-IOT/jetbot)
+- [jetson-inference](https://github.com/dusty-nv/jetson-inference)
+- [TensorRT](https://developer.nvidia.com/tensorrt)
+- [Jetson Nano wiki (elinux)](https://elinux.org/Jetson_Nano)
