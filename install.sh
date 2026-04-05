@@ -163,7 +163,7 @@ fi
 if [ $swap == true ] ; then
     cd ~/$main_path/$install_source
     ./swap.sh
-    msg_swap="swap $size "
+    msg_swap="swap $swap_size"
 fi
 
 if [ $ssh_setup == true ] ; then
